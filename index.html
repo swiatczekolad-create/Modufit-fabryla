@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIEMONTUJE — Atelier mebli na wymiar</title>
+<title>modu·fit — Meble na wymiar · Trójmiasto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,9 +42,11 @@ body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opa
 /* ===== NAV ===== */
 nav{position:sticky;top:0;z-index:60;background:rgba(243,237,225,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1340px;margin:0 auto}
-.brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;letter-spacing:-.02em;display:flex;align-items:center;gap:11px}
-.brand .mark{width:11px;height:11px;background:var(--terra);border-radius:50%}
-.brand small{font-family:'Hanken Grotesk';font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);font-weight:600;padding-left:11px;border-left:1px solid var(--hair)}
+.brand{display:flex;align-items:baseline;gap:0;text-decoration:none}
+.brand .b-modu{font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-.03em;color:var(--espresso);text-transform:lowercase}
+.brand .b-dot{width:6px;height:6px;background:var(--terra);border-radius:50%;display:inline-block;margin:0 5px 3px;vertical-align:middle}
+.brand .b-fit{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.02em;color:var(--terra);font-style:italic}
+.brand small{font-family:'Hanken Grotesk';font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);font-weight:600;padding-left:12px;margin-left:12px;border-left:1px solid var(--hair);align-self:center}
 .nav-r{display:flex;align-items:center;gap:28px}
 .nav-r a.lk{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--espresso);opacity:.6;transition:.2s;display:none}
 .nav-r a.lk:hover{opacity:1}
@@ -364,7 +366,7 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
 
 <nav>
   <div class="nav-in">
-    <a href="#" class="brand"><span class="mark"></span>Siemontuje<small>Meble na wymiar</small></a>
+    <a href="#" class="brand"><span class="b-modu">modu</span><span class="b-dot"></span><span class="b-fit">fit</span><small>Meble na wymiar</small></a>
     <div class="nav-r">
       <a href="#uklady" class="lk"><b>01</b>Układy</a>
       <a href="#materialy" class="lk"><b>02</b>Materiały</a>
@@ -628,7 +630,7 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 Siemontuje — Meble na wymiar</span>
+    <span>© 2026 modu·fit — Meble na wymiar</span>
     <span>Płyty Egger &amp; Kronospan · ±1 mm</span>
   </div>
 </footer>
