@@ -185,10 +185,14 @@ body.internal .cutlist{display:block}
 @media(max-width:640px){.cut-head{flex-direction:column;align-items:flex-start;gap:14px}.cut-sum{text-align:left}.cut-table th,.cut-table td{padding-left:18px;padding-right:18px}}
 
 /* ===== BADGE "DOSTARCZAMY ZŁOŻONE" ===== */
-.usp-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(194,87,47,.15);border:1.5px solid rgba(194,87,47,.4);backdrop-filter:blur(8px);padding:12px 22px;border-radius:60px;margin-bottom:28px;opacity:0;animation:hh-rise .85s .08s ease both}
-.usp-badge svg{width:22px;height:22px;stroke:var(--terra);fill:none;stroke-width:2;flex-shrink:0}
-.usp-badge span{font-size:.82rem;font-weight:700;letter-spacing:.06em;color:#fff}
-.usp-badge b{color:var(--terra);font-weight:800}
+.usp-badge{display:inline-flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(194,87,47,.22),rgba(194,87,47,.08));border:2px solid var(--terra);backdrop-filter:blur(10px);padding:18px 28px;border-radius:18px;margin-bottom:30px;opacity:0;animation:hh-rise .85s .08s ease both;position:relative;overflow:hidden}
+.usp-badge::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:usp-shine 3s ease-in-out infinite}
+@keyframes usp-shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.usp-badge .usp-main{display:flex;align-items:center;gap:10px}
+.usp-badge svg{width:26px;height:26px;stroke:var(--terra);fill:none;stroke-width:2.5;flex-shrink:0}
+.usp-badge .usp-main span{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#fff}
+.usp-badge .usp-main b{color:var(--terra);font-weight:800}
+.usp-badge .usp-sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);font-weight:600;padding-left:36px}
 
 /* sekcja wyróżnik */
 .usp-strip{background:var(--espresso);color:var(--paper);padding:0;overflow:hidden}
@@ -413,8 +417,11 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
   <div class="hh-veil"></div>
   <div class="wrap hh-inner">
     <div class="usp-badge">
-      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-      <span>Dostarczamy <b>złożone i gotowe</b> — nie formatki do skręcania</span>
+      <div class="usp-main">
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>Dostarczamy <b>złożone i gotowe</b> — nie formatki</span>
+      </div>
+      <div class="usp-sub">Trójmiasto i okolice · pod drzwi · bez montażu</div>
     </div>
     <h1 class="hh-title fr">Meble na wymiar?<br><span class="it">Łatwiej niż myślisz.</span></h1>
     <p class="hh-lede">Wybierz mebel, ustaw wymiary, zobacz cenę od razu. Dowozimy zmontowane — odpakowujesz i ustawiasz. Zero wkrętarki.</p>
@@ -430,14 +437,14 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
 <section class="usp-strip" id="uspSection">
   <div class="usp-inner">
     <div class="usp-text">
-      <div class="lbl">Tylko u nas</div>
+      <div class="lbl">Gdańsk · Gdynia · Sopot i okolice</div>
       <h2 class="fr reveal">Dostarczamy <span class="it">złożone.</span><br>Nie paczki z płytami.</h2>
-      <p class="reveal">Inne firmy wysyłają formatki i instrukcję. Ty musisz mieć narzędzia, czas i cierpliwość. U nas meble przyjeżdżają zmontowane — odpakowujesz, ustawiasz i gotowe.</p>
+      <p class="reveal">Na terenie Trójmiasta i okolic dowozimy meble <b>zmontowane i gotowe do ustawienia</b>. Inne firmy wysyłają formatki z instrukcją — Ty musisz mieć narzędzia, czas i cierpliwość. U nas to niepotrzebne.</p>
       <ul class="usp-points reveal">
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Meble zmontowane w naszym warsztacie</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Dostarczamy pod drzwi — Trójmiasto i okolice</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Odpakowujesz i ustawiasz — bez wkrętarki</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Instalacja wiszących i kuchni — opcjonalna usługa</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Składamy meble w naszym warsztacie — profesjonalnie</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Dowozimy pod drzwi — Trójmiasto i okolice</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Ty tylko odpakowujesz i ustawiasz na miejsce</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Szafki wiszące, kuchnie? Zamów instalację — opcja</li>
       </ul>
       <div class="usp-vs reveal">
         <div class="vs-col">
@@ -457,8 +464,18 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
       </div>
     </div>
     <div class="usp-visual reveal">
-      <div class="usp-icon">
-        <svg viewBox="0 0 100 100"><rect x="15" y="25" width="50" height="60" rx="3" stroke-width="2.5"/><path d="M15 55h50M40 25v60" stroke-width="2"/><circle cx="32" cy="40" r="2.5" fill="currentColor" stroke="none"/><circle cx="48" cy="40" r="2.5" fill="currentColor" stroke="none"/><path d="M72 60l14-8v22l-14-8z" stroke-width="2"/><path d="M70 45c8-12 22-8 22 4" stroke-width="2" fill="none"/></svg>
+      <div style="text-align:center">
+        <div style="display:flex;align-items:flex-end;justify-content:center;gap:40px">
+          <div style="opacity:.35">
+            <svg width="80" height="100" viewBox="0 0 80 100"><rect x="5" y="20" width="70" height="50" rx="3" stroke="var(--clay)" fill="none" stroke-width="1.5" stroke-dasharray="6 4"/><line x1="5" y1="45" x2="75" y2="45" stroke="var(--clay)" stroke-width="1" stroke-dasharray="4 3"/><line x1="40" y1="20" x2="40" y2="70" stroke="var(--clay)" stroke-width="1" stroke-dasharray="4 3"/><text x="40" y="88" text-anchor="middle" font-size="9" fill="var(--clay)" font-family="Hanken Grotesk" font-weight="600">FORMATKI</text></svg>
+            <div style="font-size:.72rem;color:var(--clay);margin-top:4px;text-decoration:line-through">sam montujesz</div>
+          </div>
+          <div style="font-size:2rem;color:var(--clay);margin-bottom:30px">→</div>
+          <div>
+            <svg width="100" height="120" viewBox="0 0 100 120"><rect x="8" y="10" width="84" height="90" rx="4" stroke="var(--terra)" fill="none" stroke-width="2.5"/><line x1="8" y1="50" x2="92" y2="50" stroke="var(--terra)" stroke-width="2"/><line x1="50" y1="10" x2="50" y2="90" stroke="var(--terra)" stroke-width="1.5"/><circle cx="38" cy="30" r="3" fill="var(--terra)"/><circle cx="62" cy="30" r="3" fill="var(--terra)"/><rect x="28" y="58" width="18" height="30" rx="2" stroke="var(--terra)" fill="none" stroke-width="1.5"/><rect x="54" y="58" width="18" height="30" rx="2" stroke="var(--terra)" fill="none" stroke-width="1.5"/><text x="50" y="112" text-anchor="middle" font-size="10" fill="var(--terra)" font-family="Fraunces" font-weight="700">ZŁOŻONE</text></svg>
+            <div style="font-size:.72rem;color:var(--terra);margin-top:4px;font-weight:700">odpakowujesz i stawiasz</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
