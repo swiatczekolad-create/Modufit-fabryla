@@ -1095,6 +1095,101 @@ function buildGeometry(c, g, collect){
     _G=prevG; _C=prevC; return;
   }
 
+  // ===== BIURKO / STÓŁ NA STELAŻU =====
+  if(kind==='desk'||kind==='desk-cabinet-left'||kind==='desk-cabinet-right'||kind==='desk-2cab'||kind==='desk-corner'||kind==='desk-frame'){
+    const topTh=0.028; // grubość blatu 28 mm
+    const topY2=H-topTh/2;
+    const legR=0.025;  // promień nogi
+    const legInset=0.06;
+
+    // BLAT (zawsze)
+    addBox(W,topTh,D,0,topY2,0,frontMat,true);
+    // krawędź przednia
+    addBox(W,0.004,0.004,0,H-0.002,D/2+0.002,bodyMat,true);
+
+    if(kind==='desk-frame'){
+      // stelaż metalowy: 2 boczne ramy (prostokątne profile)
+      const barW=0.04, barH=0.04;
+      const frameH=H-topTh;
+      // lewa rama
+      addBox(barW,frameH,barH,-(W/2-legInset),frameH/2,D/2-legInset,steel,true);
+      addBox(barW,frameH,barH,-(W/2-legInset),frameH/2,-(D/2-legInset),steel,true);
+      addBox(barW,barH,D-2*legInset,-(W/2-legInset),barH/2,0,steel,true);
+      // prawa rama
+      addBox(barW,frameH,barH,(W/2-legInset),frameH/2,D/2-legInset,steel,true);
+      addBox(barW,frameH,barH,(W/2-legInset),frameH/2,-(D/2-legInset),steel,true);
+      addBox(barW,barH,D-2*legInset,(W/2-legInset),barH/2,0,steel,true);
+      // poprzeczka łącząca (stabilizator)
+      addBox(W-2*legInset,barH,barW,0,barH/2,0,steel,true);
+    } else if(kind==='desk-corner'){
+      // narożne L: dodatkowy blat prostopadły
+      const arm=D*0.6;
+      addBox(arm,topTh,D,-(W/2+arm/2),topY2,0,frontMat,true);
+      // nogi: 3 w rogach L
+      const legH2=H-topTh;
+      [[W/2-legInset,D/2-legInset],[W/2-legInset,-(D/2-legInset)],[-(W/2+arm-legInset),D/2-legInset],[-(W/2+arm-legInset),-(D/2-legInset)]].forEach(p=>{
+        const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
+        leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
+      });
+    } else if(kind==='desk-cabinet-left'||kind==='desk-cabinet-right'){
+      // biurko z szafką na jednej stronie
+      const cabW=0.40, cabD=D-0.02;
+      const cabH=H-topTh-0.01;
+      const cabSide=kind==='desk-cabinet-left'?-1:1;
+      const cabX=cabSide*(W/2-cabW/2);
+      // szafka (korpus)
+      addBox(cabW,cabH,cabD,cabX,cabH/2,0,bodyMat,true);
+      // fronty szafki: 2 szuflady lub drzwi
+      const fz=cabD/2+pd/2;
+      if(c.dr>0){
+        const dh=(cabH-gap*(c.dr-1))/c.dr;
+        for(let i=0;i<c.dr;i++){
+          const dy=cabH-dh/2-i*(dh+gap);
+          addBox(cabW-0.01,dh-0.01,pd,cabX,dy,fz,frontMat,true);
+          addBox((cabW-0.01)*0.3,0.013,0.026,cabX,dy+dh/2-0.03,fz+pd/2,handleMat,false);
+        }
+      } else {
+        addBox(cabW-0.01,cabH-0.01,pd,cabX,cabH/2,fz,frontMat,true);
+        addBox(0.016,cabH*0.22,0.026,cabX+(-cabSide)*(cabW/2-0.04),cabH/2,fz+pd/2,handleMat,false);
+      }
+      // nogi z wolnej strony
+      const legH2=H-topTh;
+      const freeX=-cabSide*(W/2-legInset);
+      [[freeX,D/2-legInset],[freeX,-(D/2-legInset)]].forEach(p=>{
+        const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
+        leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
+      });
+    } else if(kind==='desk-2cab'){
+      // biurko na 2 kontenerach
+      const cabW=0.40, cabD=D-0.02;
+      const cabH=H-topTh-0.01;
+      [-1,1].forEach(side=>{
+        const cabX=side*(W/2-cabW/2);
+        addBox(cabW,cabH,cabD,cabX,cabH/2,0,bodyMat,true);
+        const fz=cabD/2+pd/2;
+        const dh=(cabH-gap*1)/2;
+        for(let i=0;i<2;i++){
+          const dy=cabH-dh/2-i*(dh+gap);
+          addBox(cabW-0.01,dh-0.01,pd,cabX,dy,fz,frontMat,true);
+          addBox((cabW-0.01)*0.3,0.013,0.026,cabX,dy+dh/2-0.03,fz+pd/2,handleMat,false);
+        }
+      });
+    } else {
+      // standardowe biurko: 4 nogi metalowe
+      const legH2=H-topTh;
+      [[W/2-legInset,D/2-legInset],[-(W/2-legInset),D/2-legInset],[W/2-legInset,-(D/2-legInset)],[-(W/2-legInset),-(D/2-legInset)]].forEach(p=>{
+        const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
+        leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
+      });
+      // przepust kablowy (otwór w blacie — sygnalizowany ciemnym kółkiem)
+      if(c.cableHole!==false){
+        const hole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,topTh+0.002,16),dark);
+        hole.position.set(W/4,topY2,-(D/4)); g.add(hole);
+      }
+    }
+    _G=prevG; _C=prevC; return;
+  }
+
   // ===== SKOS: mebel ze ściętym bokiem lub tyłem (poddasze) =====
   if(kind==='slope-left'||kind==='slope-right'||kind==='slope-back'){
     // Geometria: korpus z jednym bokiem/tyłem niższym
@@ -1799,23 +1894,23 @@ const PRESETS=[
 
   // ===================== MEBLE BIUROWE (1:1 Fabryka) =====================
   // -- Biurka gabinetowe (/60) — 18 typów --
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste z przepustem kablowym',             w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Blat na nogach'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko narożne lewe z szafką otwartą',           w:140, h:75, d:140, dr:0, doo:0, soon:true, meta:'Narożne L'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste z nadstawką',                       w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Z nadbudową'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste prawe z szafkami',                  w:140, h:75, d:60, dr:0, doo:0, soon:true, meta:'Prawe + szafki'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste lewe z szafkami',                   w:140, h:75, d:60, dr:0, doo:0, soon:true, meta:'Lewe + szafki'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na kontener prawe',                 w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Prawe na kontener'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na kontener lewe',                  w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Lewe na kontener'},
-  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na 2 kontenery',                    w:140, h:75, d:60, dr:0, doo:0, soon:true, meta:'2 kontenery'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste z przepustem kablowym',             w:120, h:75, d:60, dr:0, doo:0, kind:'desk', meta:'Blat na nogach'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko narożne lewe z szafką otwartą',           w:140, h:75, d:70, dr:0, doo:0, kind:'desk-corner', meta:'Narożne L'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste z nadstawką',                       w:120, h:75, d:60, dr:0, doo:0, kind:'desk', meta:'Z nadbudową'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste prawe z szafkami',                  w:140, h:75, d:60, dr:3, doo:0, kind:'desk-cabinet-right', meta:'Prawe + szafka'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste lewe z szafkami',                   w:140, h:75, d:60, dr:3, doo:0, kind:'desk-cabinet-left', meta:'Lewe + szafka'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na kontener prawe',                 w:120, h:75, d:60, dr:2, doo:0, kind:'desk-cabinet-right', meta:'Prawe na kontener'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na kontener lewe',                  w:120, h:75, d:60, dr:2, doo:0, kind:'desk-cabinet-left', meta:'Lewe na kontener'},
+  {cat:'Meble biurowe', sub:'Biurka', name:'Biurko proste na 2 kontenery',                    w:140, h:75, d:60, dr:2, doo:0, kind:'desk-2cab', meta:'2 kontenery'},
   {cat:'Meble biurowe', sub:'Biurka', name:'Biurko wiszące 3 szuflady',                       w:100, h:40, d:50, dr:3, doo:0, wall:true, meta:'Podwieszane'},
   {cat:'Meble biurowe', sub:'Biurka', name:'Biurko wiszące 2 szuflady',                       w:100, h:40, d:50, dr:2, doo:0, wall:true, meta:'Podwieszane'},
   {cat:'Meble biurowe', sub:'Biurka', name:'Biurko wiszące otwarte 3 przestrzenie',           w:120, h:40, d:50, dr:0, doo:0, kind:'open', shelves:2, wall:true, meta:'Otwarte'},
   {cat:'Meble biurowe', sub:'Biurka', name:'Biurko wiszące otwarte 2 przestrzenie',           w:100, h:40, d:50, dr:0, doo:0, kind:'open', shelves:1, wall:true, meta:'Otwarte'},
   // -- Biurka na stelażu (/118) — 9 typów --
-  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Biurko stelaż z regulacją elektryczną', w:140, h:75, d:70, dr:0, doo:0, soon:true, meta:'Regulacja wysokości'},
-  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Biurko stelaż boczny',                  w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Stelaż boczny'},
-  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Stół biurowy na stelażu',               w:160, h:75, d:80, dr:0, doo:0, soon:true, meta:'Stół konferencyjny'},
-  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Stolik kawowy na stelażu',               w:80, h:45, d:60, dr:0, doo:0, soon:true, meta:'Niski stolik'},
+  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Biurko stelaż z regulacją elektryczną', w:140, h:75, d:70, dr:0, doo:0, kind:'desk-frame', meta:'Regulacja wysokości'},
+  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Biurko stelaż boczny',                  w:120, h:75, d:60, dr:0, doo:0, kind:'desk-frame', meta:'Stelaż boczny'},
+  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Stół biurowy na stelażu',               w:160, h:75, d:80, dr:0, doo:0, kind:'desk-frame', meta:'Stół konferencyjny'},
+  {cat:'Meble biurowe', sub:'Stoły na stelażu', name:'Stolik kawowy na stelażu',               w:80, h:45, d:60, dr:0, doo:0, kind:'desk-frame', meta:'Niski stolik'},
   // -- Kontenerki (/61) — 11 typów --
   {cat:'Meble biurowe', sub:'Kontenerki', name:'Kontener biurowy z półką',                     w:43, h:60, d:50, dr:0, doo:0, kind:'open', shelves:1, meta:'Otwarta półka'},
   {cat:'Meble biurowe', sub:'Kontenerki', name:'Kontener biurowy z wieńcem środkowym',         w:43, h:60, d:50, dr:0, doo:1, niche:0.12, meta:'Wnęka + drzwi'},
