@@ -1604,18 +1604,34 @@ const PRESETS=[
   {cat:'Meble kuchenne', sub:'Słupki', name:'Słupek z półkami',                            w:40, h:200, d:56, dr:0, doo:0, kind:'open', shelves:5, meta:'Otwarte półki'},
   {cat:'Meble kuchenne', sub:'Słupki', name:'Słupek pod cargo wysokie',                    w:30, h:200, d:56, dr:0, doo:0, kind:'cargo', meta:'Wysoki kosz cargo'},
 
-  // ===================== MEBLE ŁAZIENKOWE =====================
-  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Wisząca - drzwi',     w:60, h:55, d:46, dr:0, doo:2, wall:true, meta:'2 drzwi'},
-  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Wisząca - szuflady',  w:60, h:55, d:46, dr:2, doo:0, wall:true, meta:'2 szuflady'},
-  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Stojąca - drzwi',     w:60, h:72, d:46, dr:0, doo:2, meta:'Na nóżkach'},
-  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Stojąca - szuflady',  w:60, h:72, d:46, dr:2, doo:0, meta:'Na nóżkach'},
-  {cat:'Meble łazienkowe', sub:'Szafki dolne', name:'Dolna podwieszana drzwi', w:80, h:40, d:35, dr:0, doo:2, wall:true, meta:'Niska, szeroka'},
-  {cat:'Meble łazienkowe', sub:'Szafki dolne', name:'Dolna podwieszana szuflady', w:80, h:40, d:35, dr:2, doo:0, wall:true, meta:'Niska, szuflady'},
-  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek wiszący drzwi', w:40, h:160, d:30, dr:0, doo:2, wall:true, meta:'Drzwi dzielone'},
-  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek z wnęką',      w:40, h:170, d:30, dr:1, doo:2, niche:0.22, meta:'Otwarta wnęka'},
-  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek stojący',      w:40, h:180, d:35, dr:0, doo:2, meta:'Wysoki, na nóżkach'},
-  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Zabudowa pralki',     w:65, h:200, d:60, dr:0, doo:2, niche:0.90, appliance:true, meta:'Otwór na pralkę'},
-  {cat:'Meble łazienkowe', sub:'Wiszące',      name:'Szafka nad pralką',   w:50, h:60, d:25, dr:0, doo:2, wall:true, meta:'Wisząca'},
+  // ===================== MEBLE ŁAZIENKOWE (22 typy 1:1 Fabryka) =====================
+  // -- Wiszące pod umywalkę (/51) — 5 typów --
+  {cat:'Meble łazienkowe', sub:'Wiszące pod umywalkę', name:'Szafka pod umywalkę z szufladą',              w:60, h:50, d:46, dr:1, doo:0, wall:true, meta:'1 szuflada, wisząca'},
+  {cat:'Meble łazienkowe', sub:'Wiszące pod umywalkę', name:'Szafka pod umywalkę z szufladami',            w:60, h:50, d:46, dr:2, doo:0, wall:true, meta:'2 szuflady, wisząca'},
+  {cat:'Meble łazienkowe', sub:'Wiszące pod umywalkę', name:'Szafka pod umywalkę z drzwiami',              w:60, h:50, d:46, dr:0, doo:2, wall:true, meta:'2 drzwi, wisząca'},
+  {cat:'Meble łazienkowe', sub:'Wiszące pod umywalkę', name:'Szafka pod umywalkę nablatową z szufladami',  w:60, h:55, d:46, dr:2, doo:0, wall:true, meta:'Pod umywalkę nablatową'},
+  {cat:'Meble łazienkowe', sub:'Wiszące pod umywalkę', name:'Szafka pod umywalkę nablatową z drzwiami',    w:60, h:55, d:46, dr:0, doo:2, wall:true, meta:'Pod umywalkę nablatową'},
+  // -- Dolne podwieszane (/50) — 2 typy --
+  {cat:'Meble łazienkowe', sub:'Dolne podwieszane', name:'Dolna podwieszana z drzwiami',   w:80, h:40, d:35, dr:0, doo:2, wall:true, meta:'Niska, wisząca'},
+  {cat:'Meble łazienkowe', sub:'Dolne podwieszane', name:'Dolna podwieszana z szufladami', w:80, h:40, d:35, dr:2, doo:0, wall:true, meta:'Niska, szuflady'},
+  // -- Stojące pod umywalkę (/59) — 4 typy --
+  {cat:'Meble łazienkowe', sub:'Stojące pod umywalkę', name:'Szafka stojąca pod umywalkę z drzwiami',             w:60, h:72, d:46, dr:0, doo:2, meta:'Na nóżkach, drzwi'},
+  {cat:'Meble łazienkowe', sub:'Stojące pod umywalkę', name:'Szafka stojąca pod umywalkę z szufladami',           w:60, h:72, d:46, dr:2, doo:0, meta:'Na nóżkach, szuflady'},
+  {cat:'Meble łazienkowe', sub:'Stojące pod umywalkę', name:'Szafka stojąca pod umywalkę nablatową z drzwiami',   w:60, h:72, d:46, dr:0, doo:2, meta:'Nablatowa, drzwi'},
+  {cat:'Meble łazienkowe', sub:'Stojące pod umywalkę', name:'Szafka stojąca pod umywalkę nablatową z szufladami', w:60, h:72, d:46, dr:2, doo:0, meta:'Nablatowa, szuflady'},
+  // -- Słupki wiszące (/52) — 10 typów --
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką drzwi pojedyncze górne',         w:40, h:160, d:30, dr:0, doo:1, niche:0.22, wall:true, meta:'Wnęka + 1 drzwi góra'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką drzwi podwójne górne',          w:40, h:160, d:30, dr:0, doo:2, niche:0.22, wall:true, meta:'Wnęka + 2 drzwi góra'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką szuflady i drzwi pojedyncze',   w:40, h:170, d:30, dr:1, doo:1, niche:0.22, wall:true, meta:'Wnęka + szuflada + 1 drzwi'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką szuflady i drzwi podwójne',     w:40, h:170, d:30, dr:1, doo:2, niche:0.22, wall:true, meta:'Wnęka + szuflada + 2 drzwi'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką drzwi pojedyncze dolne i górne', w:40, h:170, d:30, dr:0, doo:1, niche:0.22, wall:true, meta:'Wnęka + drzwi góra/dół'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z wnęką drzwi podwójne dolne i górne',   w:40, h:170, d:30, dr:0, doo:2, niche:0.22, wall:true, meta:'Wnęka + 2 drzwi góra/dół'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący szuflady i drzwi pojedyncze',            w:40, h:160, d:30, dr:1, doo:1, wall:true, meta:'Szuflada + 1 drzwi'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący szuflady i drzwi podwójne',              w:40, h:160, d:30, dr:1, doo:2, wall:true, meta:'Szuflada + 2 drzwi'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z drzwiami',                             w:40, h:160, d:30, dr:0, doo:2, wall:true, meta:'Drzwi dzielone'},
+  {cat:'Meble łazienkowe', sub:'Słupki wiszące', name:'Słupek wiszący z drzwiami dzielonymi',                  w:40, h:160, d:30, dr:0, doo:2, wall:true, meta:'Drzwi niezależne'},
+  // -- Zabudowa pralki (/53) — 1 typ --
+  {cat:'Meble łazienkowe', sub:'Zabudowa pralki', name:'Zabudowa pralki wysoka z drzwiami',                     w:65, h:200, d:60, dr:0, doo:1, niche:0.90, appliance:true, meta:'Otwór na pralkę'},
 
   // ===================== MEBLE POKOJOWE =====================
   {cat:'Meble pokojowe', sub:'Szafki nocne', name:'Szafka nocna szuflady', w:45, h:45, d:40, dr:2, doo:0, meta:'2 szuflady'},
@@ -1737,7 +1753,7 @@ const CAT_ART={
 };
 const CAT_META={
   'Meble kuchenne':'Dolne · górne · słupki · zabudowa AGD',
-  'Meble łazienkowe':'Pod umywalkę · słupki · wiszące',
+  'Meble łazienkowe':'Pod umywalkę · słupki · zabudowa pralki',
   'Meble pokojowe':'Nocne · komody · RTV · słupki',
   'Meble pod skosy':'Regały · komody · szafy na poddasze',
   'Szafy i regały':'Regały · szafy · garderoby',
