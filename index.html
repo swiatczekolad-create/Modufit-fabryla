@@ -221,7 +221,22 @@ body.internal .cutlist{display:block}
 .usp-vs .vs-item.them svg{stroke:rgba(255,255,255,.25);fill:none}
 .usp-vs .vs-item.us{color:#fff;font-weight:600}
 .usp-vs .vs-item.us svg{stroke:var(--terra);fill:none}
-@media(max-width:820px){.usp-inner{grid-template-columns:1fr}.usp-visual{min-height:220px}.usp-text{padding:40px 28px}}
+@media(max-width:820px){
+  .usp-inner{grid-template-columns:1fr}
+  .usp-visual{min-height:200px;padding:30px 20px}
+  .usp-text{padding:40px 28px}
+  .usp-vs{flex-direction:column;gap:14px}
+  .usp-vs .vs-col{padding:16px}
+}
+@media(max-width:520px){
+  .usp-text{padding:30px 20px}
+  .usp-text h2{font-size:1.8rem}
+  .usp-text p{font-size:.92rem}
+  .usp-points li{font-size:.84rem}
+  .usp-badge{padding:14px 18px;border-radius:14px}
+  .usp-badge .usp-main span{font-size:.92rem}
+  .usp-badge .usp-sub{padding-left:0;font-size:.65rem;margin-top:2px}
+}
 
 /* ===== HERO STARTOWE (zdjęcie + animacja) ===== */
 .home-hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center}
@@ -1181,8 +1196,10 @@ function renderPresetThumbs(){
       lift:!!p.lift, rail:!!p.rail, shelves:(p.shelves!=null?p.shelves:null), wall:!!p.wall, drawerSplit:p.drawerSplit||null, drainer:!!p.drainer, cutH:p.cutH||0});  // dekor + konstrukcja presetu
     buildGeometry(c,g,tmpOpen);
 
-    // kadrowanie kamery na bryłę (uwzględnia wysokie/wąskie meble)
-    const H=p.h/100, W=p.w/100, D=p.d/100, cyc=0.09+H/2;
+    // kadrowanie kamery na bryłę (uwzględnia wysokie/wąskie meble + biurka/blaty)
+    const H=p.h/100, W=p.w/100, D=p.d/100;
+    const isDesk=c.kind&&c.kind.startsWith('desk'), isSlab=c.kind==='slab';
+    const cyc=isSlab?H/2:(isDesk?H*0.55:0.09+H/2);
     const vFov=tcam.fov*Math.PI/180, hFov=2*Math.atan(Math.tan(vFov/2)*tcam.aspect);
     const halfV=(H+0.09)/2*1.12, halfH=Math.hypot(W,D)/2*1.12;
     const rV=halfV/Math.tan(vFov/2), rH=halfH/Math.tan(hFov/2);
