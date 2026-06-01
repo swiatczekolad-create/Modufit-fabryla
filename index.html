@@ -1075,16 +1075,19 @@ function buildGeometry(c, g, collect){
   const handleMat=new THREE.MeshStandardMaterial({color:0x12100b,roughness:.34,metalness:.72});
   const cy=legH+H/2;
   const pt=.018;                                           // grubość płyty meblowej (18 mm)
+  const kind=c.kind||'std';
+  const noCorpus=kind==='slab'||kind==='desk'||kind==='desk-frame'||kind==='desk-corner'||kind==='desk-cabinet-left'||kind==='desk-cabinet-right'||kind==='desk-2cab'||kind.startsWith('slope');
   // --- KORPUS z formatek (boki + wieniec górny/dolny + plecy) — wnętrze PUSTE ---
+  if(!noCorpus){
   addBox(pt,H,D,-(W/2-pt/2),cy,0,bodyMat,true);            // bok lewy
   addBox(pt,H,D, (W/2-pt/2),cy,0,bodyMat,true);            // bok prawy
   addBox(W-2*pt,pt,D,0,legH+H-pt/2,0,bodyMat,true);        // wieniec górny
   addBox(W-2*pt,pt,D,0,legH+pt/2,0,bodyMat,true);          // wieniec dolny
   addBox(W-2*pt,H-2*pt,pt,0,cy,-(D/2-pt/2),interiorMat,true); // plecy (HDF)
+  }
   const margin=.018,gap=.009,pd=.02,frontZ=D/2+pd/2;
   const innerW=W-2*margin,innerH=H-2*margin,topY=legH+H-margin,botY=legH+margin;
   const nd=c.dr,ndoor=c.doo,denom=nd+2*ndoor;
-  const kind=c.kind||'std';
 
   // ===== BLAT (slab): gruba płyta robocza, bez nóżek =====
   if(kind==='slab'){
