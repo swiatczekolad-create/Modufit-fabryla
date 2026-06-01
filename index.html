@@ -328,6 +328,17 @@ body.step-config #proces{display:block}
 .proc-aside .mini .t{font-size:.7rem;color:var(--clay);margin-top:3px;letter-spacing:.04em}
 @media(max-width:880px){.proc{grid-template-columns:1fr;gap:34px}.proc-aside{position:static}}
 
+/* INFO TILES */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.itile{padding:30px 26px;border-radius:20px;border:1px solid var(--hair);background:var(--paper)}
+.itile .it-icon{width:40px;height:40px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--stone)}
+.itile .it-icon svg{width:22px;height:22px;stroke:var(--terra);fill:none;stroke-width:1.8}
+.itile .it-ttl{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin-bottom:8px}
+.itile .it-price{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;color:var(--terra);margin-bottom:8px}
+.itile .it-desc{font-size:.88rem;color:rgba(34,26,18,.6);line-height:1.55}
+.itile .it-note{font-size:.76rem;color:var(--clay);margin-top:10px;padding-top:10px;border-top:1px solid var(--hair)}
+@media(max-width:820px){.info-grid{grid-template-columns:1fr}}
+
 /* CONTACT */
 .contact{text-align:center;padding:120px 0}
 .contact .idx{color:var(--terra-d);margin-bottom:22px}
@@ -541,21 +552,56 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
       </div>
       <div class="proc-steps">
         <div class="pstep reveal"><span class="pn">1</span><div><h3>Konfigurujesz online</h3><p>Wybierasz typ, ustawiasz wymiary, dekor i układ. Cenę widzisz od razu — bez czekania na wycenę.</p></div></div>
-        <div class="pstep reveal"><span class="pn">2</span><div><h3>Potwierdzamy szczegóły</h3><p>Dzwonimy lub piszemy. Sprawdzamy wymiary, dobieramy próbkę dekoru, ustalamy termin.</p></div></div>
-        <div class="pstep reveal"><span class="pn">3</span><div><h3>Produkujemy</h3><p>Meble powstają z płyt Kronospan i Egger. Precyzja co do milimetra, czas realizacji 2–3 tygodnie.</p></div></div>
-        <div class="pstep reveal"><span class="pn">4</span><div><h3>Dostarczamy</h3><p>Gotowe meble dowozimy pod drzwi. Montaż? Możemy pomóc, albo złożysz sam — jak wolisz.</p></div></div>
+        <div class="pstep reveal"><span class="pn">2</span><div><h3>Pomiar u Ciebie</h3><p>Przyjeżdżamy z miarką laserową i sprawdzamy wymiary. Koszt pomiaru: <b>250 zł</b> — odliczane od zamówienia.</p></div></div>
+        <div class="pstep reveal"><span class="pn">3</span><div><h3>Produkujemy</h3><p>Meble powstają z płyt Kronospan i Egger. Precyzja co do milimetra, realizacja 2–3 tygodnie.</p></div></div>
+        <div class="pstep reveal"><span class="pn">4</span><div><h3>Dostarczamy pod drzwi</h3><p>Gotowe meble dowozimy do Ciebie. Montujesz sam lub zamawiasz nasz montaż — osobna usługa.</p></div></div>
       </div>
     </div>
     <div class="proc-aside reveal">
       <div class="card">
-        <div class="lbl">Bez niespodzianek</div>
-        <div class="big fr">Cena na stronie = <span class="it">cena końcowa.</span></div>
-        <p>Żadnych ukrytych kosztów, dopłat za „niestandardowy wymiar" ani czekania na wycenę. Konfigurujesz → widzisz cenę → zamawiasz.</p>
+        <div class="lbl">Przejrzyste zasady</div>
+        <div class="big fr">Wiesz ile płacisz <span class="it">zanim zamówisz.</span></div>
+        <p>Cena z konfiguratora to cena mebla. Pomiar, dostawa i montaż — osobno, bez niespodzianek. Wszystko ustalisz przed zamówieniem.</p>
         <div class="mini">
-          <div><div class="n">250+</div><div class="t">Dekorów</div></div>
-          <div><div class="n">2–3</div><div class="t">Tygodnie</div></div>
-          <div><div class="n">0 zł</div><div class="t">Wycena</div></div>
+          <div><div class="n">250 zł</div><div class="t">Pomiar (odliczany od zamówienia)</div></div>
+          <div><div class="n">2–3</div><div class="t">Tygodnie realizacji</div></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USŁUGI I CENY -->
+<section class="sec sec-stone" id="uslugi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="idx lbl">Cennik usług</div>
+        <h2 class="fr">Jasne <span class="it">zasady</span>, zero zaskoczeń.</h2>
+      </div>
+      <p>Cena mebla jest w konfiguratorze. Poniżej — dodatkowe usługi, które zamawiasz osobno, jeśli chcesz.</p>
+    </div>
+    <div class="info-grid reveal">
+      <div class="itile">
+        <div class="it-icon"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div>
+        <div class="it-ttl">Pomiar u Ciebie</div>
+        <div class="it-price">250 zł</div>
+        <div class="it-desc">Przyjeżdżamy z miarką laserową, sprawdzamy każdy wymiar, kąt i pion. Pewność co do milimetra.</div>
+        <div class="it-note">Kwota odliczana od zamówienia — jeśli zamawiasz, pomiar wychodzi gratis.</div>
+      </div>
+      <div class="itile">
+        <div class="it-icon"><svg viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="it-ttl">Dostawa</div>
+        <div class="it-price">wg odległości</div>
+        <div class="it-desc">Gotowe meble dowozimy pod wskazany adres. Trójmiasto i okolice — wycena przy zamówieniu.</div>
+        <div class="it-note">Możesz też odebrać osobiście — wtedy 0 zł za transport.</div>
+      </div>
+      <div class="itile">
+        <div class="it-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94L6.7 20.2a2.12 2.12 0 0 1-3-3l6.83-6.83a6 6 0 0 1 7.94-7.94l-3.77 3.77z"/></svg></div>
+        <div class="it-ttl">Montaż</div>
+        <div class="it-price">wg wyceny</div>
+        <div class="it-desc">Nie chcesz montować sam? Zamów nasz montaż — wniesiemy, zmontujemy, posprzątamy.</div>
+        <div class="it-note">Usługa opcjonalna. Wiele osób montuje samodzielnie — dajemy instrukcję.</div>
       </div>
     </div>
   </div>
