@@ -121,6 +121,12 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .stp button:hover{background:var(--terra);color:var(--paper)}
 .stp .q{min-width:30px;text-align:center;font-weight:600;font-family:'Fraunces',serif}
 
+.body-list{display:flex;flex-wrap:wrap;gap:8px}
+.bk{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--hair);border-radius:13px;cursor:pointer;transition:.16s;background:var(--paper)}
+.bk:hover{border-color:var(--clay)}
+.bk.sel{border-color:var(--espresso);background:var(--stone-d)}
+.bk .cdot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(34,26,18,.18);flex-shrink:0}
+.bk .bn{font-size:.78rem;font-weight:600}
 .faktura-list{display:flex;flex-direction:column;gap:7px}
 .fk{display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid var(--hair);border-radius:13px;cursor:pointer;transition:.16s;background:var(--paper)}
 .fk:hover{border-color:var(--clay)}
@@ -460,7 +466,8 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
           <div class="ttl"><span>Układ</span></div>
           <div class="row"><span class="nm">Szuflady</span><div class="stp"><button data-k="dr" data-d="-1">–</button><span class="q" id="qdr">2</span><button data-k="dr" data-d="1">+</button></div></div>
           <div class="row"><span class="nm">Drzwi / fronty</span><div class="stp"><button data-k="do" data-d="-1">–</button><span class="q" id="qdo">1</span><button data-k="do" data-d="1">+</button></div></div>
-          <div class="row" style="border-bottom:none"><span class="nm">Korpus</span><div class="stp" style="border:none"><span class="q" id="bodyName" style="font-size:.82rem;color:var(--clay);min-width:auto;font-family:'Hanken Grotesk';font-weight:600">—</span></div></div>
+          <div class="ttl" style="margin-top:14px"><span>Korpus</span></div>
+          <div class="body-list" id="bodyList"></div>
         </div>
         <div class="dock-col">
           <div class="ttl"><span>Faktura</span><b>połysk · cena</b></div>
@@ -692,6 +699,8 @@ const DECORS={
 };
 const BODIES=[
   {number:'U999',  name:'Czarny',                hex:'#1C1D21', file:'U999'},
+  {number:'W1000', name:'Biały Premium',          hex:'#F1EEE8', file:'W1000'},
+  {number:'U732',  name:'Kaszmir',                hex:'#CDB9A0', file:'U732'},
   {number:'K080 PW', name:'Dąb Coastland Biały', hex:'#D7CBB8', file:'K080'},
   {number:'K003 PW', name:'Dąb Craft Złoty',     hex:'#C49A5A', file:'K003'},
   {number:'0854 BS', name:'Wenge',               hex:'#3A2A20', file:'0854'},
@@ -889,7 +898,7 @@ function build(){
   }
   document.getElementById('dims').textContent=cfg.w+' × '+cfg.h+' × '+cfg.d+' cm';
   document.getElementById('nowName').textContent=cfg.front.name;
-  document.getElementById('bodyName').textContent=cfg.body.name;
+  if(typeof renderBodies==='function') renderBodies();
   cutlist();
   price();
   _G=group; _C=cfg;
@@ -1329,6 +1338,19 @@ FAKTURY.forEach((f,i)=>{
   el.onclick=()=>{cfg.faktura=f;fl.querySelectorAll('.fk').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');build();};
   fl.appendChild(el);
 });
+
+/* body (corpus) selector */
+const bl=document.getElementById('bodyList');
+function renderBodies(){
+  bl.innerHTML='';
+  BODIES.forEach(b=>{
+    const el=document.createElement('div');el.className='bk'+(b===cfg.body?' sel':'');
+    el.innerHTML='<span class="cdot" style="background:'+b.hex+'"></span><span class="bn">'+b.name+'</span>';
+    el.onclick=()=>{cfg.body=b;renderBodies();build();};
+    bl.appendChild(el);
+  });
+}
+renderBodies();
 
 /* brand tabs + material grid */
 const brandTabs=document.getElementById('brandTabs');
