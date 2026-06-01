@@ -1007,7 +1007,7 @@ function renderPresetThumbs(){
     const tmpOpen=[];
     const c=Object.assign({},cfg,{w:p.w,h:p.h,d:p.d,dr:p.dr,doo:p.doo,
       kind:p.kind||'std', niche:p.niche||0, appliance:!!p.appliance,
-      lift:!!p.lift, rail:!!p.rail, shelves:(p.shelves!=null?p.shelves:null), wall:!!p.wall, drawerSplit:p.drawerSplit||null, drainer:!!p.drainer});  // dekor + konstrukcja presetu
+      lift:!!p.lift, rail:!!p.rail, shelves:(p.shelves!=null?p.shelves:null), wall:!!p.wall, drawerSplit:p.drawerSplit||null, drainer:!!p.drainer, cutH:p.cutH||0});  // dekor + konstrukcja presetu
     buildGeometry(c,g,tmpOpen);
 
     // kadrowanie kamery na bryłę (uwzględnia wysokie/wąskie meble)
@@ -1085,6 +1085,72 @@ function buildGeometry(c, g, collect){
   const innerW=W-2*margin,innerH=H-2*margin,topY=legH+H-margin,botY=legH+margin;
   const nd=c.dr,ndoor=c.doo,denom=nd+2*ndoor;
   const kind=c.kind||'std';
+
+  // ===== BLAT (slab): gruba płyta robocza, bez nóżek =====
+  if(kind==='slab'){
+    const slabH=Math.max(H,0.03);
+    addBox(W,slabH,D,0,slabH/2,0,frontMat,true);
+    // zaokrąglona krawędź przednia (cienki pasek)
+    addBox(W,0.004,0.004,0,slabH-0.002,D/2+0.002,bodyMat,true);
+    _G=prevG; _C=prevC; return;
+  }
+
+  // ===== SKOS: mebel ze ściętym bokiem lub tyłem (poddasze) =====
+  if(kind==='slope-left'||kind==='slope-right'||kind==='slope-back'){
+    // Geometria: korpus z jednym bokiem/tyłem niższym
+    const fullH=H, cutH=c.cutH||H*0.5; // cutH = wysokość ściętej strony
+    const shape=new THREE.Shape();
+    // przekrój boczny (patrząc od boku): prostokąt ze ściętym rogiem
+    if(kind==='slope-left'){
+      // lewy bok niższy: kształt = trapez od lewej
+      shape.moveTo(-W/2, legH);
+      shape.lineTo(W/2, legH);
+      shape.lineTo(W/2, legH+fullH);
+      shape.lineTo(-W/2, legH+cutH);
+      shape.lineTo(-W/2, legH);
+    } else if(kind==='slope-right'){
+      shape.moveTo(-W/2, legH);
+      shape.lineTo(W/2, legH);
+      shape.lineTo(W/2, legH+cutH);
+      shape.lineTo(-W/2, legH+fullH);
+      shape.lineTo(-W/2, legH);
+    } else { // slope-back
+      shape.moveTo(-W/2, legH);
+      shape.lineTo(W/2, legH);
+      shape.lineTo(W/2, legH+fullH);
+      shape.lineTo(-W/2, legH+fullH);
+      shape.lineTo(-W/2, legH);
+    }
+    const extrudeSettings={depth:D, bevelEnabled:false};
+    const geo=new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    geo.translate(0,0,-D/2); // centruj na Z
+    const mesh=new THREE.Mesh(geo, bodyMat);
+    mesh.castShadow=true; mesh.receiveShadow=true; g.add(mesh);
+    // plecy
+    if(kind==='slope-back'){
+      // plecy ze skosem: tył jest niższy
+      const backH=c.cutH||H*0.6;
+      const bShape=new THREE.Shape();
+      bShape.moveTo(-W/2+pt, legH+pt);
+      bShape.lineTo(W/2-pt, legH+pt);
+      bShape.lineTo(W/2-pt, legH+backH-pt);
+      bShape.lineTo(-W/2+pt, legH+backH-pt);
+      const bGeo=new THREE.ExtrudeGeometry(bShape,{depth:pt,bevelEnabled:false});
+      bGeo.translate(0,0,-D/2);
+      const bMesh=new THREE.Mesh(bGeo, interiorMat);
+      bMesh.castShadow=true; g.add(bMesh);
+    }
+    // półki wewnętrzne
+    const shCount=c.shelves!=null?c.shelves:Math.round(Math.min(fullH,cutH)/0.36);
+    const minH=Math.min(fullH,cutH||fullH);
+    for(let s=1;s<=shCount;s++){
+      const sy=legH+pt+((minH-2*pt)*s/(shCount+1));
+      addBox(W-2*pt,0.018,D-pt-0.01,0,sy,pt/2-0.005,bodyMat,true);
+    }
+    // nóżki
+    const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    _G=prevG; _C=prevC; return;
+  }
 
   // ===== OTWARTY REGAŁ / SZAFA OTWARTA: półki + opcjonalny drążek, bez frontów =====
   if(kind==='open'||kind==='wardrobe-open'){
@@ -1680,13 +1746,13 @@ const PRESETS=[
   {cat:'Meble pokojowe', sub:'Słupki RTV', name:'Słupek RTV drzwi podwójne dolne i górne',           w:50, h:170, d:40, dr:0, doo:2, meta:'2 drzwi góra/dół'},
 
   // ===================== MEBLE POD SKOSY =====================
-  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos lewy',   w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony bok lewy'},
-  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos prawy',  w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony bok prawy'},
-  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos tylny',  w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony tył'},
-  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył drzwi', w:100, h:90, d:45, dr:0, doo:2, soon:true, meta:'Pod skos dachu'},
-  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył szuflady', w:100, h:90, d:45, dr:3, doo:0, soon:true, meta:'Pod skos dachu'},
-  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos lewy',   w:120, h:200, d:60, dr:0, doo:2, soon:true, meta:'Pod poddasze'},
-  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos prawy',  w:120, h:200, d:60, dr:0, doo:2, soon:true, meta:'Pod poddasze'},
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos lewy',   w:80, h:160, d:40, dr:0, doo:0, kind:'slope-left', cutH:0.80, shelves:3, meta:'Obniżony bok lewy'},
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos prawy',  w:80, h:160, d:40, dr:0, doo:0, kind:'slope-right', cutH:0.80, shelves:3, meta:'Obniżony bok prawy'},
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos tylny',  w:80, h:160, d:40, dr:0, doo:0, kind:'slope-back', cutH:0.96, shelves:3, meta:'Obniżony tył'},
+  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył drzwi', w:100, h:90, d:45, dr:0, doo:2, kind:'slope-back', cutH:0.54, shelves:1, meta:'Pod skos dachu'},
+  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył szuflady', w:100, h:90, d:45, dr:3, doo:0, kind:'slope-back', cutH:0.54, shelves:0, meta:'Pod skos dachu'},
+  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos lewy',   w:120, h:200, d:60, dr:0, doo:2, kind:'slope-left', cutH:1.20, shelves:4, meta:'Pod poddasze'},
+  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos prawy',  w:120, h:200, d:60, dr:0, doo:2, kind:'slope-right', cutH:1.20, shelves:4, meta:'Pod poddasze'},
 
   // ===================== SZAFY I REGAŁY (1:1 Fabryka: 19 regałów + 20 garderób) =====================
   // -- Regały (/23) — 19 typów --
@@ -1798,9 +1864,9 @@ const PRESETS=[
   {cat:'Komody', sub:'Modułowe', name:'Komoda modułowa 7-3-2-2',         w:180, h:100, d:40, dr:4, doo:3, meta:'Duża, asymetryczna'},
 
   // ===================== BLATY (1:1 Fabryka /30) =====================
-  {cat:'Blaty', sub:'Blaty', name:'Blat prosty',             w:120, h:4, d:60, dr:0, doo:0, soon:true, meta:'Płyta na wymiar'},
-  {cat:'Blaty', sub:'Blaty', name:'Blat narożny wersja lewa', w:180, h:4, d:60, dr:0, doo:0, soon:true, meta:'Narożny lewy'},
-  {cat:'Blaty', sub:'Blaty', name:'Blat narożny wersja prawa', w:180, h:4, d:60, dr:0, doo:0, soon:true, meta:'Narożny prawy'},
+  {cat:'Blaty', sub:'Blaty', name:'Blat prosty',              w:120, h:4, d:60, dr:0, doo:0, kind:'slab', meta:'Płyta na wymiar'},
+  {cat:'Blaty', sub:'Blaty', name:'Blat narożny wersja lewa', w:180, h:4, d:60, dr:0, doo:0, kind:'slab', meta:'Narożny lewy'},
+  {cat:'Blaty', sub:'Blaty', name:'Blat narożny wersja prawa', w:180, h:4, d:60, dr:0, doo:0, kind:'slab', meta:'Narożny prawy'},
 ];
 const PRESET_CATS=['Meble kuchenne','Meble łazienkowe','Meble pokojowe','Meble pod skosy','Szafy i regały','Meble biurowe','Szafki RTV','Komody','Blaty'];
 let presetCat=PRESET_CATS[0];
@@ -1836,7 +1902,7 @@ function presetSVG(p){
 function applyPreset(p){
   cfg.w=p.w; cfg.h=p.h; cfg.d=p.d; cfg.dr=p.dr; cfg.doo=p.doo;
   cfg.kind=p.kind||'std'; cfg.niche=p.niche||0; cfg.appliance=!!p.appliance;
-  cfg.lift=!!p.lift; cfg.rail=!!p.rail; cfg.shelves=(p.shelves!=null?p.shelves:null); cfg.wall=!!p.wall; cfg.drawerSplit=p.drawerSplit||null; cfg.drainer=!!p.drainer;
+  cfg.lift=!!p.lift; cfg.rail=!!p.rail; cfg.shelves=(p.shelves!=null?p.shelves:null); cfg.wall=!!p.wall; cfg.drawerSplit=p.drawerSplit||null; cfg.drainer=!!p.drainer; cfg.cutH=p.cutH||0;
   ['w','h','d'].forEach(k=>{const inp=document.getElementById(k);if(inp){inp.value=cfg[k];document.getElementById(k+'V').textContent=cfg[k];}});
   document.getElementById('qdr').textContent=cfg.dr;
   document.getElementById('qdo').textContent=cfg.doo;
