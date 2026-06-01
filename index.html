@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIEMONTUJE — Atelier mebli na wymiar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PALETA — spójna rodzina 2026 (ciepły kamień · glina · espresso · terakota)
+   ============================================================ */
+:root{
+  --paper:#F3EDE1;
+  --stone:#E7DDCB;
+  --stone-d:#DBCFB8;
+  --clay:#C7A78C;
+  --clay-soft:#D8C3AC;
+  --espresso:#221A12;
+  --espresso-2:#2D2318;
+  --terra:#C2572F;
+  --terra-d:#A4451F;
+  --jade:#3F574D;
+  --hair:rgba(34,26,18,.13);
+  --hair-l:rgba(243,237,225,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:var(--paper);color:var(--espresso);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--terra);color:var(--paper)}
+.fr{font-family:'Fraunces',serif;font-weight:600;line-height:1;letter-spacing:-.015em}
+.it{font-style:italic;font-weight:500}
+.lbl{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600}
+.wrap{max-width:1340px;margin:0 auto;padding:0 32px;position:relative}
+
+/* grain + warm atmosphere */
+body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.038;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.z{position:relative;z-index:2}
+
+/* ===== NAV ===== */
+nav{position:sticky;top:0;z-index:60;background:rgba(243,237,225,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1340px;margin:0 auto}
+.brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;letter-spacing:-.02em;display:flex;align-items:center;gap:11px}
+.brand .mark{width:11px;height:11px;background:var(--terra);border-radius:50%}
+.brand small{font-family:'Hanken Grotesk';font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);font-weight:600;padding-left:11px;border-left:1px solid var(--hair)}
+.nav-r{display:flex;align-items:center;gap:28px}
+.nav-r a.lk{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--espresso);opacity:.6;transition:.2s;display:none}
+.nav-r a.lk:hover{opacity:1}
+.nav-r a.lk b{color:var(--terra);font-weight:600;margin-right:5px}
+.nav-ph{display:flex;align-items:center;gap:9px;border:1px solid var(--espresso);border-radius:40px;padding:10px 18px;font-size:.8rem;font-weight:600;transition:.22s}
+.nav-ph:hover{background:var(--espresso);color:var(--paper)}
+.nav-ph svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+@media(min-width:1020px){.nav-r a.lk{display:inline-block}}
+
+/* ===== HERO / SHOWROOM ===== */
+.hero{position:relative;padding:46px 0 30px}
+.hero-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:40px;align-items:stretch}
+.ghost{position:absolute;top:8%;left:-2%;font-family:'Fraunces',serif;font-weight:600;font-size:24vw;line-height:.8;color:var(--espresso);opacity:.035;letter-spacing:-.04em;pointer-events:none;z-index:0;white-space:nowrap}
+
+.hero-edit{display:flex;flex-direction:column;justify-content:center;z-index:2}
+.eyebrow{display:flex;align-items:center;gap:13px;margin-bottom:26px;color:var(--terra-d)}
+.eyebrow .ln{width:30px;height:1px;background:var(--terra)}
+.hero h1{font-size:clamp(3rem,6.4vw,5.7rem);letter-spacing:-.025em}
+.hero h1 .it{color:var(--terra)}
+.hero .lede{font-size:1.12rem;color:rgba(34,26,18,.62);max-width:27em;margin:24px 0 32px}
+.hero-cta{display:inline-flex;align-items:center;gap:13px;align-self:flex-start;background:var(--espresso);color:var(--paper);padding:15px 26px;border-radius:46px;font-weight:600;font-size:.92rem;transition:.25s}
+.hero-cta:hover{background:var(--terra);gap:18px}
+.hero-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.hero-meta{display:flex;gap:30px;margin-top:40px;padding-top:26px;border-top:1px solid var(--hair)}
+.hero-meta .m .n{font-family:'Fraunces',serif;font-weight:600;font-size:1.7rem;line-height:1}
+.hero-meta .m .t{font-size:.72rem;letter-spacing:.04em;color:rgba(34,26,18,.5);margin-top:5px}
+
+/* STAGE (3D) */
+.stage{position:relative;border-radius:30px;overflow:hidden;min-height:560px;z-index:2;
+  background:radial-gradient(120% 95% at 50% 8%, #FBF6EC 0%, #EFE5D2 45%, #E0D2B8 100%);
+  border:1px solid var(--hair);box-shadow:0 40px 90px -50px rgba(34,26,18,.5)}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(34,26,18,.07)}
+#viewport{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+#viewport:active{cursor:grabbing}
+.stage-tl{position:absolute;top:20px;left:22px;z-index:3}
+.stage-tl .lbl{color:var(--terra-d)}
+.stage-tl .now{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;margin-top:4px}
+.stage-hint{position:absolute;top:22px;right:22px;z-index:3;display:flex;align-items:center;gap:8px;background:rgba(243,237,225,.7);border:1px solid var(--hair);padding:8px 13px;border-radius:40px;font-size:.68rem;letter-spacing:.04em;font-weight:600;color:rgba(34,26,18,.65)}
+.stage-hint svg{width:14px;height:14px;stroke:var(--espresso);fill:none;stroke-width:1.7}
+.stage-tools{position:absolute;left:22px;bottom:22px;z-index:3;display:flex;gap:9px}
+.stage-tools button{width:44px;height:44px;border-radius:50%;border:1px solid var(--hair);background:rgba(243,237,225,.85);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.18s}
+.stage-tools button:hover{background:var(--espresso)}
+.stage-tools button:hover svg{stroke:var(--paper)}
+.stage-tools button svg{width:18px;height:18px;stroke:var(--espresso);fill:none;stroke-width:1.8}
+.stage-dim{position:absolute;right:22px;bottom:22px;z-index:3;font-family:'Fraunces',serif;font-size:1rem;background:var(--espresso);color:var(--paper);padding:9px 16px;border-radius:40px;letter-spacing:.01em}
+@media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:26px}.stage{min-height:440px;order:-1}.ghost{font-size:42vw;top:2%}}
+
+.reveal{opacity:0;transform:translateY(24px);transition:.85s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== CONTROL DOCK ===== */
+.dock{margin-top:22px;border:1px solid var(--hair);border-radius:24px;background:var(--stone);overflow:hidden;position:relative;z-index:2}
+.dock-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:0}
+.dock-col{padding:24px 26px;border-right:1px solid var(--hair)}
+.dock-col:last-child{border-right:none}
+.dock-col .ttl{display:flex;align-items:center;gap:9px;margin-bottom:18px;color:var(--terra-d)}
+.dock-col .ttl span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.dock-col .ttl b{font-family:'Hanken Grotesk';font-size:.68rem;color:var(--clay);font-weight:600;margin-left:auto}
+
+.sl{margin-bottom:15px}.sl:last-child{margin-bottom:0}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.sl-top .l{font-size:.9rem;font-weight:500;color:rgba(34,26,18,.7)}
+.sl-top .v{font-family:'Fraunces',serif;font-size:1.08rem;font-weight:600}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:3px;background:var(--clay-soft);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--espresso);cursor:pointer;border:4px solid var(--stone);transition:.15s}
+input[type=range]::-webkit-slider-thumb:hover{background:var(--terra)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--espresso);cursor:pointer;border:3px solid var(--stone)}
+
+.row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row .nm{font-size:.92rem;font-weight:500;color:rgba(34,26,18,.75)}
+.stp{display:flex;align-items:center;gap:0;border:1px solid var(--espresso);border-radius:40px;overflow:hidden}
+.stp button{width:34px;height:34px;border:none;background:transparent;font-size:1.05rem;cursor:pointer;color:var(--espresso);transition:.14s;line-height:1}
+.stp button:hover{background:var(--terra);color:var(--paper)}
+.stp .q{min-width:30px;text-align:center;font-weight:600;font-family:'Fraunces',serif}
+
+.faktura-list{display:flex;flex-direction:column;gap:7px}
+.fk{display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid var(--hair);border-radius:13px;cursor:pointer;transition:.16s;background:var(--paper)}
+.fk:hover{border-color:var(--clay)}
+.fk.sel{border-color:var(--espresso);background:var(--stone-d)}
+.fk .dot{width:13px;height:13px;border-radius:50%;border:1px solid var(--espresso);flex-shrink:0;position:relative}
+.fk.sel .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--terra)}
+.fk .fn{font-size:.86rem;font-weight:500;flex:1}
+.fk .fp{font-family:'Fraunces',serif;font-size:.82rem;color:var(--clay)}
+@media(max-width:820px){.dock-grid{grid-template-columns:1fr}.dock-col{border-right:none;border-bottom:1px solid var(--hair)}.dock-col:last-child{border-bottom:none}}
+
+/* ===== PRICE BAR ===== */
+.pricebar{margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1.2fr auto;gap:0;border:1px solid var(--espresso);border-radius:22px;overflow:hidden;background:var(--espresso);color:var(--paper);position:relative;z-index:2}
+.pb{padding:20px 24px;border-right:1px solid var(--hair-l)}
+.pb .t{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);margin-bottom:6px}
+.pb .a{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;line-height:1}
+.pb.tot .a{font-size:2.1rem;color:var(--terra)}
+.pb.tot .t{color:rgba(243,237,225,.6)}
+.pb.svc .a{color:var(--clay-soft)}
+.pb-cta{border:none;background:var(--terra);color:var(--paper);padding:0 34px;font-family:'Hanken Grotesk';font-weight:700;font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:11px;white-space:nowrap}
+.pb-cta:hover{background:var(--paper);color:var(--espresso)}
+.pb-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+@media(max-width:900px){.pricebar{grid-template-columns:1fr 1fr}.pb-cta{grid-column:1/-1;padding:18px;justify-content:center}}
+
+/* ===== LISTA FORMATEK (TYLKO TRYB WEWNĘTRZNY) ===== */
+.cutlist{display:none;margin-top:18px;border:1px solid var(--terra);border-radius:22px;background:var(--stone);overflow:hidden;position:relative;z-index:2;box-shadow:0 0 0 3px rgba(194,87,47,.12)}
+body.internal .cutlist{display:block}
+.cut-badge{display:block;background:var(--terra);color:var(--paper);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:7px 26px;text-align:center}
+.cut-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:22px 26px 16px}
+.cut-ttl{font-size:1.5rem;margin-top:5px}
+.cut-ttl .it{color:var(--terra)}
+.cut-sum{display:flex;gap:22px;flex-wrap:wrap;text-align:right}
+.cut-sum .ci .cn{font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;line-height:1}
+.cut-sum .ci .ct{font-size:.66rem;letter-spacing:.04em;color:rgba(34,26,18,.5);margin-top:4px}
+.cut-table-wrap{overflow-x:auto}
+.cut-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.cut-table th{text-align:left;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--terra-d);padding:10px 26px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:rgba(243,237,225,.4)}
+.cut-table th.c,.cut-table td.c{text-align:center}
+.cut-table td{padding:11px 26px;border-bottom:1px solid var(--hair);color:rgba(34,26,18,.82)}
+.cut-table tr:last-child td{border-bottom:none}
+.cut-table td.el{font-weight:600;color:var(--espresso)}
+.cut-table td.dim{font-family:'Fraunces',serif;font-weight:500;letter-spacing:.01em}
+.cut-table td.mat{font-size:.82rem;color:rgba(34,26,18,.62)}
+.cut-table td.edg{font-size:.78rem;color:var(--clay)}
+.cut-grp td{background:rgba(199,167,140,.14);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--terra-d);padding:8px 26px}
+.cut-note{padding:14px 26px 20px;font-size:.78rem;line-height:1.55;color:rgba(34,26,18,.55);border-top:1px solid var(--hair)}
+.cut-cost{padding:16px 26px;border-top:1px solid var(--hair);background:rgba(243,237,225,.45)}
+.cut-cost .cc-h{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--terra-d);margin-bottom:10px}
+.cut-cost table{width:100%;border-collapse:collapse;font-size:.86rem}
+.cut-cost td{padding:6px 0;color:rgba(34,26,18,.78)}
+.cut-cost td.v{text-align:right;font-family:'Fraunces',serif;font-weight:500}
+.cut-cost tr.sub td{border-top:1px solid var(--hair);padding-top:9px}
+.cut-cost tr.mar td{color:var(--terra-d);font-weight:600}
+.cut-cost tr.fin td{border-top:1px solid var(--espresso);padding-top:9px;font-family:'Fraunces',serif;font-weight:600;font-size:1rem;color:var(--espresso)}
+@media(max-width:640px){.cut-head{flex-direction:column;align-items:flex-start;gap:14px}.cut-sum{text-align:left}.cut-table th,.cut-table td{padding-left:18px;padding-right:18px}}
+
+/* ===== HERO STARTOWE (zdjęcie + animacja) ===== */
+.home-hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center}
+.home-hero .hh-photo{position:absolute;inset:0;z-index:0;background-image:url('https://images.unsplash.com/photo-1764526624453-db32c24eca55?fm=jpg&q=70&w=2400&auto=format&fit=crop');background-size:cover;background-position:center;animation:hh-zoom 22s ease-in-out infinite alternate}
+@keyframes hh-zoom{from{transform:scale(1.04)}to{transform:scale(1.14)}}
+.home-hero .hh-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(28,20,12,.82) 0%,rgba(28,20,12,.58) 42%,rgba(28,20,12,.18) 75%,rgba(28,20,12,.34) 100%)}
+.home-hero .hh-inner{position:relative;z-index:2;color:var(--paper)}
+.hh-eyebrow{font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--clay);margin-bottom:22px;opacity:0;animation:hh-rise .8s .15s ease both}
+.hh-title{font-size:clamp(2.9rem,6.8vw,6rem);line-height:.98;letter-spacing:-.01em;margin:0 0 24px;color:#fff;opacity:0;animation:hh-rise .9s .3s ease both}
+.hh-title .it{color:var(--clay);font-style:italic}
+.hh-lede{max-width:32em;font-size:clamp(1.02rem,1.5vw,1.22rem);line-height:1.6;color:rgba(255,255,255,.82);margin-bottom:34px;opacity:0;animation:hh-rise .9s .45s ease both}
+.hh-cta{display:inline-flex;align-items:center;gap:12px;background:var(--terra);color:#fff;padding:18px 32px;border-radius:46px;font-weight:600;font-size:1.02rem;text-decoration:none;transition:.22s;box-shadow:0 20px 46px -16px rgba(176,99,58,.7);opacity:0;animation:hh-rise .9s .6s ease both}
+.hh-cta:hover{transform:translateY(-3px);background:var(--terra-d);box-shadow:0 28px 56px -18px rgba(176,99,58,.85)}
+.hh-cta svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;transition:.22s}
+.hh-cta:hover svg{transform:translateX(4px)}
+.hh-scroll{display:flex;align-items:center;gap:11px;margin-top:50px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600;opacity:0;animation:hh-rise 1s .8s ease both}
+.hh-scroll span{display:inline-block;width:32px;height:1px;background:var(--clay);animation:hh-line 2.4s ease-in-out infinite}
+@keyframes hh-line{0%,100%{width:18px;opacity:.5}50%{width:38px;opacity:1}}
+@keyframes hh-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hh-credit{position:absolute;right:16px;bottom:14px;z-index:2;font-size:.62rem;letter-spacing:.08em;color:rgba(255,255,255,.45)}
+body.step-types #homeHero, body.step-config #homeHero{display:none}
+@media(max-width:760px){.home-hero{min-height:auto;padding:110px 0 70px}.home-hero .hh-veil{background:linear-gradient(180deg,rgba(28,20,12,.7),rgba(28,20,12,.55))}}
+
+/* ===== PRZEPŁYW 3 EKRANÓW (kategorie → typy → konfigurator) ===== */
+/* domyślnie pokazujemy ekran kategorii */
+#screenCats{display:block}
+#screenTypes{display:none}
+#konfigurator, #materialy, #proces{display:none}
+body.step-types #screenCats{display:none}
+body.step-types #screenTypes{display:block}
+body.step-config #screenCats{display:none}
+body.step-config #screenTypes{display:none}
+body.step-config #konfigurator{display:block}
+body.step-config #materialy{display:block}
+body.step-config #proces{display:block}
+
+/* pasek nawigacji kroków (breadcrumb + wstecz) */
+.stepnav{display:flex;align-items:center;gap:14px;margin-bottom:30px;flex-wrap:wrap}
+.stepnav .back{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--espresso);border-radius:40px;background:transparent;cursor:pointer;font-weight:600;font-size:.82rem;transition:.18s}
+.stepnav .back:hover{background:var(--espresso);color:var(--paper)}
+.stepnav .back svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.stepnav .crumb{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(34,26,18,.5)}
+.stepnav .crumb b{color:var(--terra-d)}
+
+/* KAFLE KATEGORII — lekkie, jasne, dużo powietrza */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.catcard{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;border:1px solid transparent;transition:.25s;background:var(--paper);padding:38px 24px 30px}
+.catcard:hover{border-color:var(--hair);box-shadow:0 18px 40px -28px rgba(34,26,18,.4);transform:translateY(-3px)}
+.catcard .cc-art{flex:0 0 auto;height:96px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.catcard .cc-art svg{width:72px;height:72px;transition:.3s}
+.catcard:hover .cc-art svg{transform:scale(1.05)}
+.catcard .cc-art svg .ln{fill:none;stroke:var(--clay);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.catcard .cc-art svg .fl{fill:none;stroke:var(--clay);stroke-width:2.2;stroke-linejoin:round}
+.catcard:hover .cc-art svg .ln,.catcard:hover .cc-art svg .fl{stroke:var(--terra)}
+.catcard .cc-art svg .ac{fill:none;stroke:var(--terra);stroke-width:2.2;stroke-linecap:round;opacity:.7}
+.catcard .cc-body{padding:0}
+.catcard .cc-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.24rem;line-height:1.1;color:var(--espresso)}
+.catcard .cc-meta{font-size:.74rem;color:rgba(34,26,18,.48);margin-top:7px;line-height:1.4}
+.catcard .cc-go{margin-top:14px;display:inline-flex;align-items:center;gap:7px;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--terra-d);opacity:0;transition:.25s}
+.catcard:hover .cc-go{opacity:1}
+.catcard .cc-go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+@media(max-width:980px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.cat-grid{grid-template-columns:1fr}.catcard{padding:30px 20px 24px}}
+
+/* ===== SECTION SHELL ===== */
+.sec{padding:104px 0}
+.sec-stone{background:var(--stone);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.sec-dark{background:var(--espresso);color:var(--paper)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:52px;flex-wrap:wrap}
+.sec-head .idx{color:var(--terra-d);margin-bottom:16px}
+.sec-head h2{font-size:clamp(2.3rem,4.8vw,4rem);max-width:11em}
+.sec-head h2 .it{color:var(--terra)}
+.sec-dark .sec-head h2 .it{color:var(--clay)}
+.sec-head p{max-width:25em;color:rgba(34,26,18,.6);font-size:1.04rem}
+.sec-dark .sec-head p{color:var(--clay-soft)}
+
+/* MATERIALS LIBRARY */
+.mat-toolbar{display:flex;gap:10px;margin-bottom:26px;flex-wrap:wrap}
+.mtab{padding:11px 22px;border:1px solid var(--espresso);border-radius:40px;font-size:.8rem;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:.18s;background:transparent}
+.mtab:hover{background:var(--stone-d)}
+.mtab.sel{background:var(--espresso);color:var(--paper)}
+.mat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.mcard{cursor:pointer;transition:.25s}
+.mcard .sw{width:100%;aspect-ratio:4/5;border-radius:16px;border:1px solid var(--hair);background-size:cover;background-position:center;position:relative;overflow:hidden;transition:.25s}
+.mcard .sw::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 40px rgba(34,26,18,.12);border-radius:16px}
+.mcard:hover{transform:translateY(-6px)}
+.mcard:hover .sw{box-shadow:0 22px 40px -22px rgba(34,26,18,.6)}
+.mcard.sel .sw{border-color:var(--terra);box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--terra)}
+.mcard .mn{font-size:.88rem;font-weight:600;margin-top:11px;line-height:1.2}
+.mcard .mc{font-size:.72rem;color:var(--clay);margin-top:2px;letter-spacing:.02em}
+.mcard .pick{display:inline-block;margin-top:6px;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-d);opacity:0;transform:translateY(4px);transition:.2s}
+.mcard:hover .pick{opacity:1;transform:none}
+@media(max-width:900px){.mat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.mat-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* PRESETS / GOTOWE UKŁADY */
+.preset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.preset-subhead{grid-column:1/-1;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--terra-d);padding:14px 2px 2px;border-bottom:1px solid var(--hair);margin-top:8px}
+.preset-subhead:first-child{margin-top:0}
+.pcard{cursor:pointer;border:1px solid var(--hair);border-radius:18px;background:var(--paper);padding:18px;transition:.22s;display:flex;flex-direction:column;gap:12px}
+.pcard:hover{transform:translateY(-5px);box-shadow:0 22px 44px -26px rgba(34,26,18,.55);border-color:var(--clay)}
+.pcard.sel{border-color:var(--terra);box-shadow:0 0 0 2px var(--terra)}
+.pcard .pic{display:flex;align-items:flex-end;justify-content:center;height:150px}
+.pcard .pic svg{max-height:120px;width:auto}
+.pcard .pic img{max-height:150px;max-width:100%;width:auto;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(34,26,18,.18))}
+.pcard .pic svg .bd{fill:var(--stone);stroke:var(--espresso);stroke-width:2}
+.pcard .pic svg .pn{fill:var(--clay-soft);stroke:var(--espresso);stroke-width:1.6}
+.pcard .pic svg .hd{stroke:var(--espresso);stroke-width:2.4;stroke-linecap:round}
+.pcard .pn-name{font-size:.94rem;font-weight:600;line-height:1.2}
+.pcard .pn-meta{font-size:.74rem;color:var(--clay)}
+.pcard .pn-dim{font-family:'Fraunces',serif;font-size:.84rem;color:rgba(34,26,18,.7);margin-top:auto}
+.pcard .pn-pick{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-d);opacity:0;transition:.2s}
+.pcard:hover .pn-pick{opacity:1}
+.pcard.soon{opacity:.6;cursor:default}
+.pcard.soon:hover{transform:none;box-shadow:none;border-color:var(--hair)}
+.pcard .pn-soon{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);font-weight:700}
+@media(max-width:900px){.preset-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.preset-grid{grid-template-columns:repeat(2,1fr)}}
+
+.upbar{display:flex;align-items:center;gap:13px;margin-top:24px;padding:16px 20px;border:1.5px dashed var(--clay);border-radius:16px;cursor:pointer;transition:.2s;background:var(--paper)}
+.upbar:hover{border-color:var(--terra);background:var(--stone-d)}
+.upbar svg{width:22px;height:22px;stroke:var(--terra-d);fill:none;stroke-width:1.7;flex-shrink:0}
+.upbar .ut{font-size:.86rem;font-weight:600}
+.upbar .us{font-size:.72rem;color:rgba(34,26,18,.55);margin-top:1px}
+.upbar input{display:none}
+.mat-note{font-size:.78rem;color:rgba(34,26,18,.5);margin-top:16px;line-height:1.6;max-width:60em}
+.mat-note b{color:var(--espresso)}
+
+/* PROCESS — editorial vertical */
+.proc{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.proc-steps{display:flex;flex-direction:column}
+.pstep{display:grid;grid-template-columns:auto 1fr;gap:24px;padding:26px 0;border-top:1px solid var(--hair-l)}
+.pstep:first-child{border-top:none}
+.pstep .pn{font-family:'Fraunces',serif;font-weight:500;font-size:2.4rem;color:var(--clay);line-height:.85}
+.pstep h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.65rem;margin-bottom:8px}
+.pstep p{color:var(--clay-soft);font-size:.97rem;max-width:30em}
+.proc-aside{position:sticky;top:120px}
+.proc-aside .card{border:1px solid var(--hair-l);border-radius:24px;padding:34px;background:var(--espresso-2)}
+.proc-aside .lbl{color:var(--clay)}
+.proc-aside .big{font-family:'Fraunces',serif;font-weight:600;font-size:2rem;margin:14px 0;line-height:1.05}
+.proc-aside .big .it{color:var(--terra)}
+.proc-aside p{color:var(--clay-soft);font-size:.96rem;margin-bottom:22px}
+.proc-aside .mini{display:flex;gap:24px;border-top:1px solid var(--hair-l);padding-top:20px}
+.proc-aside .mini .n{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;color:var(--terra)}
+.proc-aside .mini .t{font-size:.7rem;color:var(--clay);margin-top:3px;letter-spacing:.04em}
+@media(max-width:880px){.proc{grid-template-columns:1fr;gap:34px}.proc-aside{position:static}}
+
+/* CONTACT */
+.contact{text-align:center;padding:120px 0}
+.contact .idx{color:var(--terra-d);margin-bottom:22px}
+.contact h2{font-size:clamp(2.8rem,7vw,6rem);margin-bottom:34px}
+.contact h2 .it{color:var(--terra)}
+.contact-row{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap}
+.cbig{display:inline-flex;align-items:center;gap:13px;font-family:'Fraunces',serif;font-weight:600;font-size:2rem}
+.cbig svg{width:24px;height:24px;stroke:var(--terra);fill:none;stroke-width:1.7}
+.cwa{display:inline-flex;align-items:center;gap:11px;border:1px solid var(--espresso);border-radius:46px;padding:16px 28px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;transition:.22s}
+.cwa:hover{background:var(--espresso);color:var(--paper)}
+.cwa svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.contact .area{margin-top:30px;color:rgba(34,26,18,.5);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
+
+footer{border-top:1px solid var(--hair);padding:34px 0}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(34,26,18,.5)}
+
+.fab{position:fixed;bottom:24px;right:24px;z-index:80;width:58px;height:58px;border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px -8px rgba(162,69,31,.7);transition:.22s}
+.fab:hover{transform:scale(1.08) rotate(-4deg)}
+.fab svg{width:27px;height:27px;stroke:var(--paper);fill:none;stroke-width:1.7}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a href="#" class="brand"><span class="mark"></span>Siemontuje<small>Atelier</small></a>
+    <div class="nav-r">
+      <a href="#uklady" class="lk"><b>01</b>Układy</a>
+      <a href="#materialy" class="lk"><b>02</b>Materiały</a>
+      <a href="#proces" class="lk"><b>03</b>Proces</a>
+      <a href="tel:+48000000000" class="nav-ph">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Zadzwoń
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO STARTOWE (zdjęcie kuchni + animacja) -->
+<section class="home-hero" id="homeHero">
+  <div class="hh-photo"></div>
+  <div class="hh-veil"></div>
+  <div class="wrap hh-inner">
+    <div class="hh-eyebrow">Meble na wymiar · Trójmiasto</div>
+    <h1 class="hh-title fr">Meble, które<br><span class="it">składasz sam.</span></h1>
+    <p class="hh-lede">Zaprojektuj szafkę, komodę czy całą zabudowę w 3D — obróć, zmień wymiary i dekor, zobacz cenę od razu. Pomiar, projekt i montaż bierzemy na siebie.</p>
+    <a href="#screenCats" class="hh-cta" id="hhStart">Zacznij projektować
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <div class="hh-scroll"><span></span>Wybierz pomieszczenie niżej</div>
+  </div>
+  <div class="hh-credit">fot. Clay Banks · Unsplash</div>
+</section>
+
+<!-- EKRAN 1: KATEGORIE -->
+<section class="sec" id="screenCats" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="idx lbl">Konfigurator</div>
+        <h2 class="fr">Wybierz <span class="it">pomieszczenie</span>.</h2>
+      </div>
+      <p>Zacznij od kategorii. Dalej wybierzesz typ mebla, a na końcu dopasujesz wymiary, układ i dekor w podglądzie 3D.</p>
+    </div>
+    <div class="cat-grid reveal" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- EKRAN 2: TYPY W KATEGORII -->
+<section class="sec sec-stone" id="screenTypes">
+  <div class="wrap">
+    <div class="stepnav">
+      <button class="back" id="backToCats"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Kategorie</button>
+      <div class="crumb">Konfigurator · <b id="crumbCat">—</b></div>
+    </div>
+    <div class="sec-head reveal" style="margin-bottom:30px">
+      <div>
+        <div class="idx lbl" id="typesIdx">Typ mebla</div>
+        <h2 class="fr">Wybierz <span class="it">typ</span> i układ.</h2>
+      </div>
+      <p>Każdy typ to gotowy układ szuflad i frontów. Po wyborze ustawisz wymiary i dekor pod swoje wnętrze.</p>
+    </div>
+    <div class="preset-grid reveal" id="presetGrid"></div>
+  </div>
+</section>
+
+<!-- HERO / SHOWROOM -->
+<header class="hero" id="konfigurator">
+  <div class="ghost">NA WYMIAR</div>
+  <div class="wrap">
+    <div class="stepnav" style="margin-bottom:8px">
+      <button class="back" id="backToTypes"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Typy</button>
+      <div class="crumb">Konfigurator · <b id="crumbCat2">—</b> · <b id="crumbType">—</b></div>
+    </div>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-edit">
+      <div class="eyebrow reveal"><span class="ln"></span><span class="lbl">Meble na wymiar · Trójmiasto</span></div>
+      <h1 class="fr reveal">Zaprojektuj.<br>Obróć.<br><span class="it">Zamieszkaj.</span></h1>
+      <p class="lede reveal">Złóż swój mebel w 3D — obróć go, zmień wymiary i dekor, zobacz cenę na żywo. Pomiar laserem, projekt i montaż bierzemy na siebie. Ty masz pewność co do milimetra.</p>
+      <a href="#materialy" class="hero-cta reveal">Dobierz materiał
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <div class="hero-meta reveal">
+        <div class="m"><div class="n">±1<span style="font-size:1rem"> mm</span></div><div class="t">Dokładność pomiaru</div></div>
+        <div class="m"><div class="n">0 zł</div><div class="t">Pomiar i wycena</div></div>
+        <div class="m"><div class="n">36<span style="font-size:1rem"> mc</span></div><div class="t">Gwarancji montażu</div></div>
+      </div>
+    </div>
+
+    <div class="stage reveal">
+      <div class="stage-tl"><div class="lbl">Na żywo</div><div class="now" id="nowName">—</div></div>
+      <div class="stage-hint"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10M12 2v4M2 12h4"/><path d="M16 8l4-4M20 8V4h-4"/></svg>Obróć · kliknij front, by otworzyć</div>
+      <div id="viewport"></div>
+      <div class="stage-tools">
+        <button id="zin" aria-label="Przybliż"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M21 21l-4-4"/></svg></button>
+        <button id="zout" aria-label="Oddal"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M21 21l-4-4"/></svg></button>
+        <button id="spin" aria-label="Obrót"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v4h-4"/></svg></button>
+        <button id="reset" aria-label="Reset"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7M3 20v-4h4"/></svg></button>
+      </div>
+      <div class="stage-dim" id="dims">— × — × — cm</div>
+    </div>
+  </div>
+
+  <!-- CONTROL DOCK -->
+  <div class="wrap">
+    <div class="dock reveal">
+      <div class="dock-grid">
+        <div class="dock-col">
+          <div class="ttl"><span>Wymiary</span><b>cm</b></div>
+          <div class="sl"><div class="sl-top"><span class="l">Szerokość</span><span class="v"><span id="wV">120</span></span></div><input type="range" id="w" min="40" max="240" step="1" value="120"></div>
+          <div class="sl"><div class="sl-top"><span class="l">Wysokość</span><span class="v"><span id="hV">85</span></span></div><input type="range" id="h" min="40" max="220" step="1" value="85"></div>
+          <div class="sl"><div class="sl-top"><span class="l">Głębokość</span><span class="v"><span id="dV">40</span></span></div><input type="range" id="d" min="25" max="65" step="1" value="40"></div>
+        </div>
+        <div class="dock-col">
+          <div class="ttl"><span>Układ</span></div>
+          <div class="row"><span class="nm">Szuflady</span><div class="stp"><button data-k="dr" data-d="-1">–</button><span class="q" id="qdr">2</span><button data-k="dr" data-d="1">+</button></div></div>
+          <div class="row"><span class="nm">Drzwi / fronty</span><div class="stp"><button data-k="do" data-d="-1">–</button><span class="q" id="qdo">1</span><button data-k="do" data-d="1">+</button></div></div>
+          <div class="row" style="border-bottom:none"><span class="nm">Korpus</span><div class="stp" style="border:none"><span class="q" id="bodyName" style="font-size:.82rem;color:var(--clay);min-width:auto;font-family:'Hanken Grotesk';font-weight:600">—</span></div></div>
+        </div>
+        <div class="dock-col">
+          <div class="ttl"><span>Faktura</span><b>połysk · cena</b></div>
+          <div class="faktura-list" id="fakturaList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICE BAR -->
+    <div class="pricebar reveal">
+      <div class="pb"><div class="t">Mebel na wymiar</div><div class="a" id="rMeble">0 zł</div></div>
+      <div class="pb svc"><div class="t">Pomiar + montaż</div><div class="a" id="rPakiet">0 zł</div></div>
+      <div class="pb tot"><div class="t">Razem — pod klucz</div><div class="a" id="rTotal">0 zł</div></div>
+      <button class="pb-cta" id="bookBtn">Umów pomiar
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <!-- LISTA FORMATEK / ROZKRÓJ -->
+    <div class="cutlist" id="cutlist">
+      <div class="cut-badge">Tryb wewnętrzny · niewidoczne dla klienta</div>
+      <div class="cut-head">
+        <div>
+          <div class="lbl" style="color:var(--terra-d)">Specyfikacja produkcyjna</div>
+          <div class="cut-ttl fr">Lista formatek <span class="it">· płyta 18 mm</span></div>
+        </div>
+        <div class="cut-sum" id="cutSummary"></div>
+      </div>
+      <div class="cut-table-wrap">
+        <table class="cut-table">
+          <thead><tr><th>Element</th><th>Wymiar (mm)</th><th class="c">Szt.</th><th>Materiał</th><th>Obrzeże</th></tr></thead>
+          <tbody id="cutBody"></tbody>
+        </table>
+      </div>
+      <div class="cut-cost" id="costBreak"></div>
+      <div class="cut-note" id="cutNote"></div>
+    </div>
+  </div>
+</header>
+
+<!-- MATERIALS LIBRARY -->
+<section class="sec sec-stone" id="materialy">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="idx lbl">02 — Materiały</div>
+        <h2 class="fr">Niech <span class="it">drewno</span> mówi.</h2>
+      </div>
+      <p>Wybierz dekor z kolekcji Standard. Kliknij, a mebel w podglądzie przyjmie nowy front — w czasie rzeczywistym.</p>
+    </div>
+
+    <div class="mat-toolbar reveal" id="brandTabs"></div>
+    <div class="mat-grid reveal" id="matGrid"></div>
+
+    <label class="upbar reveal">
+      <svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
+      <span><span class="ut">Wgraj oryginalną teksturę na wybrany dekor</span><span class="us" id="upState">Kliknij dekor powyżej, potem wskaż pobrany plik</span></span>
+      <input type="file" id="texUpload" accept="image/*">
+    </label>
+    <p class="mat-note reveal">Dekory: realna kolekcja <b>Standard</b> Kronospan (kolekcja architektoniczna, tekstury 1:1). Podgląd ma charakter poglądowy — ostateczny kolor potwierdzamy na oryginalnej próbce, dlatego pomiar robimy z próbnikiem.</p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec sec-dark" id="proces">
+  <div class="wrap proc">
+    <div>
+      <div class="sec-head reveal" style="margin-bottom:34px;display:block">
+        <div class="idx lbl">03 — Proces</div>
+        <h2 class="fr">Od wymiaru<br>do <span class="it">gotowego</span> mebla.</h2>
+      </div>
+      <div class="proc-steps">
+        <div class="pstep reveal"><span class="pn">1</span><div><h3>Bezpłatny pomiar</h3><p>Przyjeżdżamy z miarką laserową i sprawdzamy każdą ścianę, pion i kąt. To, czego nie zrobisz sam z kartką papieru.</p></div></div>
+        <div class="pstep reveal"><span class="pn">2</span><div><h3>Projekt i doradztwo</h3><p>Dobieramy układ, fronty i dekor do Twojego wnętrza i budżetu. Pokazujemy próbki na żywo.</p></div></div>
+        <div class="pstep reveal"><span class="pn">3</span><div><h3>Produkcja</h3><p>Zamawiamy meble u sprawdzonego producenta na płytach Egger i Kronospan. Jedna cena za całość.</p></div></div>
+        <div class="pstep reveal"><span class="pn">4</span><div><h3>Montaż pod klucz</h3><p>Wnosimy, montujemy, sprzątamy. Ty nie dotykasz wkrętarki. Gotowe tego samego dnia.</p></div></div>
+      </div>
+    </div>
+    <div class="proc-aside reveal">
+      <div class="card">
+        <div class="lbl">Dlaczego my</div>
+        <div class="big fr">Najdroższy błąd to <span class="it">jeden zły wymiar.</span></div>
+        <p>Meble na wymiar to zamówienie indywidualne — bez prawa do zwrotu. Pomyłka o 2 cm i mebel nie wchodzi. My to ryzyko bierzemy na siebie.</p>
+        <div class="mini">
+          <div><div class="n">±1 mm</div><div class="t">Pomiar laserem</div></div>
+          <div><div class="n">36 mc</div><div class="t">Gwarancji</div></div>
+          <div><div class="n">1×</div><div class="t">Cena za całość</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="wrap">
+    <div class="idx lbl reveal">Kontakt</div>
+    <h2 class="fr reveal">Umów <span class="it">bezpłatny pomiar</span></h2>
+    <div class="contact-row reveal">
+      <a href="tel:+48000000000" class="cbig">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +48 000 000 000
+      </a>
+      <a href="https://wa.me/48000000000" class="cwa">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <div class="area reveal">Gdańsk · Gdynia · Sopot i okolice — pomiar bezpłatny i niezobowiązujący</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Siemontuje — Atelier mebli na wymiar</span>
+    <span>Płyty Egger &amp; Kronospan · ±1 mm</span>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/48000000000" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+
+<script>
+/* --- Ładowanie Three.js z fallbackiem na 3 CDN-y (cdnjs → unpkg → jsdelivr) --- */
+(function(){
+  var sources=[
+    'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+    'https://unpkg.com/three@0.128.0/build/three.min.js',
+    'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js'
+  ];
+  function tryLoad(i){
+    if(i>=sources.length){window.__threeFailed=true;return;}
+    var s=document.createElement('script');
+    s.src=sources[i];
+    s.onerror=function(){tryLoad(i+1);};
+    document.head.appendChild(s);
+  }
+  tryLoad(0);
+})();
+</script>
+<script>
+/* ============================================================
+   KOSZTORYS (DO EDYCJI) — wycena budowana z rozkroju
+   Mebel = (materiał płyty + HDF + oklejanie + okucia + robocizna) × (1 + marża)
+   Materiał liczony z listy formatek: m² płyty, m² HDF, mb obrzeża, szt. okuć.
+   Usługa (pomiar+montaż) = max(SERVICE_RATE × mebel, SERVICE_MIN).
+   ============================================================ */
+const COST_BOARD18 = 95;   // zł / m²  — płyta 18 mm (z cięciem)
+const COST_HDF     = 28;   // zł / m²  — HDF 3 mm (plecy, dna)
+const COST_EDGE    = 4.5;  // zł / mb  — obrzeże ABS + oklejanie
+const COST_HINGE   = 14;   // zł / szt — zawias (2 na drzwi)
+const COST_RUNNER  = 42;   // zł / szt — komplet prowadnic na szufladę
+const COST_HANDLE  = 12;   // zł / szt — uchwyt (na każdy front)
+const LABOR_M2     = 120;  // zł / m²  — robocizna (cięcie, oklejanie, montaż korpusu) wg pola płyty
+const MARGIN       = 0.45; // marża 45% (NIEWIDOCZNA dla klienta — tylko #kalkulacja)
+const SERVICE_RATE = 0.25, SERVICE_MIN = 800;   // pomiar + montaż u klienta
+
+const FAKTURY=[
+  {key:'PE',  label:'Gładka',     rough:.58, metal:.05, mult:1.00},
+  {key:'MAT', label:'Mat',        rough:.82, metal:.03, mult:1.10},
+  {key:'STR', label:'Struktura',  rough:.90, metal:.02, mult:1.18},
+  {key:'GLS', label:'Połysk',     rough:.12, metal:.22, mult:1.32},
+];
+
+/* Pliki: pobierz Standard.zip z kronosfera.pl, rozpakuj do folderu tekstury/,
+   nazwij plik numerem (K003.jpg). Ustaw USE_FILES=true. */
+const TEX_DIR='tekstury/';
+const USE_FILES=true;
+
+/* Dekory Kronospan — kolekcja STANDARD (realne numery + nazwy z katalogu) */
+const DECORS={
+  standard:[
+    {number:'0344', name:'Wiśnia', hex:'#9a7a52', file:'0344'},
+    {number:'0375', name:'Klon', hex:'#9a7a52', file:'0375'},
+    {number:'0381', name:'Buk Klasyczny', hex:'#9a7a52', file:'0381'},
+    {number:'0729', name:'Orzech', hex:'#9a7a52', file:'0729'},
+    {number:'0854', name:'Wenge', hex:'#9a7a52', file:'0854'},
+    {number:'1715', name:'1715', hex:'#9a7a52', file:'1715'},
+    {number:'1912', name:'Olcha', hex:'#9a7a52', file:'1912'},
+    {number:'3025', name:'3025', hex:'#9a7a52', file:'3025'},
+    {number:'5194', name:'Dąb Truflowy', hex:'#9a7a52', file:'5194'},
+    {number:'5500', name:'5500', hex:'#9a7a52', file:'5500'},
+    {number:'5529', name:'Dąb Skalny Oregon', hex:'#9a7a52', file:'5529'},
+    {number:'7648', name:'7648', hex:'#9a7a52', file:'7648'},
+    {number:'8431', name:'8431', hex:'#9a7a52', file:'8431'},
+    {number:'8548', name:'Fineline Mocca', hex:'#9a7a52', file:'8548'},
+    {number:'8921', name:'Dąb Ferrara', hex:'#9a7a52', file:'8921'},
+    {number:'8953', name:'Orzech Tiepolo', hex:'#9a7a52', file:'8953'},
+    {number:'8995', name:'płyta   kolekcja Standard Coco Bol', hex:'#9a7a52', file:'8995'},
+    {number:'9614', name:'Orzech Alpejski', hex:'#9a7a52', file:'9614'},
+    {number:'9763', name:'płyta   w dekorze drewna', hex:'#9a7a52', file:'9763'},
+    {number:'K001', name:'płyta  na meble biurowe', hex:'#9a7a52', file:'K001'},
+    {number:'K002', name:'Dąb Craft Biały', hex:'#9a7a52', file:'K002'},
+    {number:'K003', name:'Dąb Craft Złoty', hex:'#9a7a52', file:'K003'},
+    {number:'K004', name:'Dąb Craft', hex:'#9a7a52', file:'K004'},
+    {number:'K005', name:'Dąb Urban Oyster', hex:'#9a7a52', file:'K005'},
+    {number:'K006', name:'Dąb Urban Bursztynowy', hex:'#9a7a52', file:'K006'},
+    {number:'K007', name:'K007', hex:'#9a7a52', file:'K007'},
+    {number:'K008', name:'K008', hex:'#9a7a52', file:'K008'},
+    {number:'K009', name:'Orzech Select Ciemny', hex:'#9a7a52', file:'K009'},
+    {number:'K010', name:'Sosna Loft Biała', hex:'#9a7a52', file:'K010'},
+    {number:'K012', name:'Buk Artisan Perłowy', hex:'#9a7a52', file:'K012'},
+    {number:'K013', name:'Buk Artisan Piaskowany', hex:'#9a7a52', file:'K013'},
+    {number:'K016', name:'Carbon Marine Wood', hex:'#9a7a52', file:'K016'},
+    {number:'K017', name:'Wiąz Liberty Jasny', hex:'#9a7a52', file:'K017'},
+    {number:'K018', name:'Wiąz Liberty Dymiony', hex:'#9a7a52', file:'K018'},
+    {number:'K019', name:'K019', hex:'#9a7a52', file:'K019'},
+    {number:'K020', name:'Orzech Select Ciepły', hex:'#9a7a52', file:'K020'},
+    {number:'K076', name:'Dąb Piaskowany', hex:'#9a7a52', file:'K076'},
+    {number:'K078', name:'Wiśnia Riverside Ciemna', hex:'#9a7a52', file:'K078'},
+    {number:'K079', name:'K079', hex:'#9a7a52', file:'K079'},
+    {number:'K080', name:'Dąb Coastland Biały', hex:'#9a7a52', file:'K080'},
+    {number:'K081', name:'Dąb Coastland Szampański', hex:'#9a7a52', file:'K081'},
+    {number:'K082', name:'Dąb Burbon', hex:'#9a7a52', file:'K082'},
+    {number:'K088', name:'K088', hex:'#9a7a52', file:'K088'},
+    {number:'K089', name:'K089', hex:'#9a7a52', file:'K089'},
+    {number:'K090', name:'Dąb Brązowy', hex:'#9a7a52', file:'K090'},
+    {number:'K365', name:'Dąb K365', hex:'#9a7a52', file:'K365'},
+    {number:'K366', name:'K366', hex:'#9a7a52', file:'K366'},
+    {number:'K015', name:'Vintage Marine Wood', hex:'#9a7a52', file:'K015'},
+  ],
+  egger:[
+    {number:'H1180', name:'Dąb Halifax naturalny',  hex:'#C7A06A', file:'H1180'},
+    {number:'H3303', name:'Dąb Nebraska',           hex:'#7C6347', file:'H3303'},
+    {number:'H1145', name:'Dąb Hamilton złoty',     hex:'#B98A4E', file:'H1145'},
+    {number:'W1000', name:'Biały Premium',          hex:'#F1EEE8', file:'W1000'},
+    {number:'U999',  name:'Czarny',                 hex:'#23262A', file:'U999'},
+    {number:'U732',  name:'Kaszmir',                hex:'#CDB9A0', file:'U732'},
+  ],
+};
+const BODIES=[
+  {number:'U999',  name:'Czarny',                hex:'#1C1D21', file:'U999'},
+  {number:'K080 PW', name:'Dąb Coastland Biały', hex:'#D7CBB8', file:'K080'},
+  {number:'K003 PW', name:'Dąb Craft Złoty',     hex:'#C49A5A', file:'K003'},
+  {number:'0854 BS', name:'Wenge',               hex:'#3A2A20', file:'0854'},
+];
+
+// Domyślny jednolity wygląd: korpus CZARNY + front DĄB NATURALNY (Egger Halifax) — dotyczy też miniatur
+let cfg={w:120,h:85,d:40,dr:2,doo:1,brand:'standard',front:null,body:null,faktura:FAKTURY[0]};
+cfg.front=DECORS.standard.find(d=>d.number==='K003')||DECORS.standard[0]; cfg.body=BODIES[0];
+
+const fmt=n=>new Intl.NumberFormat('pl-PL').format(Math.round(n))+' zł';
+const hexRgb=h=>{h=h.replace('#','');return{r:parseInt(h.substr(0,2),16),g:parseInt(h.substr(2,2),16),b:parseInt(h.substr(4,2),16)};};
+
+/* ---------- procedural wood texture (fallback / thumbnails) ---------- */
+function makeTexCanvas(decor){
+  const c=document.createElement('canvas');c.width=512;c.height=640;const x=c.getContext('2d');
+  x.fillStyle=decor.hex;x.fillRect(0,0,512,640);
+  const {r,g,b}=hexRgb(decor.hex);
+  // vertical grain
+  for(let i=0;i<340;i++){
+    const xx=Math.random()*512, dd=0.05+Math.random()*0.22;
+    x.strokeStyle='rgba('+Math.round(r*(1-dd))+','+Math.round(g*(1-dd))+','+Math.round(b*(1-dd))+','+(0.04+Math.random()*0.12)+')';
+    x.lineWidth=0.4+Math.random()*1.8;x.beginPath();x.moveTo(xx,0);
+    const amp=2+Math.random()*8, ph=Math.random()*6.28;
+    for(let yy=0;yy<=640;yy+=12)x.lineTo(xx+Math.sin(yy*0.016+ph)*amp,yy);
+    x.stroke();
+  }
+  // light streaks
+  for(let i=0;i<54;i++){const xx=Math.random()*512;x.strokeStyle='rgba(255,250,240,'+(0.02+Math.random()*0.05)+')';x.lineWidth=0.5+Math.random();x.beginPath();x.moveTo(xx,0);for(let yy=0;yy<=640;yy+=16)x.lineTo(xx+Math.sin(yy*0.02)*3,yy);x.stroke();}
+  // occasional knot
+  if(Math.random()<0.5){const kx=80+Math.random()*352,ky=120+Math.random()*400;x.strokeStyle='rgba('+Math.round(r*0.7)+','+Math.round(g*0.7)+','+Math.round(b*0.7)+',0.18)';for(let rr=3;rr<16;rr+=3){x.beginPath();x.ellipse(kx,ky,rr,rr*1.6,0,0,6.28);x.stroke();}}
+  return c;
+}
+function thumbBg(decor){
+  if(decor._uploaded) return decor.hex+" url('"+decor._uploaded+"') center/cover";
+  if(USE_FILES && decor.file) return decor.hex+" url('"+TEX_DIR+decor.file+".jpg') center/cover";
+  if(!decor._thumb) decor._thumb=makeTexCanvas(decor).toDataURL();
+  return "url('"+decor._thumb+"') center/cover";
+}
+
+/* ---------- THREE ---------- */
+const vp=document.getElementById('viewport');
+let renderer,scene,camera,group,loader,maxAniso;
+let sph={r:2.7,theta:Math.PI*0.2,phi:Math.PI*0.42}, target=null;
+let autoSpin=true,dragging=false,lastX=0,lastY=0,pinchDist=0;
+let openables=[], ray=null, ndc=null;
+let _G=null, _C=null;   // aktywna grupa i konfiguracja (dla reużycia build w miniaturach)
+const OPEN_ANGLE=1.95;
+
+function cfgTex(t){t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(1.3,1.3);t.anisotropy=maxAniso||4;t.encoding=THREE.sRGBEncoding;}
+function getTexture(decor){
+  if(decor._tex) return decor._tex;
+  let t;
+  if(USE_FILES && decor.file){
+    t=loader.load(TEX_DIR+decor.file+'.jpg', ()=>{}, undefined, ()=>{const ct=new THREE.CanvasTexture(makeTexCanvas(decor));cfgTex(ct);decor._tex=ct;build();});
+  } else { t=new THREE.CanvasTexture(makeTexCanvas(decor)); }
+  cfgTex(t);decor._tex=t;return t;
+}
+
+function showFallback(msg){
+  vp.innerHTML='<div style="position:absolute;inset:0;display:flex;flex-direction:column;'+
+    'align-items:center;justify-content:center;text-align:center;padding:32px;gap:14px;color:#221A12">'+
+    '<div style="font-family:\'Fraunces\',serif;font-weight:600;font-size:1.35rem">Podgląd 3D niedostępny</div>'+
+    '<div style="max-width:30em;font-size:.92rem;line-height:1.5;color:rgba(34,26,18,.62)">'+msg+'</div>'+
+    '<div style="font-size:.8rem;color:rgba(34,26,18,.5)">Konfigurator i wycena działają normalnie — wybierz wymiary i dekor poniżej.</div>'+
+    '</div>';
+}
+function webglOk(){
+  try{var c=document.createElement('canvas');
+    return !!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));
+  }catch(e){return false;}
+}
+
+function initThree(){
+  if(typeof THREE==='undefined'){
+    showFallback('Nie udało się wczytać biblioteki grafiki 3D. Sprawdź połączenie z internetem i odśwież stronę.');
+    return;
+  }
+  if(!webglOk()){
+    showFallback('Twoja przeglądarka ma wyłączone lub niedostępne WebGL. Spróbuj otworzyć stronę w Chrome lub Safari (nie w przeglądarce wewnątrz aplikacji), albo włącz akcelerację sprzętową.');
+    return;
+  }
+  target=new THREE.Vector3(0,0.45,0); ray=new THREE.Raycaster(); ndc=new THREE.Vector2();
+  try{
+    renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  }catch(err){
+    showFallback('Nie udało się uruchomić grafiki 3D na tym urządzeniu. ('+(err&&err.message?err.message:'WebGL error')+')');
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(vp.clientWidth,vp.clientHeight);
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  vp.appendChild(renderer.domElement);
+  maxAniso=renderer.capabilities.getMaxAnisotropy();
+  loader=new THREE.TextureLoader(); loader.setCrossOrigin('anonymous');
+
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(40,vp.clientWidth/vp.clientHeight,0.1,100);
+  scene.add(new THREE.HemisphereLight(0xfff4e2,0xcdb89a,0.9));
+  scene.add(new THREE.AmbientLight(0xffffff,0.2));
+  const key=new THREE.DirectionalLight(0xffffff,1.15);key.position.set(2.6,4.2,3);
+  key.castShadow=true;key.shadow.mapSize.set(1024,1024);
+  key.shadow.camera.near=0.5;key.shadow.camera.far=16;
+  key.shadow.camera.left=-3;key.shadow.camera.right=3;key.shadow.camera.top=3;key.shadow.camera.bottom=-3;
+  key.shadow.bias=-0.0004;scene.add(key);
+  const fill=new THREE.DirectionalLight(0xffe7c9,0.42);fill.position.set(-3,2,-2);scene.add(fill);
+  const sp=new THREE.Mesh(new THREE.PlaneGeometry(24,24),new THREE.ShadowMaterial({opacity:.17}));
+  sp.rotation.x=-Math.PI/2;sp.receiveShadow=true;scene.add(sp);
+
+  group=new THREE.Group();scene.add(group);
+  build();loop();
+  window.addEventListener('resize',onResize);bindControls();
+}
+
+/* ---------- MINIATURY 3D KART (jeden offscreen renderer, zrzut do PNG) ---------- */
+function renderPresetThumbs(){
+  if(typeof THREE==='undefined'||!webglOk())return;   // bez WebGL karty zostają z SVG-fallbackiem
+  let tr;
+  try{ tr=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true}); }
+  catch(e){ return; }
+  const TS=Math.min(window.devicePixelRatio,2)*340;
+  tr.setPixelRatio(1); tr.setSize(TS,TS,false);
+  tr.shadowMap.enabled=true; tr.shadowMap.type=THREE.PCFSoftShadowMap; tr.outputEncoding=THREE.sRGBEncoding;
+
+  const tscene=new THREE.Scene();
+  tscene.add(new THREE.HemisphereLight(0xfff4e2,0xcdb89a,0.95));
+  tscene.add(new THREE.AmbientLight(0xffffff,0.22));
+  const k=new THREE.DirectionalLight(0xffffff,1.15); k.position.set(2.4,4,3);
+  k.castShadow=true; k.shadow.mapSize.set(1024,1024);
+  k.shadow.camera.near=0.5; k.shadow.camera.far=18;
+  k.shadow.camera.left=-3.5;k.shadow.camera.right=3.5;k.shadow.camera.top=3.5;k.shadow.camera.bottom=-3.5;
+  k.shadow.bias=-0.0004; tscene.add(k);
+  const f=new THREE.DirectionalLight(0xffe7c9,0.4); f.position.set(-3,2,-2); tscene.add(f);
+  const sp=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.ShadowMaterial({opacity:.16}));
+  sp.rotation.x=-Math.PI/2; sp.receiveShadow=true; tscene.add(sp);
+  const tcam=new THREE.PerspectiveCamera(38,1,0.1,100);
+
+  const list=[]; document.querySelectorAll('#presetGrid .pcard').forEach(card=>{
+    const name=card.dataset.name; const p=PRESETS.find(x=>x.name===name&&x.cat===presetCat)||PRESETS.find(x=>x.name===name);
+    if(p)list.push({card,p});
+  });
+
+  let i=0;
+  function step(){
+    if(i>=list.length){ tr.dispose(); return; }
+    const {card,p}=list[i++];
+    const g=new THREE.Group(); tscene.add(g);
+    const tmpOpen=[];
+    const c=Object.assign({},cfg,{w:p.w,h:p.h,d:p.d,dr:p.dr,doo:p.doo,
+      kind:p.kind||'std', niche:p.niche||0, appliance:!!p.appliance,
+      lift:!!p.lift, rail:!!p.rail, shelves:(p.shelves!=null?p.shelves:null), wall:!!p.wall, drawerSplit:p.drawerSplit||null, drainer:!!p.drainer});  // dekor + konstrukcja presetu
+    buildGeometry(c,g,tmpOpen);
+
+    // kadrowanie kamery na bryłę (uwzględnia wysokie/wąskie meble)
+    const H=p.h/100, W=p.w/100, D=p.d/100, cyc=0.09+H/2;
+    const vFov=tcam.fov*Math.PI/180, hFov=2*Math.atan(Math.tan(vFov/2)*tcam.aspect);
+    const halfV=(H+0.09)/2*1.12, halfH=Math.hypot(W,D)/2*1.12;
+    const rV=halfV/Math.tan(vFov/2), rH=halfH/Math.tan(hFov/2);
+    const r=Math.max(rV,rH)+Math.max(W,H,D)*0.35;
+    const th=Math.PI*0.22, ph=Math.PI*0.46;
+    tcam.position.set(r*Math.sin(ph)*Math.sin(th), cyc+r*Math.cos(ph), r*Math.sin(ph)*Math.cos(th));
+    tcam.lookAt(0,cyc,0);
+    tr.render(tscene,tcam);
+
+    try{
+      const url=tr.domElement.toDataURL('image/png');
+      const pic=card.querySelector('.pic');
+      if(pic) pic.innerHTML='<img src="'+url+'" alt="'+p.name+'" loading="lazy">';
+    }catch(e){}
+
+    // sprzątanie
+    g.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());} });
+    tscene.remove(g);
+    (window.requestAnimationFrame||setTimeout)(step);
+  }
+  step();
+}
+function onResize(){if(!renderer)return;renderer.setSize(vp.clientWidth,vp.clientHeight);camera.aspect=vp.clientWidth/vp.clientHeight;camera.updateProjectionMatrix();}
+function disposeGroup(){while(group.children.length){const c=group.children.pop();if(c.geometry)c.geometry.dispose();if(c.material){(Array.isArray(c.material)?c.material:[c.material]).forEach(m=>m.dispose());}group.remove(c);}}
+function addBox(w,h,d,x,y,z,mat,sh){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);if(sh){m.castShadow=true;m.receiveShadow=true;}(_G||group).add(m);return m;}
+function meshOf(w,h,d,mat,sh){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);if(sh){m.castShadow=true;m.receiveShadow=true;}return m;}
+function frontMatNew(){return new THREE.MeshStandardMaterial({map:getTexture(cfg.front),color:0xffffff,roughness:cfg.faktura.rough,metalness:cfg.faktura.metal});}
+
+function build(){
+  disposeGroup();
+  openables=[];
+  _G=group; _C=cfg;
+  buildGeometry(cfg, group, openables);
+  const cy=0.09+(cfg.h/100)/2;
+  target.set(0,cy,0);
+  // auto-dystans kamery: dopasuj do największego wymiaru mebla (jeśli user nie zoomował ręcznie)
+  if(!window.__userZoom){
+    const maxDim=Math.max(cfg.w,cfg.h,cfg.d)/100;
+    sph.r=Math.max(2.2, maxDim*1.55+0.7);
+  }
+  document.getElementById('dims').textContent=cfg.w+' × '+cfg.h+' × '+cfg.d+' cm';
+  document.getElementById('nowName').textContent=cfg.front.name;
+  document.getElementById('bodyName').textContent=cfg.body.name;
+  cutlist();
+  price();
+  _G=group; _C=cfg;
+}
+
+/* Czysta geometria mebla — buduje do podanej grupy z podanej konfiguracji.
+   Używa jej zarówno duży podgląd (build), jak i generator miniatur. */
+function buildGeometry(c, g, collect){
+  const prevG=_G, prevC=_C; _G=g; _C=c;
+  const W=c.w/100,H=c.h/100,D=c.d/100;
+  const wall=!!c.wall;                  // mebel wiszący (górny / podwieszany) — bez nóżek
+  const legH=wall?0:0.09;
+  const bodyMat=new THREE.MeshStandardMaterial({map:getTexture(c.body),color:0xffffff,roughness:.76,metalness:.04});
+  const interiorMat=new THREE.MeshStandardMaterial({map:getTexture(c.body),color:0xefe8dc,roughness:.86,metalness:.03});
+  const frontMat=new THREE.MeshStandardMaterial({map:getTexture(c.front),color:0xffffff,roughness:c.faktura.rough,metalness:c.faktura.metal});
+  const dark=new THREE.MeshStandardMaterial({color:0x1d1610,roughness:.5,metalness:.3});
+  const steel=new THREE.MeshStandardMaterial({color:0x9a958c,roughness:.32,metalness:.85});
+  const handleMat=new THREE.MeshStandardMaterial({color:0x12100b,roughness:.34,metalness:.72});
+  const cy=legH+H/2;
+  const pt=.018;                                           // grubość płyty meblowej (18 mm)
+  // --- KORPUS z formatek (boki + wieniec górny/dolny + plecy) — wnętrze PUSTE ---
+  addBox(pt,H,D,-(W/2-pt/2),cy,0,bodyMat,true);            // bok lewy
+  addBox(pt,H,D, (W/2-pt/2),cy,0,bodyMat,true);            // bok prawy
+  addBox(W-2*pt,pt,D,0,legH+H-pt/2,0,bodyMat,true);        // wieniec górny
+  addBox(W-2*pt,pt,D,0,legH+pt/2,0,bodyMat,true);          // wieniec dolny
+  addBox(W-2*pt,H-2*pt,pt,0,cy,-(D/2-pt/2),interiorMat,true); // plecy (HDF)
+  const margin=.018,gap=.009,pd=.02,frontZ=D/2+pd/2;
+  const innerW=W-2*margin,innerH=H-2*margin,topY=legH+H-margin,botY=legH+margin;
+  const nd=c.dr,ndoor=c.doo,denom=nd+2*ndoor;
+  const kind=c.kind||'std';
+
+  // ===== OTWARTY REGAŁ / SZAFA OTWARTA: półki + opcjonalny drążek, bez frontów =====
+  if(kind==='open'||kind==='wardrobe-open'){
+    const innerW2=W-2*pt, innerH2=H-2*pt;
+    const shelves=Math.max(1, c.shelves!=null?c.shelves : Math.round(innerH2/0.36));
+    for(let s=1;s<=shelves;s++){
+      const sy=legH+pt+(innerH2)*s/(shelves+1);
+      addBox(innerW2,.018,D-pt-0.01,0,sy,(pt/2-0.005),bodyMat,true);
+    }
+    if(c.rail){ // drążek na ubrania (metalowy walec w poprzek)
+      const railY=legH+H-margin-0.12;
+      const rail=new THREE.Mesh(new THREE.CylinderGeometry(.014,.014,innerW2-0.02,16),steel);
+      rail.rotation.z=Math.PI/2; rail.position.set(0,railY,0.02); rail.castShadow=true; g.add(rail);
+    }
+    if(nd>0){ // opcjonalne szuflady w dolnej strefie regału
+      const band=innerH2*0.30, dh=(band-(nd-1)*0.009)/nd, topYd=legH+pt+band;
+      for(let i=0;i<nd;i++){
+        const cyD=topYd-i*(dh+0.009)-dh/2;
+        const gr=new THREE.Group(); gr.position.set(0,cyD,0); gr.userData.oi=collect.length; g.add(gr);
+        const front=meshOf(innerW,dh,pd,frontMat,true); front.position.set(0,0,frontZ); gr.add(front);
+        const hh=meshOf(innerW*0.3,.013,.026,handleMat,false); hh.position.set(0,dh/2-.028,frontZ+pd/2); gr.add(hh);
+        const boxDepth=D*0.82, sideH=Math.min(dh*0.7,dh-.02), bz=D/2-boxDepth/2, ty=-dh*0.12;
+        const dBottom=meshOf(innerW*0.9,.012,boxDepth,interiorMat,true); dBottom.position.set(0,ty-sideH/2,bz); gr.add(dBottom);
+        const dBack=meshOf(innerW*0.9,sideH,.012,interiorMat,true); dBack.position.set(0,ty,D/2-boxDepth); gr.add(dBack);
+        const dLeft=meshOf(.012,sideH,boxDepth,interiorMat,true); dLeft.position.set(-innerW*0.45,ty,bz); gr.add(dLeft);
+        const dRight=meshOf(.012,sideH,boxDepth,interiorMat,true); dRight.position.set(innerW*0.45,ty,bz); gr.add(dRight);
+        collect.push({type:'drawer',g:gr,t:0,target:0,dist:Math.min(boxDepth*0.74,D*0.62)});
+      }
+    }
+    const lo2=.045;if(!wall)[[W/2-lo2,D/2-lo2],[-(W/2-lo2),D/2-lo2],[W/2-lo2,-(D/2-lo2)],[-(W/2-lo2),-(D/2-lo2)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    _G=prevG; _C=prevC; return;
+  }
+
+  // ===== SZAFKA NAROŻNA 45° (czysta bryła — front na ściętym narożniku) =====
+  if(kind==='corner45'){
+    // pełny korpus prostopadłościenny + skośna listwa narożna + jeden front czołowy
+    addBox(pt,H,D,-(W/2-pt/2),cy,0,bodyMat,true);             // bok lewy
+    addBox(pt,H,D,(W/2-pt/2),cy,0,bodyMat,true);              // bok prawy
+    addBox(W-2*pt,pt,D,0,legH+H-pt/2,0,bodyMat,true);         // wieniec górny
+    addBox(W-2*pt,pt,D,0,legH+pt/2,0,bodyMat,true);           // wieniec dolny
+    addBox(W-2*pt,H-2*pt,pt,0,cy,-(D/2-pt/2),interiorMat,true); // plecy
+    // skośna listwa narożna (sygnalizuje 45°) — wąski panel pod kątem w przednim rogu
+    const cut=Math.min(W,D)*0.32;
+    const corner=new THREE.Group(); corner.position.set(W/2-cut,cy,D/2); g.add(corner);
+    const bevel=meshOf(Math.sqrt(2)*cut,H-2*margin,pd,bodyMat,true);
+    bevel.rotation.y=Math.PI/4; bevel.position.set(cut/2,0,-cut/2); corner.add(bevel);
+    // front czołowy na froncie korpusu (główne drzwi)
+    const fw=(W-cut)-2*margin;
+    const gr=new THREE.Group(); gr.position.set(-(W/2)+margin,cy,frontZ); gr.userData.oi=collect.length; g.add(gr);
+    const panel=meshOf(fw,H-2*margin,pd,frontMat,true); panel.position.set(fw/2,0,0); gr.add(panel);
+    const hd=meshOf(.016,(H-2*margin)*0.22,.026,handleMat,false); hd.position.set(fw-0.03,0,pd/2); gr.add(hd);
+    collect.push({type:'door',g:gr,t:0,target:0,dir:1});
+    const lo3=.045;if(!wall)[[-(W/2-lo3),D/2-lo3],[-(W/2-lo3),-(D/2-lo3)],[W/2-lo3,-(D/2-lo3)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    _G=prevG; _C=prevC; return;
+  }
+
+  // ===== SZAFKA NAROŻNA 90° (bryła L — dwa drzwi w narożu) =====
+  if(kind==='corner90'){
+    const arm=W*0.5;                          // szerokość ramienia L
+    // bryła L: korpus główny (pełna szerokość, płytki) + ramię z boku (głębokie)
+    // pion narożnika
+    addBox(pt,H,D,-(W/2-pt/2),cy,0,bodyMat,true);
+    addBox(pt,H,arm,(W/2-pt/2),cy,(D/2-arm/2),bodyMat,true);
+    // wieńce L (przybliżenie: prostokąt główny + dostawka)
+    addBox(W,pt,arm,0,legH+H-pt/2,(D/2-arm/2),bodyMat,true);
+    addBox(arm,pt,D,(W/2-arm/2),legH+H-pt/2,0,bodyMat,true);
+    addBox(W,pt,arm,0,legH+pt/2,(D/2-arm/2),bodyMat,true);
+    addBox(arm,pt,D,(W/2-arm/2),legH+pt/2,0,bodyMat,true);
+    addBox(W,H-2*pt,pt,0,cy,-(D/2-pt/2),interiorMat,true);     // plecy
+    addBox(pt,H-2*pt,D-arm,-(arm/2),cy,-(arm/2),interiorMat,true);
+    // dwa drzwi w narożu (front L)
+    const bandH=H-2*margin;
+    [[-1,'L'],[1,'R']].forEach(([s],idx)=>{
+      const colW=arm-margin;
+      const cx=idx===0? -(W/2)+colW/2+margin : (W/2)-colW/2-margin;
+      const leftHinge=idx===0, hingeX=leftHinge?cx-colW/2:cx+colW/2;
+      const gr=new THREE.Group(); gr.position.set(hingeX,cy,frontZ); gr.userData.oi=collect.length; g.add(gr);
+      const panel=meshOf(colW,bandH,pd,frontMat,true); panel.position.set(leftHinge?colW/2:-colW/2,0,0); gr.add(panel);
+      const hx=leftHinge?(colW-.034):-(colW-.034);
+      const hd=meshOf(.016,bandH*0.22,.026,handleMat,false); hd.position.set(hx,0,pd/2); gr.add(hd);
+      collect.push({type:'door',g:gr,t:0,target:0,dir:leftHinge?-1:1});
+    });
+    const lo4=.045;if(!wall)[[-(W/2-lo4),D/2-lo4],[-(W/2-lo4),-(D/2-lo4)],[W/2-lo4,-(D/2-lo4)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    _G=prevG; _C=prevC; return;
+  }
+
+  // ===== CARGO (wąski słupek z koszem wysuwanym) =====
+  if(kind==='cargo'){
+    addBox(pt,H,D,-(W/2-pt/2),cy,0,bodyMat,true);
+    addBox(pt,H,D,(W/2-pt/2),cy,0,bodyMat,true);
+    addBox(W-2*pt,pt,D,0,legH+H-pt/2,0,bodyMat,true);
+    addBox(W-2*pt,pt,D,0,legH+pt/2,0,bodyMat,true);
+    addBox(W-2*pt,H-2*pt,pt,0,cy,-(D/2-pt/2),interiorMat,true);
+    // front cargo + wysuwany kosz (kilka drucianych półek)
+    const gr=new THREE.Group(); gr.position.set(0,cy,0); gr.userData.oi=collect.length; g.add(gr);
+    const front=meshOf(innerW,H-2*margin,pd,frontMat,true); front.position.set(0,0,frontZ); gr.add(front);
+    const hh=meshOf(innerW*0.4,.014,.026,handleMat,false); hh.position.set(0,(H-2*margin)/2-0.05,frontZ+pd/2); gr.add(hh);
+    // kosze (poziome druty)
+    const baskets=4;
+    for(let b=1;b<=baskets;b++){
+      const by=-(H-2*margin)/2+(H-2*margin)*b/(baskets+1);
+      const bk=meshOf(innerW*0.8,.01,D*0.7,steel,false); bk.position.set(0,by,D*0.12); gr.add(bk);
+      const bk2=meshOf(innerW*0.8,.05,.01,steel,false); bk2.position.set(0,by+0.025,D*0.12-D*0.35); gr.add(bk2);
+    }
+    collect.push({type:'drawer',g:gr,t:0,target:0,dist:D*0.6});
+    const lo5=.045;if(!wall)[[W/2-lo5,D/2-lo5],[-(W/2-lo5),D/2-lo5],[W/2-lo5,-(D/2-lo5)],[-(W/2-lo5),-(D/2-lo5)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    _G=prevG; _C=prevC; return;
+  }
+
+  const nicheH = (c.niche && c.niche>0) ? c.niche : 0;   // wysokość otwartej wnęki (m)
+  const usableH = innerH - (nicheH>0 ? nicheH+gap*2 : 0);
+  let drawerBand=denom>0?usableH*(nd/denom):0; if(ndoor===0)drawerBand=usableH; if(nd===0)drawerBand=0;
+  const doorsBand=usableH-drawerBand-((nd>0&&ndoor>0)?gap:0);
+  // pozycja wnęki: tuż pod pasmem szuflad (góra), nad pasmem drzwi (dół)
+  const nicheTop = topY - drawerBand - (nd>0?gap:0);
+  const nicheBot = nicheTop - nicheH;
+
+  // ===== WNĘKA: otwarta strefa (półka) lub OTWÓR AGD na sprzęt =====
+  if(nicheH>0){
+    const appliance = !!c.appliance;
+    const shelfTh = appliance ? .028 : .018;   // grubsze listwy nośne pod sprzęt AGD
+    // listwa dolna i górna wnęki/otworu
+    addBox(innerW,shelfTh,D-pt-0.01,0,nicheBot,(pt/2-0.005),bodyMat,true);
+    addBox(innerW,shelfTh,D-pt-0.01,0,nicheTop,(pt/2-0.005),bodyMat,true);
+    if(appliance){
+      // ciemny panel w głębi — sygnalizuje miejsce na piekarnik/lodówkę
+      const slot=new THREE.MeshStandardMaterial({color:0x2a2420,roughness:.55,metalness:.25});
+      addBox(innerW-0.01,nicheH-shelfTh,.012,0,(nicheTop+nicheBot)/2,-(D/2-pt-0.012),slot,false);
+      // delikatne boczki otworu
+      addBox(.012,nicheH-shelfTh,D-pt-0.02,-(innerW/2-0.006),(nicheTop+nicheBot)/2,(pt/2),interiorMat,true);
+      addBox(.012,nicheH-shelfTh,D-pt-0.02, (innerW/2-0.006),(nicheTop+nicheBot)/2,(pt/2),interiorMat,true);
+    }
+  }
+
+  // ---- DRAWERS (top band) — slide out, revealing tray box ----
+  if(nd>0){
+    // proporcje wysokości szuflad: domyślnie równe; c.drawerSplit np. [1,2,2] = wąska + dwie większe
+    let split=(Array.isArray(c.drawerSplit)&&c.drawerSplit.length===nd)?c.drawerSplit.slice():null;
+    if(!split){ split=[]; for(let i=0;i<nd;i++)split.push(1); }
+    const sumS=split.reduce((a,b)=>a+b,0);
+    const usable=drawerBand-(nd-1)*gap;
+    let yCursor=topY;  // od góry w dół
+    for(let i=0;i<nd;i++){
+      const dh=usable*(split[i]/sumS);
+      const cyD=yCursor-dh/2;
+      yCursor-=(dh+gap);
+      const gr=new THREE.Group(); gr.position.set(0,cyD,0); gr.userData.oi=collect.length; g.add(gr);
+      const front=meshOf(innerW,dh,pd,frontMat,true); front.position.set(0,0,frontZ); gr.add(front);
+      const h=meshOf(innerW*0.3,.013,.026,handleMat,false); h.position.set(0,dh/2-.028,frontZ+pd/2); gr.add(h);
+      const boxDepth=D*0.82, sideH=Math.min(dh*0.7,dh-.02), bz=D/2-boxDepth/2, ty=-dh*0.12;
+      const dBottom=meshOf(innerW*0.9,.012,boxDepth,interiorMat,true); dBottom.position.set(0,ty-sideH/2,bz); gr.add(dBottom);
+      const dBack=meshOf(innerW*0.9,sideH,.012,interiorMat,true); dBack.position.set(0,ty,D/2-boxDepth); gr.add(dBack);
+      const dLeft=meshOf(.012,sideH,boxDepth,interiorMat,true); dLeft.position.set(-innerW*0.45,ty,bz); gr.add(dLeft);
+      const dRight=meshOf(.012,sideH,boxDepth,interiorMat,true); dRight.position.set(innerW*0.45,ty,bz); gr.add(dRight);
+      collect.push({type:'drawer',g:gr,t:0,target:0,dist:Math.min(boxDepth*0.74,D*0.62)});
+    }
+  }
+
+  // ---- OCIEKARKA: pręty ociekowe wewnątrz (nad zlewem) ----
+  if(c.drainer){
+    const rows=2, perRow=6;
+    const topR=legH+H-margin-0.04;
+    for(let r=0;r<rows;r++){
+      const ry=topR-r*0.05;
+      for(let i=0;i<perRow;i++){
+        const rx=-innerW/2+innerW*(i+0.5)/perRow;
+        const bar=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,D*0.7,10),steel);
+        bar.rotation.x=Math.PI/2; bar.position.set(rx,ry,0.02); bar.castShadow=true; g.add(bar);
+      }
+    }
+  }
+
+  // ---- DOORS (bottom band) — swing on hinge, revealing shelves ----
+  if(ndoor>0&&doorsBand>0.01){
+    const colW=(innerW-(ndoor-1)*gap)/ndoor;
+    const doorsTop = nicheH>0 ? nicheBot : (topY-drawerBand-((nd>0)?gap:0));
+    const midY = doorsTop - doorsBand/2;
+    const shelfCount=doorsBand>0.55?2:1;
+    for(let s=1;s<=shelfCount;s++){
+      const sy=midY-doorsBand/2+doorsBand*s/(shelfCount+1);
+      addBox(innerW*0.94,.014,D*0.84,0,sy,-0.005,interiorMat,true);
+    }
+    if(c.lift){
+      // FRONT UCHYLNY: jedna klapa, zawias poziomy u góry, podnosi się do góry
+      const topEdge=midY+doorsBand/2;
+      const gr=new THREE.Group(); gr.position.set(0,topEdge,frontZ); gr.userData.oi=collect.length; g.add(gr);
+      const panel=meshOf(innerW,doorsBand,pd,frontMat,true); panel.position.set(0,-doorsBand/2,0); gr.add(panel);
+      const h=meshOf(innerW*0.3,.013,.026,handleMat,false); h.position.set(0,-doorsBand+0.05,pd/2); gr.add(h);
+      // zawiasy u góry
+      [-innerW*0.35,innerW*0.35].forEach(ox=>{
+        const cyl=new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,.045,16),steel); cyl.rotation.z=Math.PI/2;
+        cyl.castShadow=true; cyl.position.set(ox,topEdge,D/2-.004); g.add(cyl);
+      });
+      collect.push({type:'lift',g:gr,t:0,target:0});
+    } else {
+    for(let j=0;j<ndoor;j++){
+      const cx=-innerW/2+colW/2+j*(colW+gap);
+      const leftHinge=j<ndoor/2, hingeX=leftHinge?cx-colW/2:cx+colW/2;
+      const gr=new THREE.Group(); gr.position.set(hingeX,midY,frontZ); gr.userData.oi=collect.length; g.add(gr);
+      const panel=meshOf(colW,doorsBand,pd,frontMat,true); panel.position.set(leftHinge?colW/2:-colW/2,0,0); gr.add(panel);
+      const hx=leftHinge?(colW-.034):-(colW-.034);
+      const h=meshOf(.016,doorsBand*0.24,.026,handleMat,false); h.position.set(hx,0,pd/2); gr.add(h);
+      [doorsBand*0.36,-doorsBand*0.36].forEach(oy=>{
+        const cyl=new THREE.Mesh(new THREE.CylinderGeometry(.013,.013,.05,16),steel); cyl.castShadow=true;
+        cyl.position.set(hingeX,midY+oy,D/2-.004); g.add(cyl);
+      });
+      collect.push({type:'door',g:gr,t:0,target:0,dir:leftHinge?-1:1});
+    }
+    }
+  }
+
+  const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+  _G=prevG; _C=prevC;
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  for(const o of openables){
+    o.t+=(o.target-o.t)*0.16;
+    if(Math.abs(o.target-o.t)<0.0015)o.t=o.target;
+    if(o.type==='drawer')o.g.position.z=o.t*o.dist;
+    else if(o.type==='lift')o.g.rotation.x=-o.t*OPEN_ANGLE;
+    else o.g.rotation.y=o.dir*o.t*OPEN_ANGLE;
+  }
+  if(autoSpin&&!dragging)sph.theta+=0.0034;
+  sph.phi=Math.max(0.16,Math.min(Math.PI/2-0.03,sph.phi));
+  sph.r=Math.max(1.2,Math.min(7,sph.r));
+  camera.position.set(target.x+sph.r*Math.sin(sph.phi)*Math.sin(sph.theta),target.y+sph.r*Math.cos(sph.phi),target.z+sph.r*Math.sin(sph.phi)*Math.cos(sph.theta));
+  camera.lookAt(target);renderer.render(scene,camera);
+}
+function pickOpenable(e){
+  const r=renderer.domElement.getBoundingClientRect();
+  ndc.x=((e.clientX-r.left)/r.width)*2-1;
+  ndc.y=-((e.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(ndc,camera);
+  const hits=ray.intersectObjects(group.children,true);
+  for(const hit of hits){let o=hit.object;while(o){if(o.userData&&o.userData.oi!=null)return openables[o.userData.oi];o=o.parent;}}
+  return null;
+}
+function bindControls(){
+  const el=renderer.domElement;
+  let dnX=0,dnY=0,dnT=0;
+  el.addEventListener('pointerdown',e=>{dragging=true;autoSpin=false;lastX=e.clientX;lastY=e.clientY;dnX=e.clientX;dnY=e.clientY;dnT=performance.now();el.setPointerCapture(e.pointerId);});
+  el.addEventListener('pointermove',e=>{
+    if(dragging){sph.theta-=(e.clientX-lastX)*0.008;sph.phi-=(e.clientY-lastY)*0.008;lastX=e.clientX;lastY=e.clientY;}
+    else{el.style.cursor=pickOpenable(e)?'pointer':'grab';}
+  });
+  el.addEventListener('pointerup',e=>{
+    dragging=false;
+    const dt=performance.now()-dnT, dist=Math.abs(e.clientX-dnX)+Math.abs(e.clientY-dnY);
+    if(dt<350&&dist<6){const o=pickOpenable(e);if(o){o.target=o.target?0:1;autoSpin=false;}}
+  });
+  el.addEventListener('pointercancel',()=>dragging=false);
+  el.addEventListener('wheel',e=>{e.preventDefault();sph.r*=(1+Math.sign(e.deltaY)*0.08);window.__userZoom=true;},{passive:false});
+  el.addEventListener('touchmove',e=>{if(e.touches.length===2){const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY,dist=Math.hypot(dx,dy);if(pinchDist){sph.r*=pinchDist/dist;window.__userZoom=true;}pinchDist=dist;e.preventDefault();}},{passive:false});
+  el.addEventListener('touchend',()=>pinchDist=0);
+  document.getElementById('zin').onclick=()=>{sph.r*=0.85;window.__userZoom=true;};
+  document.getElementById('zout').onclick=()=>{sph.r*=1.18;window.__userZoom=true;};
+  document.getElementById('spin').onclick=()=>autoSpin=!autoSpin;
+  document.getElementById('reset').onclick=()=>{window.__userZoom=false;sph={r:2.7,theta:Math.PI*0.2,phi:Math.PI*0.42};autoSpin=true;openables.forEach(o=>o.target=0);build();};
+}
+
+function price(){
+  const b=window.__bom;
+  let meble, usluga;
+  if(b){
+    const board   = b.carc18*COST_BOARD18 + b.front18*COST_BOARD18*cfg.faktura.mult;
+    const hdf     = b.areaHdf*COST_HDF;
+    const edge    = (b.edgeTot/1000)*COST_EDGE;
+    const hinges  = b.ndoor*2*COST_HINGE;
+    const runners = b.nd*COST_RUNNER;
+    const handles = (b.nd+b.ndoor)*COST_HANDLE;
+    const labor   = b.area18*LABOR_M2;
+    const koszt   = board+hdf+edge+hinges+runners+handles+labor;
+    meble  = koszt*(1+MARGIN);
+    usluga = Math.max(meble*SERVICE_RATE, SERVICE_MIN);
+    renderCost({board,hdf,edge,hinges,runners,handles,labor,koszt,meble});
+  } else {
+    meble=0; usluga=0;
+  }
+  animateNum(document.getElementById('rMeble'),meble);
+  animateNum(document.getElementById('rPakiet'),usluga);
+  animateNum(document.getElementById('rTotal'),meble+usluga);
+}
+
+/* rozkład kosztów — renderowany zawsze, ale widoczny tylko w trybie wewnętrznym */
+function renderCost(c){
+  const el=document.getElementById('costBreak'); if(!el) return;
+  const r=(n,t,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+n+'</td><td class="v">'+fmt(t)+'</td></tr>';
+  el.innerHTML='<div class="cc-h">Kalkulacja (koszt własny → cena)</div><table>'
+    +r('Płyta 18 mm',c.board)
+    +r('HDF (plecy, dna)',c.hdf)
+    +r('Obrzeże + oklejanie',c.edge)
+    +r('Zawiasy',c.hinges)
+    +r('Prowadnice szuflad',c.runners)
+    +r('Uchwyty',c.handles)
+    +r('Robocizna',c.labor)
+    +r('Koszt własny',c.koszt,'sub')
+    +r('Marża '+Math.round(MARGIN*100)+'%',c.meble-c.koszt,'mar')
+    +r('Cena mebla (netto wycena)',c.meble,'fin')
+    +'</table>';
+}
+function animateNum(el,to){const from=parseFloat(el.dataset.v||'0');el.dataset.v=to;const t0=performance.now(),dur=400;function tick(t){const p=Math.min(1,(t-t0)/dur);el.textContent=fmt(from+(to-from)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);}requestAnimationFrame(tick);}
+
+/* ---------- LISTA FORMATEK (rozkrój) — konstrukcja: boki przelotowe, fronty nakładane ---------- */
+function cutlist(){
+  const W=cfg.w*10, H=cfg.h*10, D=cfg.d*10;     // mm
+  const t=18, hdf=3, margin=18, gap=9;          // mm (margin/gap = 0.018/0.009 m z modelu)
+  const nd=cfg.dr, ndoor=cfg.doo;
+  const innerW=W-2*margin, innerH=H-2*margin;
+  const denom=nd+2*ndoor;
+  let drawerBand = denom>0 ? innerH*(nd/denom) : 0;
+  if(ndoor===0) drawerBand=innerH; if(nd===0) drawerBand=0;
+  const doorsBand = innerH - drawerBand - ((nd>0&&ndoor>0)?gap:0);
+
+  const R=Math.round;
+  const korp=cfg.body.name+' 18', frontMat=cfg.front.name+' 18';
+  const parts=[]; // {grp, el, w, h, qty, mat, edg, board:'18'|'hdf', edgeLen:mm}
+  const add=(grp,el,w,h,qty,mat,edg,board,edgeLen)=>parts.push({grp,el,w:R(w),h:R(h),qty,mat,edg,board,edgeLen:edgeLen||0});
+
+  // KORPUS
+  add('Korpus','Bok',           D, H,      2, korp, '1 dł. (przód)', '18', H*2);
+  add('Korpus','Wieniec (gór/dół)', W-2*t, D, 2, korp, '1 dł. (przód)', '18', (W-2*t)*2);
+  add('Korpus','Plecy (nabijane)', W, H,   1, cfg.body.name+' HDF 3', '—', 'hdf', 0);
+
+  // PÓŁKI (tylko przy drzwiach)
+  if(ndoor>0 && doorsBand>10){
+    const shelfCount = doorsBand>550 ? 2 : 1;
+    add('Półki','Półka ruchoma', W-2*t-2, D-30, shelfCount, korp, '1 dł. (przód)', '18', (W-2*t-2)*shelfCount);
+  }
+
+  // FRONTY (nakładane, dekor frontu)
+  if(nd>0){
+    const dh=(drawerBand-(nd-1)*gap)/nd;
+    add('Fronty','Front szuflady', innerW, dh, nd, frontMat, '4 krawędzie', '18', 2*(innerW+dh)*nd);
+  }
+  if(ndoor>0 && doorsBand>10){
+    const colW=(innerW-(ndoor-1)*gap)/ndoor;
+    add('Fronty','Front drzwi', colW, doorsBand, ndoor, frontMat, '4 krawędzie', '18', 2*(colW+doorsBand)*ndoor);
+  }
+
+  // SZUFLADY (skrzynki z płyty 18 + dno HDF) — wymiar zależny od prowadnic
+  if(nd>0){
+    const dh=(drawerBand-(nd-1)*gap)/nd;
+    const boxW=innerW*0.9, boxDepth=D*0.82, sideH=Math.min(dh*0.7, dh-20);
+    add('Szuflady','Bok szuflady',  boxDepth, sideH, 2*nd, korp, '1 dł. (gór)', '18', boxDepth*2*nd);
+    add('Szuflady','Tył/przód boksu', boxW-2*t, sideH, 2*nd, korp, '1 dł. (gór)', '18', (boxW-2*t)*2*nd);
+    add('Szuflady','Dno szuflady',  boxW, boxDepth, nd, cfg.body.name+' HDF 3', '—', 'hdf', 0);
+  }
+
+  // RENDER tabeli
+  const body=document.getElementById('cutBody'); if(!body) return;
+  body.innerHTML='';
+  let lastGrp=null, area18=0, areaHdf=0, edgeTot=0, count=0, front18=0;
+  parts.forEach(p=>{
+    if(p.grp!==lastGrp){
+      const tr=document.createElement('tr'); tr.className='cut-grp';
+      tr.innerHTML='<td colspan="5">'+p.grp+'</td>'; body.appendChild(tr); lastGrp=p.grp;
+    }
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td class="el">'+p.el+'</td>'
+      +'<td class="dim">'+p.w+' × '+p.h+'</td>'
+      +'<td class="c">'+p.qty+'</td>'
+      +'<td class="mat">'+p.mat+'</td>'
+      +'<td class="edg">'+p.edg+'</td>';
+    body.appendChild(tr);
+    const a=(p.w*p.h*p.qty)/1e6;
+    if(p.board==='hdf')areaHdf+=a; else { area18+=a; if(p.grp==='Fronty')front18+=a; }
+    edgeTot+=p.edgeLen; count+=p.qty;
+  });
+
+  // dane do wyceny kosztorysowej
+  window.__bom={area18,areaHdf,edgeTot,count,front18,carc18:area18-front18,nd,ndoor,
+                dims:cfg.w+'×'+cfg.h+'×'+cfg.d};
+
+  // PODSUMOWANIE
+  const nf=(n,d)=>new Intl.NumberFormat('pl-PL',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
+  document.getElementById('cutSummary').innerHTML=
+     '<div class="ci"><div class="cn">'+count+'</div><div class="ct">formatek</div></div>'
+    +'<div class="ci"><div class="cn">'+nf(area18,2)+' m²</div><div class="ct">płyta 18 mm</div></div>'
+    +'<div class="ci"><div class="cn">'+nf(areaHdf,2)+' m²</div><div class="ct">plecy / dna HDF</div></div>'
+    +'<div class="ci"><div class="cn">'+nf(edgeTot/1000,1)+' mb</div><div class="ct">obrzeże</div></div>';
+
+  document.getElementById('cutNote').innerHTML=
+    'Konstrukcja: <b>boki przelotowe</b> (bok = pełna wysokość i głębokość), wieńce wpuszczane między boki, <b>fronty nakładane</b>, plecy HDF 3 mm nabijane na tył. '
+    +'Wymiary formatek wynikają wprost z gabarytu '+cfg.w+'×'+cfg.h+'×'+cfg.d+' cm i płyty 18 mm — to wartości teoretyczne pod rozkrój. '
+    +'Skrzynki szuflad policzono jako boksy z płyty 18 mm + dno HDF; przy systemach Blum/GTV skoryguj szerokość boksu o światło prowadnic. '
+    +'Przed cięciem dolicz luzy montażowe i sprawdź kierunek słojów dla dekorów drewnopodobnych.';
+
+  // wersja tekstowa do zamówienia
+  let txt='LISTA FORMATEK (plyta 18 mm) — '+cfg.w+'x'+cfg.h+'x'+cfg.d+' cm:\n';
+  let g2=null;
+  parts.forEach(p=>{ if(p.grp!==g2){txt+='— '+p.grp.toUpperCase()+':\n';g2=p.grp;} txt+='  '+p.qty+'x '+p.el+' '+p.w+'x'+p.h+' mm ('+p.mat+')\n'; });
+  txt+='Razem: '+count+' formatek · plyta18 '+nf(area18,2)+' m2 · HDF '+nf(areaHdf,2)+' m2 · obrzeze '+nf(edgeTot/1000,1)+' mb';
+  window.__cutText=txt;
+}
+
+/* ---------- UI ---------- */
+['w','h','d'].forEach(k=>{const inp=document.getElementById(k);inp.addEventListener('input',()=>{cfg[k]=parseInt(inp.value,10);document.getElementById(k+'V').textContent=inp.value;build();});});
+document.querySelectorAll('.stp button[data-k]').forEach(b=>{b.onclick=()=>{const k=b.dataset.k,d=parseInt(b.dataset.d,10);if(k==='dr'){cfg.dr=Math.max(0,Math.min(6,cfg.dr+d));document.getElementById('qdr').textContent=cfg.dr;}else{cfg.doo=Math.max(0,Math.min(4,cfg.doo+d));document.getElementById('qdo').textContent=cfg.doo;}if(cfg.dr===0&&cfg.doo===0){cfg.dr=1;document.getElementById('qdr').textContent=1;}build();};});
+
+/* faktura list */
+const fl=document.getElementById('fakturaList');
+FAKTURY.forEach((f,i)=>{
+  const el=document.createElement('div');el.className='fk'+(i===0?' sel':'');
+  el.innerHTML='<span class="dot"></span><span class="fn">'+f.label+'</span><span class="fp">'+(f.mult>1?'+'+Math.round((f.mult-1)*100)+'%':'baza')+'</span>';
+  el.onclick=()=>{cfg.faktura=f;fl.querySelectorAll('.fk').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');build();};
+  fl.appendChild(el);
+});
+
+/* brand tabs + material grid */
+const brandTabs=document.getElementById('brandTabs');
+[['standard','Kronospan Standard'],['egger','Egger']].forEach(([k,lbl])=>{
+  const b=document.createElement('div');b.className='mtab'+(k===cfg.brand?' sel':'');b.textContent=lbl;
+  b.onclick=()=>{cfg.brand=k;brandTabs.querySelectorAll('.mtab').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');renderMat();};
+  brandTabs.appendChild(b);
+});
+function renderMat(){
+  const box=document.getElementById('matGrid');box.innerHTML='';
+  DECORS[cfg.brand].forEach(decor=>{
+    const el=document.createElement('div');el.className='mcard'+(decor===cfg.front?' sel':'');
+    el.innerHTML='<div class="sw" style="background:'+thumbBg(decor)+'"></div><div class="mn">'+decor.name+'</div><div class="mc">'+decor.number+'</div><div class="pick">Wybierz →</div>';
+    el.onclick=()=>{cfg.front=decor;renderMat();build();if(typeof renderPresetThumbs==='function'&&renderer)setTimeout(renderPresetThumbs,30);};
+    box.appendChild(el);
+  });
+}
+renderMat();
+
+/* ---------- GOTOWE UKŁADY (presety) ---------- */
+const PRESETS=[
+  // ===================== MEBLE KUCHENNE (dolne, górne, słupki) =====================
+  // -- Dolne stojące (/15) — 33 typy 1:1 Fabryka --
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Standardowa pojedyncza',          w:45, h:82, d:56, dr:0, doo:1, meta:'1 drzwi + półka'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Zlewozmywakowa pojedyncza',       w:50, h:82, d:56, dr:0, doo:1, meta:'Pod zlew, 1 front'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Standardowa',                     w:80, h:82, d:56, dr:0, doo:2, meta:'2 drzwi + półka'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Zlewozmywakowa',                  w:80, h:82, d:56, dr:0, doo:2, meta:'Pod zlew, 2 fronty'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Zlewozmywakowa z szufladą',       w:80, h:82, d:56, dr:1, doo:2, meta:'Pod zlew + szuflada'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Otwarta',                         w:60, h:82, d:56, dr:0, doo:0, kind:'open', shelves:2, meta:'Otwarte półki'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Cargo wąskie (150-200)',          w:20, h:82, d:56, dr:0, doo:0, kind:'cargo', meta:'Wąski kosz wysuwany'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Cargo (300-600)',                 w:45, h:82, d:56, dr:0, doo:0, kind:'cargo', meta:'Kosz wysuwany'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Piekarnik z szufladą',            w:60, h:82, d:56, dr:1, doo:0, niche:0.60, appliance:true, meta:'Otwór AGD + szuflada'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Piekarnik z drzwiami',            w:60, h:82, d:56, dr:0, doo:1, niche:0.60, appliance:true, meta:'Otwór AGD + drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Dolna narożna',                   w:90, h:82, d:60, dr:0, doo:2, kind:'corner90', meta:'Narożna, bryła L'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna prosta prawa',            w:60, h:82, d:60, dr:0, doo:1, meta:'Narożnik prosty, prawa'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna prosta prawa pod zlew',   w:60, h:82, d:60, dr:0, doo:1, meta:'Prawa, pod zlew'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna prosta lewa',             w:60, h:82, d:60, dr:0, doo:1, meta:'Narożnik prosty, lewa'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna prosta lewa pod zlew',    w:60, h:82, d:60, dr:0, doo:1, meta:'Lewa, pod zlew'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 45 stopni',               w:80, h:82, d:60, dr:0, doo:1, kind:'corner45', meta:'Ścięty narożnik 45°'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 45 stopni zlew',          w:80, h:82, d:60, dr:0, doo:1, kind:'corner45', meta:'45° pod zlew'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 90° drzwi składane',      w:90, h:82, d:60, dr:0, doo:2, kind:'corner90', meta:'90°, drzwi składane'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 90° pod zlew drzwi składane', w:90, h:82, d:60, dr:0, doo:2, kind:'corner90', meta:'90° pod zlew, składane'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 90° drzwi niezależne',    w:90, h:82, d:60, dr:0, doo:2, kind:'corner90', meta:'90°, fronty niezależne'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Narożna 90° pod zlew fronty niezależne', w:90, h:82, d:60, dr:0, doo:2, kind:'corner90', meta:'90° pod zlew, niezależne'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflada drzwi pojedyncze',       w:45, h:82, d:56, dr:1, doo:1, meta:'Szuflada + 1 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflada drzwi',                  w:60, h:82, d:56, dr:1, doo:2, meta:'Szuflada + 2 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflada drzwi pod płytę',        w:60, h:82, d:56, dr:1, doo:2, meta:'Pod płytę grzewczą'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 1-2',                    w:60, h:82, d:56, dr:3, doo:0, drawerSplit:[1,2,2], meta:'Wąska + dwie'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 1-2 pod płytę',          w:60, h:82, d:56, dr:3, doo:0, drawerSplit:[1,2,2], meta:'1-2, pod płytę'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 2-0',                    w:60, h:82, d:56, dr:2, doo:0, meta:'Dwie równe szuflady'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 2-0 pod płytę',          w:60, h:82, d:56, dr:2, doo:0, meta:'2-0, pod płytę'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 2-0 + szuflady wewnętrzne', w:60, h:82, d:56, dr:2, doo:0, meta:'2 + wewnętrzne'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 3-1',                    w:60, h:82, d:56, dr:4, doo:0, drawerSplit:[1,1,1,2], meta:'Trzy + jedna głęboka'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 3-1 pod płytę',          w:60, h:82, d:56, dr:4, doo:0, drawerSplit:[1,1,1,2], meta:'3-1, pod płytę'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 4-0',                    w:60, h:82, d:56, dr:4, doo:0, meta:'Cztery równe szuflady'},
+  {cat:'Meble kuchenne', sub:'Szafki dolne', name:'Szuflady 4-0 pod płytę',          w:60, h:82, d:56, dr:4, doo:0, meta:'4-0, pod płytę'},
+  // -- Górne wiszące (/16) — 21 typów 1:1 Fabryka (str.1=20 + str.2: okap) --
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem uchylno-składanym',     w:60, h:72, d:30, dr:0, doo:1, lift:true, wall:true, meta:'Klapa składana do góry'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem nad korpusem',          w:60, h:36, d:30, dr:0, doo:2, wall:true, meta:'Niska, front nakładany'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem uchylnym małym',        w:60, h:40, d:30, dr:0, doo:1, lift:true, wall:true, meta:'Mała klapa do góry'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem uchylnym dużym',        w:60, h:72, d:30, dr:0, doo:1, lift:true, wall:true, meta:'Duża klapa do góry'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Standardowa',                     w:80, h:72, d:30, dr:0, doo:2, wall:true, meta:'Wisząca, 2 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Standardowa pojedyncza',          w:45, h:72, d:30, dr:0, doo:1, wall:true, meta:'Wisząca, 1 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Standardowa z przegrodą',         w:80, h:72, d:30, dr:0, doo:2, wall:true, meta:'2 drzwi + przegroda'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Otwarta',                         w:60, h:72, d:30, dr:0, doo:0, kind:'open', shelves:3, wall:true, meta:'Otwarte półki'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Otwarta z przegrodą',             w:80, h:72, d:30, dr:0, doo:0, kind:'open', shelves:3, wall:true, meta:'Otwarte + przegroda'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Narożna 45 stopni',               w:60, h:72, d:60, dr:0, doo:1, kind:'corner45', wall:true, meta:'Wisząca 45°'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Narożna 90°',                     w:60, h:72, d:60, dr:0, doo:2, kind:'corner90', wall:true, meta:'Wisząca narożna 90°'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Narożna 90° fronty niezależne',   w:60, h:72, d:60, dr:0, doo:2, kind:'corner90', wall:true, meta:'90°, fronty niezależne'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Górna narożna prosta prawa',      w:60, h:72, d:60, dr:0, doo:1, wall:true, meta:'Narożnik prosty, prawa'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Górna narożna prosta lewa',       w:60, h:72, d:60, dr:0, doo:1, wall:true, meta:'Narożnik prosty, lewa'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Górna narożna',                   w:60, h:72, d:60, dr:0, doo:2, kind:'corner90', wall:true, meta:'Wisząca narożna'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem uchylnym małym i mikrofalówką', w:60, h:56, d:30, dr:0, doo:1, lift:true, niche:0.32, appliance:true, wall:true, meta:'Klapa + mikrofala'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Z frontem uchylnym dużym z mikrofalówką',  w:60, h:72, d:30, dr:0, doo:1, lift:true, niche:0.32, appliance:true, wall:true, meta:'Duża klapa + mikrofala'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Standardowa pojedyncza z mikrofalówką',    w:60, h:72, d:30, dr:0, doo:1, niche:0.32, appliance:true, wall:true, meta:'1 drzwi + mikrofala'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Ociekarka',                       w:60, h:72, d:30, dr:0, doo:2, wall:true, drainer:true, meta:'Z ociekaczem'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Ociekarka pojedyncza',            w:45, h:72, d:30, dr:0, doo:1, wall:true, drainer:true, meta:'Ociekacz, 1 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki górne', name:'Okap teleskopowy',                w:60, h:30, d:30, dr:0, doo:1, wall:true, meta:'Okap z wysuwem'},
+  // -- Wyspowe (/29) — 4 typy 1:1 Fabryka --
+  {cat:'Meble kuchenne', sub:'Szafki wyspowe', name:'Wyspowa standard',     w:90, h:82, d:60, dr:0, doo:2, meta:'Wyspa, 2 drzwi'},
+  {cat:'Meble kuchenne', sub:'Szafki wyspowe', name:'Wyspowa szuflady 2-0', w:60, h:82, d:60, dr:2, doo:0, meta:'Dwie równe szuflady'},
+  {cat:'Meble kuchenne', sub:'Szafki wyspowe', name:'Wyspowa szuflady 1-2', w:60, h:82, d:60, dr:3, doo:0, drawerSplit:[1,2,2], meta:'Szuflady 1-2'},
+  {cat:'Meble kuchenne', sub:'Szafki wyspowe', name:'Szafka wyspowa AGD',   w:60, h:82, d:60, dr:0, doo:1, niche:0.40, appliance:true, meta:'Pod sprzęt AGD'},
+  // -- Słupki kuchenne (/17) — 12 typów 1:1 Fabryka --
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika',                         w:60, h:200, d:56, dr:0, doo:1, niche:0.60, appliance:true, meta:'Otwór na piekarnik'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika szuflady 2-0',            w:60, h:200, d:56, dr:2, doo:0, niche:0.60, appliance:true, meta:'Piekarnik + 2 szuflady'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika szuflady 1-2',            w:60, h:200, d:56, dr:3, doo:0, niche:0.60, appliance:true, drawerSplit:[1,2,2], meta:'Piekarnik + szuflady 1-2'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika mikrofalówki',            w:60, h:210, d:56, dr:0, doo:1, niche:1.00, appliance:true, meta:'Piekarnik + mikrofala'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika mikrofalówki szuflady 2-0', w:60, h:210, d:56, dr:2, doo:0, niche:1.00, appliance:true, meta:'AGD + 2 szuflady'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika mikrofalówki szuflady 1-2', w:60, h:210, d:56, dr:3, doo:0, niche:1.00, appliance:true, drawerSplit:[1,2,2], meta:'AGD + szuflady 1-2'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika niska drzwi',             w:60, h:140, d:56, dr:0, doo:1, niche:0.60, appliance:true, meta:'Niska, drzwi'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa piekarnika niska szuflady 2-0',      w:60, h:140, d:56, dr:2, doo:0, niche:0.60, appliance:true, meta:'Niska, 2 szuflady'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa lodówki z pawlaczem',                w:60, h:210, d:56, dr:0, doo:1, niche:1.40, appliance:true, meta:'Lodówka + pawlacz'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Zabudowa lodówki bez pawlacza',               w:60, h:200, d:56, dr:0, doo:1, niche:1.50, appliance:true, meta:'Lodówka, niska'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Słupek z półkami',                            w:40, h:200, d:56, dr:0, doo:0, kind:'open', shelves:5, meta:'Otwarte półki'},
+  {cat:'Meble kuchenne', sub:'Słupki', name:'Słupek pod cargo wysokie',                    w:30, h:200, d:56, dr:0, doo:0, kind:'cargo', meta:'Wysoki kosz cargo'},
+
+  // ===================== MEBLE ŁAZIENKOWE =====================
+  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Wisząca - drzwi',     w:60, h:55, d:46, dr:0, doo:2, wall:true, meta:'2 drzwi'},
+  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Wisząca - szuflady',  w:60, h:55, d:46, dr:2, doo:0, wall:true, meta:'2 szuflady'},
+  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Stojąca - drzwi',     w:60, h:72, d:46, dr:0, doo:2, meta:'Na nóżkach'},
+  {cat:'Meble łazienkowe', sub:'Pod umywalkę', name:'Stojąca - szuflady',  w:60, h:72, d:46, dr:2, doo:0, meta:'Na nóżkach'},
+  {cat:'Meble łazienkowe', sub:'Szafki dolne', name:'Dolna podwieszana drzwi', w:80, h:40, d:35, dr:0, doo:2, wall:true, meta:'Niska, szeroka'},
+  {cat:'Meble łazienkowe', sub:'Szafki dolne', name:'Dolna podwieszana szuflady', w:80, h:40, d:35, dr:2, doo:0, wall:true, meta:'Niska, szuflady'},
+  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek wiszący drzwi', w:40, h:160, d:30, dr:0, doo:2, wall:true, meta:'Drzwi dzielone'},
+  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek z wnęką',      w:40, h:170, d:30, dr:1, doo:2, niche:0.22, meta:'Otwarta wnęka'},
+  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Słupek stojący',      w:40, h:180, d:35, dr:0, doo:2, meta:'Wysoki, na nóżkach'},
+  {cat:'Meble łazienkowe', sub:'Słupki',       name:'Zabudowa pralki',     w:65, h:200, d:60, dr:0, doo:2, niche:0.90, appliance:true, meta:'Otwór na pralkę'},
+  {cat:'Meble łazienkowe', sub:'Wiszące',      name:'Szafka nad pralką',   w:50, h:60, d:25, dr:0, doo:2, wall:true, meta:'Wisząca'},
+
+  // ===================== MEBLE POKOJOWE =====================
+  {cat:'Meble pokojowe', sub:'Szafki nocne', name:'Szafka nocna szuflady', w:45, h:45, d:40, dr:2, doo:0, meta:'2 szuflady'},
+  {cat:'Meble pokojowe', sub:'Szafki nocne', name:'Szafka nocna drzwi',    w:45, h:50, d:40, dr:0, doo:1, meta:'1 drzwi'},
+  {cat:'Meble pokojowe', sub:'Komody',       name:'Komoda 3 szuflady',     w:90, h:75, d:45, dr:3, doo:0, meta:'3 szuflady'},
+  {cat:'Meble pokojowe', sub:'Komody',       name:'Komoda 4 szuflady',     w:100, h:85, d:45, dr:4, doo:0, meta:'4 szuflady'},
+  {cat:'Meble pokojowe', sub:'Komody',       name:'Komoda drzwi+szuflady', w:120, h:85, d:45, dr:2, doo:2, meta:'Mieszana'},
+  {cat:'Meble pokojowe', sub:'Komody RTV',   name:'Komoda RTV',            w:160, h:45, d:40, dr:2, doo:2, meta:'Pod telewizor'},
+  {cat:'Meble pokojowe', sub:'Komody RTV',   name:'Komoda RTV niska',      w:140, h:40, d:40, dr:0, doo:3, meta:'Tylko drzwi'},
+  {cat:'Meble pokojowe', sub:'Słupki RTV',   name:'Słupek RTV z wnęką',    w:50, h:170, d:40, dr:1, doo:2, niche:0.30, meta:'Wnęka na sprzęt'},
+
+  // ===================== MEBLE POD SKOSY =====================
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos lewy',   w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony bok lewy'},
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos prawy',  w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony bok prawy'},
+  {cat:'Meble pod skosy', sub:'Regały pod skos', name:'Regał skos tylny',  w:80, h:160, d:40, dr:0, doo:0, soon:true, meta:'Obniżony tył'},
+  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył drzwi', w:100, h:90, d:45, dr:0, doo:2, soon:true, meta:'Pod skos dachu'},
+  {cat:'Meble pod skosy', sub:'Komody pod skos', name:'Komoda obniżony tył szuflady', w:100, h:90, d:45, dr:3, doo:0, soon:true, meta:'Pod skos dachu'},
+  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos lewy',   w:120, h:200, d:60, dr:0, doo:2, soon:true, meta:'Pod poddasze'},
+  {cat:'Meble pod skosy', sub:'Szafy pod skos',  name:'Szafa skos prawy',  w:120, h:200, d:60, dr:0, doo:2, soon:true, meta:'Pod poddasze'},
+
+  // ===================== SZAFY I REGAŁY =====================
+  {cat:'Szafy i regały', sub:'Regały', name:'Regał otwarty',      w:80, h:200, d:35, dr:0, doo:0, kind:'open', shelves:4, meta:'Półki'},
+  {cat:'Szafy i regały', sub:'Regały', name:'Regał z szufladami', w:80, h:200, d:35, dr:2, doo:0, kind:'open', shelves:3, meta:'Półki + szuflady'},
+  {cat:'Szafy i regały', sub:'Regały', name:'Regał z drzwiami',   w:80, h:200, d:35, dr:0, doo:2, meta:'Dół zamykany'},
+  {cat:'Szafy i regały', sub:'Szafy',  name:'Szafa z drążkiem',   w:100, h:210, d:60, dr:0, doo:0, kind:'open', rail:true, shelves:1, meta:'Otwarta, drążek'},
+  {cat:'Szafy i regały', sub:'Szafy',  name:'Szafa z półkami',    w:100, h:210, d:60, dr:0, doo:0, kind:'open', shelves:5, meta:'Otwarta, półki'},
+  {cat:'Szafy i regały', sub:'Szafy',  name:'Szafa drążek+półki', w:120, h:210, d:60, dr:0, doo:0, kind:'open', rail:true, shelves:3, meta:'Mieszana'},
+  {cat:'Szafy i regały', sub:'Szafy',  name:'Szafa 2-drzwiowa',   w:120, h:210, d:60, dr:2, doo:2, meta:'Zamykana, szuflady'},
+
+  // ===================== MEBLE BIUROWE =====================
+  {cat:'Meble biurowe', sub:'Biurka',     name:'Biurko proste',            w:120, h:75, d:60, dr:0, doo:0, soon:true, meta:'Blat na nogach'},
+  {cat:'Meble biurowe', sub:'Biurka',     name:'Biurko narożne',           w:140, h:75, d:140, dr:0, doo:0, soon:true, meta:'Narożne L'},
+  {cat:'Meble biurowe', sub:'Kontenerki', name:'Kontenerek 3 szuflady',    w:43, h:60, d:50, dr:3, doo:0, meta:'Pod biurko'},
+  {cat:'Meble biurowe', sub:'Kontenerki', name:'Kontenerek drzwi+szuflada', w:43, h:60, d:50, dr:1, doo:1, meta:'Mieszany'},
+  {cat:'Meble biurowe', sub:'Komody biurowe', name:'Komoda biurowa 2D',    w:100, h:80, d:45, dr:0, doo:2, meta:'Do gabinetu'},
+  {cat:'Meble biurowe', sub:'Komody biurowe', name:'Komoda biurowa szuflady', w:80, h:80, d:45, dr:4, doo:0, meta:'4 szuflady'},
+
+  // ===================== SZAFKI RTV =====================
+  {cat:'Szafki RTV', sub:'Stojące',    name:'RTV szuflady',      w:160, h:45, d:40, dr:2, doo:2, meta:'Pod telewizor'},
+  {cat:'Szafki RTV', sub:'Stojące',    name:'RTV drzwi',         w:140, h:40, d:40, dr:0, doo:3, meta:'Tylko drzwi'},
+  {cat:'Szafki RTV', sub:'Stojące',    name:'RTV niska szeroka', w:180, h:38, d:40, dr:2, doo:0, meta:'Długa, niska'},
+  {cat:'Szafki RTV', sub:'Słupki RTV', name:'Słupek RTV z wnęką', w:50, h:170, d:40, dr:1, doo:2, niche:0.30, meta:'Wnęka na sprzęt'},
+
+  // ===================== KOMODY =====================
+  {cat:'Komody', sub:'Szufladowe', name:'Komoda 3 szuflady', w:90, h:75, d:45, dr:3, doo:0, meta:'3 szuflady'},
+  {cat:'Komody', sub:'Szufladowe', name:'Komoda 4 szuflady', w:100, h:85, d:45, dr:4, doo:0, meta:'4 szuflady'},
+  {cat:'Komody', sub:'Szufladowe', name:'Komoda 5 szuflad',  w:60, h:110, d:45, dr:5, doo:0, meta:'Wąska, wysoka'},
+  {cat:'Komody', sub:'Mieszane',   name:'Komoda drzwi+szuflady', w:120, h:85, d:45, dr:2, doo:2, meta:'Mieszana'},
+  {cat:'Komody', sub:'Mieszane',   name:'Komoda z drzwiami', w:100, h:85, d:45, dr:0, doo:3, meta:'Tylko drzwi'},
+
+  // ===================== BLATY =====================
+  {cat:'Blaty', sub:'Blaty', name:'Blat prosty',     w:120, h:4, d:60, dr:0, doo:0, soon:true, meta:'Płyta na wymiar'},
+  {cat:'Blaty', sub:'Blaty', name:'Blat z wycięciem', w:180, h:4, d:60, dr:0, doo:0, soon:true, meta:'Pod zlew/płytę'},
+];
+const PRESET_CATS=['Meble kuchenne','Meble łazienkowe','Meble pokojowe','Meble pod skosy','Szafy i regały','Meble biurowe','Szafki RTV','Komody','Blaty'];
+let presetCat=PRESET_CATS[0];
+
+function presetSVG(p){
+  const maxH=110, maxW=120;
+  let H=maxH, W=H*(p.w/p.h);
+  if(W>maxW){W=maxW;H=W*(p.h/p.w);}
+  const pad=4, ow=+W.toFixed(1), oh=+H.toFixed(1);
+  const ix=pad, iy=pad, iw=ow-2*pad, ih=oh-2*pad, gap=2.4;
+  const denom=p.dr+2*p.doo;
+  let dBand = denom>0 ? ih*(p.dr/denom) : 0;
+  if(p.doo===0)dBand=ih; if(p.dr===0)dBand=0;
+  const doorBand = ih - dBand - ((p.dr>0&&p.doo>0)?gap:0);
+  let s='<svg viewBox="0 0 '+ow+' '+oh+'" xmlns="http://www.w3.org/2000/svg">';
+  s+='<rect class="bd" x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" rx="3"/>';
+  if(p.dr>0){
+    const dh=(dBand-(p.dr-1)*gap)/p.dr;
+    for(let i=0;i<p.dr;i++){const y=iy+i*(dh+gap);
+      s+='<rect class="pn" x="'+(ix+2)+'" y="'+(y+1).toFixed(1)+'" width="'+(iw-4)+'" height="'+(dh-2).toFixed(1)+'" rx="2"/>';
+      s+='<line class="hd" x1="'+(ix+iw/2-7)+'" y1="'+(y+dh/2).toFixed(1)+'" x2="'+(ix+iw/2+7)+'" y2="'+(y+dh/2).toFixed(1)+'"/>';}
+  }
+  if(p.doo>0&&doorBand>1){
+    const y0=iy+dBand+((p.dr>0)?gap:0), cw=(iw-(p.doo-1)*gap)/p.doo;
+    for(let j=0;j<p.doo;j++){const x=ix+j*(cw+gap);
+      s+='<rect class="pn" x="'+(x+1).toFixed(1)+'" y="'+(y0+1).toFixed(1)+'" width="'+(cw-2).toFixed(1)+'" height="'+(doorBand-2).toFixed(1)+'" rx="2"/>';
+      const hx=(j<p.doo/2)?(x+cw-4):(x+4);
+      s+='<line class="hd" x1="'+hx.toFixed(1)+'" y1="'+(y0+doorBand/2-6).toFixed(1)+'" x2="'+hx.toFixed(1)+'" y2="'+(y0+doorBand/2+6).toFixed(1)+'"/>';}
+  }
+  return s+'</svg>';
+}
+
+function applyPreset(p){
+  cfg.w=p.w; cfg.h=p.h; cfg.d=p.d; cfg.dr=p.dr; cfg.doo=p.doo;
+  cfg.kind=p.kind||'std'; cfg.niche=p.niche||0; cfg.appliance=!!p.appliance;
+  cfg.lift=!!p.lift; cfg.rail=!!p.rail; cfg.shelves=(p.shelves!=null?p.shelves:null); cfg.wall=!!p.wall; cfg.drawerSplit=p.drawerSplit||null; cfg.drainer=!!p.drainer;
+  ['w','h','d'].forEach(k=>{const inp=document.getElementById(k);if(inp){inp.value=cfg[k];document.getElementById(k+'V').textContent=cfg[k];}});
+  document.getElementById('qdr').textContent=cfg.dr;
+  document.getElementById('qdo').textContent=cfg.doo;
+  document.getElementById('crumbType').textContent=p.name;
+  document.getElementById('crumbCat2').textContent=p.cat;
+  gotoConfig();
+  if(typeof renderer!=='undefined'&&renderer) build();
+}
+
+/* ---- EKRANY ---- */
+const CAT_ART={
+  // szafka kuchenna dolna: blat + 2 fronty + uchwyty + nóżki
+  'Meble kuchenne':'<svg viewBox="0 0 120 120"><rect class="fl" x="26" y="34" width="32" height="62" rx="2"/><rect class="fl" x="62" y="34" width="32" height="62" rx="2"/><rect class="ln" x="22" y="20" width="76" height="11" rx="2"/><line class="ac" x1="51" y1="50" x2="51" y2="62"/><line class="ac" x1="69" y1="50" x2="69" y2="62"/><line class="ln" x1="32" y1="96" x2="32" y2="104"/><line class="ln" x1="88" y1="96" x2="88" y2="104"/></svg>',
+  // szafka pod umywalkę: umywalka u góry + 2 szuflady
+  'Meble łazienkowe':'<svg viewBox="0 0 120 120"><path class="ln" d="M28 30 Q28 23 35 23 L85 23 Q92 23 92 30 L90 37 L30 37 Z"/><rect class="fl" x="30" y="44" width="60" height="26" rx="2"/><rect class="fl" x="30" y="74" width="60" height="26" rx="2"/><line class="ac" x1="50" y1="57" x2="70" y2="57"/><line class="ac" x1="50" y1="87" x2="70" y2="87"/></svg>',
+  // komoda pokojowa na nóżkach: 2 fronty + szuflada
+  'Meble pokojowe':'<svg viewBox="0 0 120 120"><rect class="fl" x="24" y="30" width="72" height="20" rx="2"/><rect class="fl" x="24" y="54" width="34" height="40" rx="2"/><rect class="fl" x="62" y="54" width="34" height="40" rx="2"/><line class="ac" x1="52" y1="40" x2="68" y2="40"/><line class="ac" x1="38" y1="70" x2="44" y2="76"/><line class="ac" x1="76" y1="70" x2="82" y2="76"/><line class="ln" x1="30" y1="94" x2="30" y2="104"/><line class="ln" x1="90" y1="94" x2="90" y2="104"/></svg>',
+  // szafa pod skos: korpus ze ściętym górnym bokiem
+  'Meble pod skosy':'<svg viewBox="0 0 120 120"><path class="fl" d="M30 100 L30 50 L90 26 L90 100 Z"/><line class="ln" x1="60" y1="38" x2="60" y2="100"/><line class="ln" x1="30" y1="68" x2="90" y2="60"/><line class="ac" x1="52" y1="54" x2="52" y2="64"/><line class="ac" x1="68" y1="50" x2="68" y2="60"/></svg>',
+  // regał wysoki: korpus + 3 półki otwarte
+  'Szafy i regały':'<svg viewBox="0 0 120 120"><rect class="fl" x="32" y="16" width="56" height="88" rx="3"/><line class="ln" x1="32" y1="42" x2="88" y2="42"/><line class="ln" x1="32" y1="60" x2="88" y2="60"/><line class="ln" x1="32" y1="78" x2="88" y2="78"/></svg>',
+  // biurko: blat na nogach + kontenerek z szufladami
+  'Meble biurowe':'<svg viewBox="0 0 120 120"><rect class="ln" x="24" y="44" width="72" height="9" rx="2"/><line class="ln" x1="30" y1="53" x2="30" y2="96"/><rect class="fl" x="64" y="55" width="30" height="41" rx="2"/><line class="ac" x1="72" y1="66" x2="86" y2="66"/><line class="ac" x1="72" y1="82" x2="86" y2="82"/></svg>',
+  // szafka RTV: niska, szeroka, 2 fronty + nóżki
+  'Szafki RTV':'<svg viewBox="0 0 120 120"><rect class="fl" x="18" y="50" width="84" height="34" rx="2"/><line class="ln" x1="60" y1="50" x2="60" y2="84"/><line class="ac" x1="48" y1="67" x2="40" y2="67"/><line class="ac" x1="72" y1="67" x2="80" y2="67"/><line class="ln" x1="28" y1="84" x2="28" y2="94"/><line class="ln" x1="92" y1="84" x2="92" y2="94"/></svg>',
+  // komoda: 4 szuflady z uchwytami
+  'Komody':'<svg viewBox="0 0 120 120"><rect class="fl" x="34" y="22" width="52" height="80" rx="3"/><line class="ln" x1="34" y1="42" x2="86" y2="42"/><line class="ln" x1="34" y1="62" x2="86" y2="62"/><line class="ln" x1="34" y1="82" x2="86" y2="82"/><line class="ac" x1="54" y1="32" x2="66" y2="32"/><line class="ac" x1="54" y1="52" x2="66" y2="52"/><line class="ac" x1="54" y1="72" x2="66" y2="72"/><line class="ac" x1="54" y1="92" x2="66" y2="92"/></svg>',
+  // blat: gruba płyta robocza z wycięciem
+  'Blaty':'<svg viewBox="0 0 120 120"><rect class="fl" x="20" y="52" width="80" height="16" rx="2"/><ellipse class="ac" cx="74" cy="60" rx="12" ry="4"/></svg>'
+};
+const CAT_META={
+  'Meble kuchenne':'Dolne · górne · słupki · zabudowa AGD',
+  'Meble łazienkowe':'Pod umywalkę · słupki · wiszące',
+  'Meble pokojowe':'Nocne · komody · RTV · słupki',
+  'Meble pod skosy':'Regały · komody · szafy na poddasze',
+  'Szafy i regały':'Regały · szafy · garderoby',
+  'Meble biurowe':'Biurka · kontenerki · komody',
+  'Szafki RTV':'Stojące · słupki RTV',
+  'Komody':'Szufladowe · mieszane',
+  'Blaty':'Płyty robocze na wymiar'
+};
+
+function renderCats(){
+  const grid=document.getElementById('catGrid'); if(!grid) return; grid.innerHTML='';
+  PRESET_CATS.forEach(cat=>{
+    const count=PRESETS.filter(p=>p.cat===cat).length;
+    const c=document.createElement('div'); c.className='catcard';
+    c.innerHTML='<div class="cc-art">'+(CAT_ART[cat]||'')+'</div>'
+      +'<div class="cc-body"><div class="cc-name">'+cat+'</div><div class="cc-meta">'+(CAT_META[cat]||'')+' · '+count+' układów</div>'
+      +'<div class="cc-go">Wybierz typ <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>';
+    c.onclick=()=>{ presetCat=cat; gotoTypes(); };
+    grid.appendChild(c);
+  });
+}
+
+function renderPresets(){
+  const grid=document.getElementById('presetGrid'); if(!grid) return; grid.innerHTML='';
+  document.getElementById('crumbCat').textContent=presetCat;
+  document.getElementById('typesIdx').textContent=presetCat;
+  const items=PRESETS.filter(p=>p.cat===presetCat);
+  let lastSub=null;
+  items.forEach(p=>{
+    if(p.sub && p.sub!==lastSub){
+      const head=document.createElement('div'); head.className='preset-subhead'; head.textContent=p.sub;
+      grid.appendChild(head); lastSub=p.sub;
+    }
+    const c=document.createElement('div'); c.className='pcard'+(p.soon?' soon':''); c.dataset.name=p.name;
+    c.innerHTML='<div class="pic">'+presetSVG(p)+'</div>'
+      +'<div class="pn-name">'+p.name+'</div>'
+      +'<div class="pn-meta">'+p.meta+'</div>'
+      +'<div class="pn-dim">'+p.w+' × '+p.h+' × '+p.d+' cm</div>'
+      +(p.soon?'<div class="pn-soon">Wkrótce w konfiguratorze</div>':'<div class="pn-pick">Konfiguruj →</div>');
+    if(p.soon){ c.onclick=()=>{}; } else { c.onclick=()=>applyPreset(p); }
+    grid.appendChild(c);
+  });
+  if(typeof renderer!=='undefined'&&renderer) setTimeout(renderPresetThumbs,30);
+}
+
+function gotoCats(){ document.body.className=document.body.className.replace(/\bstep-\w+\b/g,'').trim(); window.scrollTo({top:0,behavior:'smooth'}); }
+function gotoTypes(){ document.body.classList.remove('step-config'); document.body.classList.add('step-types'); renderPresets(); window.scrollTo({top:0,behavior:'smooth'}); }
+function gotoConfig(){ document.body.classList.remove('step-types'); document.body.classList.add('step-config'); window.scrollTo({top:0,behavior:'smooth'}); }
+
+document.getElementById('backToCats').onclick=gotoCats;
+document.getElementById('backToTypes').onclick=()=>{ document.getElementById('crumbCat2'); gotoTypes(); };
+
+renderCats();
+
+/* uploader */
+document.getElementById('texUpload').addEventListener('change',e=>{
+  const file=e.target.files[0];if(!file)return;
+  const url=URL.createObjectURL(file);
+  const t=loader.load(url,()=>{});cfgTex(t);
+  cfg.front._tex=t;cfg.front._uploaded=url;
+  document.getElementById('upState').textContent='Wgrano: '+file.name+' → '+cfg.front.name;
+  renderMat();build();e.target.value='';
+});
+
+document.getElementById('bookBtn').onclick=()=>{
+  const total=document.getElementById('rTotal').textContent;
+  const cut=(document.body.classList.contains('internal')&&window.__cutText)?('\n\n'+window.__cutText):'';
+  const msg=encodeURIComponent('Dzien dobry, chce umowic bezplatny pomiar.\nMebel: '+cfg.w+'x'+cfg.h+'x'+cfg.d+' cm\nSzuflady: '+cfg.dr+', drzwi: '+cfg.doo+'\nDekor: '+cfg.front.name+' ('+cfg.front.number+'), faktura: '+cfg.faktura.label+'\nKorpus: '+cfg.body.name+'\nSzacunek: '+total+cut+'\nProsze o kontakt.');
+  window.open('https://wa.me/48000000000?text='+msg,'_blank');
+};
+
+/* ---------- TRYB WEWNĘTRZNY (lista formatek + kalkulacja) ----------
+   Włącz: dopisz #kalkulacja (lub #prod) do adresu, albo naciśnij Ctrl+Shift+K.
+   Domyślnie WYŁĄCZONY — klient widzi tylko podgląd, konfigurator i cenę. */
+function applyInternal(){
+  const on=/kalkulacja|prod|internal/i.test(location.hash);
+  document.body.classList.toggle('internal',on);
+}
+window.addEventListener('hashchange',applyInternal);
+applyInternal();
+window.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&e.shiftKey&&(e.key==='K'||e.key==='k')){
+    document.body.classList.toggle('internal');
+  }
+});
+
+/* reveals */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*70)+'ms';io.observe(el);});
+
+function boot(){
+  var waited=0;
+  (function wait(){
+    if(typeof THREE!=='undefined'){initThree();return;}
+    if(window.__threeFailed||waited>8000){initThree();return;} // initThree pokaże komunikat
+    waited+=120; setTimeout(wait,120);
+  })();
+}
+if(document.readyState==='complete'){boot();}
+else{window.addEventListener('load',boot);}
+</script>
+</body>
+</html>
