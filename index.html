@@ -1430,82 +1430,61 @@ function buildGeometry(c, g, collect){
     _G=prevG; _C=prevC; return;
   }
 
-  // ===== SKOS: mebel z płyt ze ściętym bokiem lub tyłem (poddasze) =====
+  // ===== SKOS: mebel z plyt — prosty model =====
   if(kind==='slope-left'||kind==='slope-right'||kind==='slope-back'){
     const fullH=H, cutH=c.cutH||H*0.5;
-    // wysokości w 4 narożnikach bryły (lewy-przód, prawy-przód, prawy-tył, lewy-tył)
-    let hLF=fullH, hRF=fullH, hRB=fullH, hLB=fullH;
-    if(kind==='slope-left'){ hLF=cutH; hLB=cutH; }
-    if(kind==='slope-right'){ hRF=cutH; hRB=cutH; }
-    if(kind==='slope-back'){ hLB=cutH; hRB=cutH; }
-    const minH=Math.min(hLF,hRF,hRB,hLB);
-    const iW=W-2*pt;
+    const iW=W-2*pt, minH=Math.min(fullH,cutH);
 
-    // BOKI — jeśli oba narożniki boku mają różną wysokość → trapez z Shape, inaczej prostokąt
-    function sidePanel(xPos,hFront,hBack2,flipX){
-      if(Math.abs(hFront-hBack2)<0.001){
-        addBox(pt,hFront,D,xPos,legH+hFront/2,0,bodyMat,true);
-      } else {
-        const s=new THREE.Shape();
-        s.moveTo(0,0); s.lineTo(D,0); s.lineTo(D,hBack2); s.lineTo(0,hFront); s.closePath();
-        const geo=new THREE.ExtrudeGeometry(s,{depth:pt,bevelEnabled:false});
-        const m=new THREE.Mesh(geo,bodyMat); m.castShadow=true; m.receiveShadow=true;
-        m.rotation.y=Math.PI/2;
-        m.position.set(flipX?xPos+pt/2:xPos-pt/2, legH, -D/2);
-        g.add(m);
-      }
+    // BOKI — proste prostokaty o roznych wysokosciach
+    if(kind==='slope-left'){
+      addBox(pt,cutH,D,-(W/2-pt/2),legH+cutH/2,0,bodyMat,true);
+      addBox(pt,fullH,D,(W/2-pt/2),legH+fullH/2,0,bodyMat,true);
+    } else if(kind==='slope-right'){
+      addBox(pt,fullH,D,-(W/2-pt/2),legH+fullH/2,0,bodyMat,true);
+      addBox(pt,cutH,D,(W/2-pt/2),legH+cutH/2,0,bodyMat,true);
+    } else {
+      // slope-back: oba boki pelna wysokosc
+      addBox(pt,fullH,D,-(W/2-pt/2),legH+fullH/2,0,bodyMat,true);
+      addBox(pt,fullH,D,(W/2-pt/2),legH+fullH/2,0,bodyMat,true);
     }
-    sidePanel(-(W/2-pt/2), hLF, hLB, false);  // bok lewy
-    sidePanel((W/2-pt/2), hRF, hRB, true);     // bok prawy
 
     // WIENIEC DOLNY
     addBox(iW,pt,D,0,legH+pt/2,0,bodyMat,true);
 
-    // PLECY (wysokość = min tylnych narożników)
-    const backH=Math.min(hLB,hRB);
-    addBox(iW,backH-pt,pt,0,legH+pt+(backH-pt)/2,-(D/2-pt/2),interiorMat,true);
+    // PLECY (wysokosc = nizsza strona)
+    addBox(iW,minH-pt,pt,0,legH+pt+(minH-pt)/2,-(D/2-pt/2),interiorMat,true);
 
-    // WIENIEC GÓRNY SKOŚNY — obrócona płyta
-    if(kind==='slope-back'){
-      const dH=fullH-cutH, slopeLen=Math.sqrt(D*D+dH*dH);
-      const angle=Math.atan2(dH,D);
-      const tp=meshOf(iW,pt,slopeLen,bodyMat,true);
-      // punkt obrotu: górny przód (y=legH+fullH, z=D/2)
-      tp.position.set(0, legH+fullH-pt/2, D/2);
-      // pivotujemy wokół krawędzi przedniej
-      const pivot=new THREE.Group(); pivot.position.set(0,0,0); g.add(pivot);
-      tp.position.set(0, 0, -slopeLen/2);
-      pivot.position.set(0, legH+fullH-pt/2, D/2);
-      pivot.rotation.x = angle;
-      pivot.add(tp);
-    } else {
-      const dH=fullH-cutH, slopeLen=Math.sqrt(iW*iW+dH*dH);
-      const angle=Math.atan2(dH,iW);
-      const tp=meshOf(slopeLen,pt,D,bodyMat,true);
-      const pivot=new THREE.Group(); g.add(pivot);
-      tp.position.set(slopeLen/2, 0, 0);
-      if(kind==='slope-left'){
-        // pivot na prawym górnym rogu
-        pivot.position.set(W/2-pt, legH+fullH-pt/2, 0);
-        pivot.rotation.z = angle;
-      } else {
-        // pivot na lewym górnym rogu
-        pivot.position.set(-(W/2-pt), legH+fullH-pt/2, 0);
-        pivot.rotation.z = -angle;
-        tp.position.set(-slopeLen/2, 0, 0);
-      }
-      pivot.add(tp);
-    }
+    // WIENIEC GORNY SKOSNY — BufferGeometry quad (4 wierzcholki, 2 trojkaty)
+    // Definiujemy wysokosci 4 naroznikow gornej plyty
+    var yLF,yRF,yLB,yRB;
+    if(kind==='slope-left')      { yLF=legH+cutH;  yRF=legH+fullH; yLB=legH+cutH;  yRB=legH+fullH; }
+    else if(kind==='slope-right'){ yLF=legH+fullH; yRF=legH+cutH;  yLB=legH+fullH; yRB=legH+cutH;  }
+    else                          { yLF=legH+fullH; yRF=legH+fullH; yLB=legH+cutH;  yRB=legH+cutH;  }
 
-    // PÓŁKI (dopasowane do najniższej krawędzi)
-    const shCount=c.shelves!=null?c.shelves:Math.max(1,Math.round(minH/0.36));
-    for(let s=1;s<=shCount;s++){
-      const sy=legH+pt+(minH-2*pt)*s/(shCount+1);
+    var x0=-(iW/2), x1=iW/2, z0=D/2, z1=-D/2;
+    // gorna powierzchnia
+    var tv=[x0,yLF,z0, x1,yRF,z0, x1,yRB,z1,  x0,yLF,z0, x1,yRB,z1, x0,yLB,z1];
+    // dolna powierzchnia (pt nizej)
+    var bv=[x0,yLF-pt,z0, x1,yRB-pt,z1, x1,yRF-pt,z0,  x0,yLF-pt,z0, x0,yLB-pt,z1, x1,yRB-pt,z1];
+    // przod (edge)
+    var fv=[x0,yLF,z0, x1,yRF,z0, x1,yRF-pt,z0,  x0,yLF,z0, x1,yRF-pt,z0, x0,yLF-pt,z0];
+    // tyl (edge)
+    var kv=[x0,yLB-pt,z1, x1,yRB-pt,z1, x1,yRB,z1,  x0,yLB-pt,z1, x1,yRB,z1, x0,yLB,z1];
+    var allV=new Float32Array([].concat(tv,bv,fv,kv));
+    var tGeo=new THREE.BufferGeometry();
+    tGeo.setAttribute('position',new THREE.BufferAttribute(allV,3));
+    tGeo.computeVertexNormals();
+    var tMesh=new THREE.Mesh(tGeo,bodyMat); tMesh.castShadow=true; tMesh.receiveShadow=true; g.add(tMesh);
+
+    // POLKI (dopasowane do nizszej krawedzi)
+    var shCount=c.shelves!=null?c.shelves:Math.max(1,Math.round(minH/0.36));
+    for(var s=1;s<=shCount;s++){
+      var sy=legH+pt+(minH-2*pt)*s/(shCount+1);
       addBox(iW,0.018,D-pt-0.01,0,sy,pt/2-0.005,bodyMat,true);
     }
 
-    // NÓŻKI
-    const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+    // NOZKI
+    var lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(function(p){addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true);});
     _G=prevG; _C=prevC; return;
   }
 
