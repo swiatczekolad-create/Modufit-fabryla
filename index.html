@@ -1456,35 +1456,35 @@ function buildGeometry(c, g, collect){
 
     // WIENIEC GORNY SKOSNY — BufferGeometry quad (4 wierzcholki, 2 trojkaty)
     // Definiujemy wysokosci 4 naroznikow gornej plyty
-    var yLF,yRF,yLB,yRB;
+    let yLF,yRF,yLB,yRB;
     if(kind==='slope-left')      { yLF=legH+cutH;  yRF=legH+fullH; yLB=legH+cutH;  yRB=legH+fullH; }
     else if(kind==='slope-right'){ yLF=legH+fullH; yRF=legH+cutH;  yLB=legH+fullH; yRB=legH+cutH;  }
     else                          { yLF=legH+fullH; yRF=legH+fullH; yLB=legH+cutH;  yRB=legH+cutH;  }
 
-    var x0=-(iW/2), x1=iW/2, z0=D/2, z1=-D/2;
+    let x0=-(iW/2), x1=iW/2, z0=D/2, z1=-D/2;
     // gorna powierzchnia
-    var tv=[x0,yLF,z0, x1,yRF,z0, x1,yRB,z1,  x0,yLF,z0, x1,yRB,z1, x0,yLB,z1];
+    let tv=[x0,yLF,z0, x1,yRF,z0, x1,yRB,z1,  x0,yLF,z0, x1,yRB,z1, x0,yLB,z1];
     // dolna powierzchnia (pt nizej)
-    var bv=[x0,yLF-pt,z0, x1,yRB-pt,z1, x1,yRF-pt,z0,  x0,yLF-pt,z0, x0,yLB-pt,z1, x1,yRB-pt,z1];
+    let bv=[x0,yLF-pt,z0, x1,yRB-pt,z1, x1,yRF-pt,z0,  x0,yLF-pt,z0, x0,yLB-pt,z1, x1,yRB-pt,z1];
     // przod (edge)
-    var fv=[x0,yLF,z0, x1,yRF,z0, x1,yRF-pt,z0,  x0,yLF,z0, x1,yRF-pt,z0, x0,yLF-pt,z0];
+    let fv=[x0,yLF,z0, x1,yRF,z0, x1,yRF-pt,z0,  x0,yLF,z0, x1,yRF-pt,z0, x0,yLF-pt,z0];
     // tyl (edge)
-    var kv=[x0,yLB-pt,z1, x1,yRB-pt,z1, x1,yRB,z1,  x0,yLB-pt,z1, x1,yRB,z1, x0,yLB,z1];
-    var allV=new Float32Array([].concat(tv,bv,fv,kv));
-    var tGeo=new THREE.BufferGeometry();
+    let kv=[x0,yLB-pt,z1, x1,yRB-pt,z1, x1,yRB,z1,  x0,yLB-pt,z1, x1,yRB,z1, x0,yLB,z1];
+    let allV=new Float32Array([].concat(tv,bv,fv,kv));
+    let tGeo=new THREE.BufferGeometry();
     tGeo.setAttribute('position',new THREE.BufferAttribute(allV,3));
     tGeo.computeVertexNormals();
-    var tMesh=new THREE.Mesh(tGeo,bodyMat); tMesh.castShadow=true; tMesh.receiveShadow=true; g.add(tMesh);
+    let tMesh=new THREE.Mesh(tGeo,bodyMat); tMesh.castShadow=true; tMesh.receiveShadow=true; g.add(tMesh);
 
     // POLKI (dopasowane do nizszej krawedzi)
-    var shCount=c.shelves!=null?c.shelves:Math.max(1,Math.round(minH/0.36));
-    for(var s=1;s<=shCount;s++){
-      var sy=legH+pt+(minH-2*pt)*s/(shCount+1);
+    let shCount=c.shelves!=null?c.shelves:Math.max(1,Math.round(minH/0.36));
+    for(let s=1;s<=shCount;s++){
+      let sy=legH+pt+(minH-2*pt)*s/(shCount+1);
       addBox(iW,0.018,D-pt-0.01,0,sy,pt/2-0.005,bodyMat,true);
     }
 
     // NOZKI
-    var lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(function(p){addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true);});
+    let lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(function(p){addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true);});
     _G=prevG; _C=prevC; return;
   }
 
@@ -1698,7 +1698,7 @@ function buildGeometry(c, g, collect){
     }
   }
 
-  var lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+  const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
   _G=prevG; _C=prevC;
 }
 
