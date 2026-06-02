@@ -1698,7 +1698,7 @@ function buildGeometry(c, g, collect){
     }
   }
 
-  const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
+  var lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
   _G=prevG; _C=prevC;
 }
 
