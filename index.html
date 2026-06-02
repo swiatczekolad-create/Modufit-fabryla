@@ -612,6 +612,7 @@ footer{border-top:1px solid var(--hair);padding:34px 0}
           <div class="sl"><div class="sl-top"><span class="l">Szerokość</span><span class="v"><span id="wV">120</span></span></div><input type="range" id="w" min="40" max="240" step="1" value="120"></div>
           <div class="sl"><div class="sl-top"><span class="l">Wysokość</span><span class="v"><span id="hV">85</span></span></div><input type="range" id="h" min="40" max="220" step="1" value="85"></div>
           <div class="sl"><div class="sl-top"><span class="l">Głębokość</span><span class="v"><span id="dV">40</span></span></div><input type="range" id="d" min="25" max="65" step="1" value="40"></div>
+          <div class="sl" id="slCutH" style="display:none"><div class="sl-top"><span class="l">Wys. min (skos)</span><span class="v"><span id="cutHV">80</span></span></div><input type="range" id="cutH" min="20" max="200" step="1" value="80"></div>
         </div>
         <div class="dock-col">
           <div class="ttl"><span>Układ</span></div>
@@ -1228,14 +1229,62 @@ function addBox(w,h,d,x,y,z,mat,sh){const m=new THREE.Mesh(new THREE.BoxGeometry
 function meshOf(w,h,d,mat,sh){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);if(sh){m.castShadow=true;m.receiveShadow=true;}return m;}
 function frontMatNew(){return new THREE.MeshStandardMaterial({map:getTexture(cfg.front),color:0xffffff,roughness:cfg.faktura.rough,metalness:cfg.faktura.metal});}
 
+/* ---------- WYMIARY 3D (linie + etykiety jak rysunek techniczny) ---------- */
+function makeLabel(text){
+  const c=document.createElement('canvas'); c.width=256; c.height=64;
+  const x=c.getContext('2d');
+  x.fillStyle='rgba(34,26,18,0.75)'; x.beginPath();
+  const rr=8, cw=c.width, ch=c.height;
+  x.moveTo(rr,0);x.lineTo(cw-rr,0);x.quadraticCurveTo(cw,0,cw,rr);x.lineTo(cw,ch-rr);x.quadraticCurveTo(cw,ch,cw-rr,ch);x.lineTo(rr,ch);x.quadraticCurveTo(0,ch,0,ch-rr);x.lineTo(0,rr);x.quadraticCurveTo(0,0,rr,0);x.fill();
+  x.font='bold 32px Hanken Grotesk, sans-serif'; x.fillStyle='#F3EDE1'; x.textAlign='center'; x.textBaseline='middle';
+  x.fillText(text,128,32);
+  const tex=new THREE.CanvasTexture(c); tex.encoding=THREE.sRGBEncoding;
+  const sp=new THREE.SpriteMaterial({map:tex,sizeAttenuation:true,transparent:true,depthTest:false});
+  const sprite=new THREE.Sprite(sp); sprite.scale.set(0.32,0.08,1);
+  return sprite;
+}
+function addDimLine(g,from,to,label,offset){
+  const dimMat=new THREE.LineBasicMaterial({color:0x221A12,linewidth:1,transparent:true,opacity:0.5,depthTest:false});
+  // linia główna
+  const pts=[new THREE.Vector3(from.x+offset.x,from.y+offset.y,from.z+offset.z),new THREE.Vector3(to.x+offset.x,to.y+offset.y,to.z+offset.z)];
+  const geo=new THREE.BufferGeometry().setFromPoints(pts);
+  const line=new THREE.Line(geo,dimMat); line.renderOrder=999; g.add(line);
+  // końcówki (krótkie kreski prostopadłe)
+  const endLen=0.025;
+  [pts[0],pts[1]].forEach(p=>{
+    const dir=new THREE.Vector3().subVectors(pts[1],pts[0]).normalize();
+    const perp=new THREE.Vector3(-dir.y,dir.x,0).multiplyScalar(endLen);
+    if(Math.abs(dir.z)>0.5) perp.set(0,endLen,0);
+    const eg=new THREE.BufferGeometry().setFromPoints([p.clone().add(perp),p.clone().sub(perp)]);
+    g.add(new THREE.Line(eg,dimMat));
+  });
+  // etykieta
+  const mid=new THREE.Vector3().addVectors(pts[0],pts[1]).multiplyScalar(0.5);
+  const sp=makeLabel(label); sp.position.copy(mid); sp.renderOrder=1000; g.add(sp);
+}
+function addDimensions(c,g){
+  const W=c.w/100, H=c.h/100, D=c.d/100;
+  const wall=!!c.wall, legH=wall?0:0.09;
+  const isSlab=c.kind==='slab', isDesk=c.kind&&c.kind.startsWith('desk');
+  const baseY=isSlab?0:(isDesk?0:legH);
+  const topY=isSlab?H:(baseY+H);
+  const off=0.12; // odległość linii od bryły
+  // SZEROKOŚĆ (u dołu, z przodu)
+  addDimLine(g,{x:-W/2,y:baseY,z:0},{x:W/2,y:baseY,z:0},c.w+' cm',{x:0,y:-0.04,z:D/2+off});
+  // WYSOKOŚĆ (z boku, z przodu)
+  addDimLine(g,{x:0,y:baseY,z:0},{x:0,y:topY,z:0},c.h+' cm',{x:W/2+off,y:0,z:D/2+off*0.5});
+  // GŁĘBOKOŚĆ (u dołu, z boku)
+  addDimLine(g,{x:0,y:baseY,z:-D/2},{x:0,y:baseY,z:D/2},c.d+' cm',{x:W/2+off,y:-0.04,z:0});
+}
+
 function build(){
   disposeGroup();
   openables=[];
   _G=group; _C=cfg;
   buildGeometry(cfg, group, openables);
+  addDimensions(cfg, group);
   const cy=0.09+(cfg.h/100)/2;
   target.set(0,cy,0);
-  // auto-dystans kamery: dopasuj do największego wymiaru mebla (jeśli user nie zoomował ręcznie)
   if(!window.__userZoom){
     const maxDim=Math.max(cfg.w,cfg.h,cfg.d)/100;
     sph.r=Math.max(2.2, maxDim*1.55+0.7);
@@ -1243,6 +1292,7 @@ function build(){
   document.getElementById('dims').textContent=cfg.w+' × '+cfg.h+' × '+cfg.d+' cm';
   document.getElementById('nowName').textContent=cfg.front.name;
   if(typeof renderBodies==='function') renderBodies();
+  if(typeof updateSlopeUI==='function') updateSlopeUI();
   cutlist();
   price();
   _G=group; _C=cfg;
@@ -1286,154 +1336,135 @@ function buildGeometry(c, g, collect){
     _G=prevG; _C=prevC; return;
   }
 
-  // ===== BIURKO / STÓŁ NA STELAŻU =====
+  // ===== BIURKO / STÓŁ NA STELAŻU (z interaktywnymi szufladami) =====
   if(kind==='desk'||kind==='desk-cabinet-left'||kind==='desk-cabinet-right'||kind==='desk-2cab'||kind==='desk-corner'||kind==='desk-frame'){
-    const topTh=0.028; // grubość blatu 28 mm
-    const topY2=H-topTh/2;
-    const legR=0.025;  // promień nogi
-    const legInset=0.06;
-
-    // BLAT (zawsze)
+    const topTh=0.028, topY2=H-topTh/2, legR=0.025, legInset=0.06;
     addBox(W,topTh,D,0,topY2,0,frontMat,true);
-    // krawędź przednia
     addBox(W,0.004,0.004,0,H-0.002,D/2+0.002,bodyMat,true);
 
+    // helper: buduje szafkę z interaktywnymi szufladami/drzwiami
+    function deskCabinet(cabX,cabW,cabH,cabD,drCount){
+      addBox(cabW,cabH,cabD,cabX,cabH/2,0,bodyMat,true);
+      const fz=cabD/2+pd/2;
+      if(drCount>0){
+        const dh=(cabH-gap*(drCount-1))/drCount;
+        for(let i=0;i<drCount;i++){
+          const dy=cabH-dh/2-i*(dh+gap);
+          const gr=new THREE.Group(); gr.position.set(cabX,dy,0); gr.userData.oi=collect.length; g.add(gr);
+          const front=meshOf(cabW-0.01,dh-0.01,pd,frontMat,true); front.position.set(0,0,fz); gr.add(front);
+          const hh=meshOf((cabW-0.01)*0.3,0.013,0.026,handleMat,false); hh.position.set(0,dh/2-0.03,fz+pd/2); gr.add(hh);
+          collect.push({type:'drawer',g:gr,t:0,target:0,dist:cabD*0.6});
+        }
+      } else {
+        const gr=new THREE.Group(); gr.position.set(cabX-cabW/2,cabH/2,fz); gr.userData.oi=collect.length; g.add(gr);
+        const panel=meshOf(cabW-0.01,cabH-0.01,pd,frontMat,true); panel.position.set(cabW/2,0,0); gr.add(panel);
+        const hd=meshOf(0.016,cabH*0.22,0.026,handleMat,false); hd.position.set(cabW-0.04,0,pd/2); gr.add(hd);
+        collect.push({type:'door',g:gr,t:0,target:0,dir:-1});
+      }
+    }
+
     if(kind==='desk-frame'){
-      // stelaż metalowy: 2 boczne ramy (prostokątne profile)
-      const barW=0.04, barH=0.04;
-      const frameH=H-topTh;
-      // lewa rama
+      const barW=0.04, barH=0.04, frameH=H-topTh;
       addBox(barW,frameH,barH,-(W/2-legInset),frameH/2,D/2-legInset,steel,true);
       addBox(barW,frameH,barH,-(W/2-legInset),frameH/2,-(D/2-legInset),steel,true);
       addBox(barW,barH,D-2*legInset,-(W/2-legInset),barH/2,0,steel,true);
-      // prawa rama
       addBox(barW,frameH,barH,(W/2-legInset),frameH/2,D/2-legInset,steel,true);
       addBox(barW,frameH,barH,(W/2-legInset),frameH/2,-(D/2-legInset),steel,true);
       addBox(barW,barH,D-2*legInset,(W/2-legInset),barH/2,0,steel,true);
-      // poprzeczka łącząca (stabilizator)
       addBox(W-2*legInset,barH,barW,0,barH/2,0,steel,true);
     } else if(kind==='desk-corner'){
-      // narożne L: dodatkowy blat prostopadły
-      const arm=D*0.6;
-      addBox(arm,topTh,D,-(W/2+arm/2),topY2,0,frontMat,true);
-      // nogi: 3 w rogach L
+      const arm=D*0.6; addBox(arm,topTh,D,-(W/2+arm/2),topY2,0,frontMat,true);
       const legH2=H-topTh;
       [[W/2-legInset,D/2-legInset],[W/2-legInset,-(D/2-legInset)],[-(W/2+arm-legInset),D/2-legInset],[-(W/2+arm-legInset),-(D/2-legInset)]].forEach(p=>{
         const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
         leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
       });
     } else if(kind==='desk-cabinet-left'||kind==='desk-cabinet-right'){
-      // biurko z szafką na jednej stronie
-      const cabW=0.40, cabD=D-0.02;
-      const cabH=H-topTh-0.01;
+      const cabW=0.40, cabD=D-0.02, cabH=H-topTh-0.01;
       const cabSide=kind==='desk-cabinet-left'?-1:1;
-      const cabX=cabSide*(W/2-cabW/2);
-      // szafka (korpus)
-      addBox(cabW,cabH,cabD,cabX,cabH/2,0,bodyMat,true);
-      // fronty szafki: 2 szuflady lub drzwi
-      const fz=cabD/2+pd/2;
-      if(c.dr>0){
-        const dh=(cabH-gap*(c.dr-1))/c.dr;
-        for(let i=0;i<c.dr;i++){
-          const dy=cabH-dh/2-i*(dh+gap);
-          addBox(cabW-0.01,dh-0.01,pd,cabX,dy,fz,frontMat,true);
-          addBox((cabW-0.01)*0.3,0.013,0.026,cabX,dy+dh/2-0.03,fz+pd/2,handleMat,false);
-        }
-      } else {
-        addBox(cabW-0.01,cabH-0.01,pd,cabX,cabH/2,fz,frontMat,true);
-        addBox(0.016,cabH*0.22,0.026,cabX+(-cabSide)*(cabW/2-0.04),cabH/2,fz+pd/2,handleMat,false);
-      }
-      // nogi z wolnej strony
-      const legH2=H-topTh;
-      const freeX=-cabSide*(W/2-legInset);
+      deskCabinet(cabSide*(W/2-cabW/2),cabW,cabH,cabD,c.dr);
+      const legH2=H-topTh, freeX=-cabSide*(W/2-legInset);
       [[freeX,D/2-legInset],[freeX,-(D/2-legInset)]].forEach(p=>{
         const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
         leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
       });
     } else if(kind==='desk-2cab'){
-      // biurko na 2 kontenerach
-      const cabW=0.40, cabD=D-0.02;
-      const cabH=H-topTh-0.01;
-      [-1,1].forEach(side=>{
-        const cabX=side*(W/2-cabW/2);
-        addBox(cabW,cabH,cabD,cabX,cabH/2,0,bodyMat,true);
-        const fz=cabD/2+pd/2;
-        const dh=(cabH-gap*1)/2;
-        for(let i=0;i<2;i++){
-          const dy=cabH-dh/2-i*(dh+gap);
-          addBox(cabW-0.01,dh-0.01,pd,cabX,dy,fz,frontMat,true);
-          addBox((cabW-0.01)*0.3,0.013,0.026,cabX,dy+dh/2-0.03,fz+pd/2,handleMat,false);
-        }
-      });
+      const cabW=0.40, cabD=D-0.02, cabH=H-topTh-0.01;
+      deskCabinet(-(W/2-cabW/2),cabW,cabH,cabD,2);
+      deskCabinet((W/2-cabW/2),cabW,cabH,cabD,2);
     } else {
-      // standardowe biurko: 4 nogi metalowe
       const legH2=H-topTh;
       [[W/2-legInset,D/2-legInset],[-(W/2-legInset),D/2-legInset],[W/2-legInset,-(D/2-legInset)],[-(W/2-legInset),-(D/2-legInset)]].forEach(p=>{
         const leg=new THREE.Mesh(new THREE.CylinderGeometry(legR,legR,legH2,12),steel);
         leg.position.set(p[0],legH2/2,p[1]); leg.castShadow=true; g.add(leg);
       });
-      // przepust kablowy (otwór w blacie — sygnalizowany ciemnym kółkiem)
-      if(c.cableHole!==false){
-        const hole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,topTh+0.002,16),dark);
-        hole.position.set(W/4,topY2,-(D/4)); g.add(hole);
-      }
+      const hole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,topTh+0.002,16),dark);
+      hole.position.set(W/4,topY2,-(D/4)); g.add(hole);
     }
     _G=prevG; _C=prevC; return;
   }
 
-  // ===== SKOS: mebel ze ściętym bokiem lub tyłem (poddasze) =====
+  // ===== SKOS: mebel z płyt ze ściętym bokiem lub tyłem (poddasze) =====
   if(kind==='slope-left'||kind==='slope-right'||kind==='slope-back'){
-    // Geometria: korpus z jednym bokiem/tyłem niższym
-    const fullH=H, cutH=c.cutH||H*0.5; // cutH = wysokość ściętej strony
-    const shape=new THREE.Shape();
-    // przekrój boczny (patrząc od boku): prostokąt ze ściętym rogiem
-    if(kind==='slope-left'){
-      // lewy bok niższy: kształt = trapez od lewej
-      shape.moveTo(-W/2, legH);
-      shape.lineTo(W/2, legH);
-      shape.lineTo(W/2, legH+fullH);
-      shape.lineTo(-W/2, legH+cutH);
-      shape.lineTo(-W/2, legH);
-    } else if(kind==='slope-right'){
-      shape.moveTo(-W/2, legH);
-      shape.lineTo(W/2, legH);
-      shape.lineTo(W/2, legH+cutH);
-      shape.lineTo(-W/2, legH+fullH);
-      shape.lineTo(-W/2, legH);
-    } else { // slope-back
-      shape.moveTo(-W/2, legH);
-      shape.lineTo(W/2, legH);
-      shape.lineTo(W/2, legH+fullH);
-      shape.lineTo(-W/2, legH+fullH);
-      shape.lineTo(-W/2, legH);
-    }
-    const extrudeSettings={depth:D, bevelEnabled:false};
-    const geo=new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    geo.translate(0,0,-D/2); // centruj na Z
-    const mesh=new THREE.Mesh(geo, bodyMat);
-    mesh.castShadow=true; mesh.receiveShadow=true; g.add(mesh);
-    // plecy
+    const fullH=H, cutH=c.cutH||H*0.5;
+    const hL=(kind==='slope-left')?cutH:fullH;   // wysokość lewego boku
+    const hR=(kind==='slope-right')?cutH:fullH;   // wysokość prawego boku
+    const hBack=(kind==='slope-back')?cutH:fullH;  // wysokość tyłu (dla slope-back)
+    const minSide=Math.min(hL,hR);
+
+    // BOK LEWY — płyta (trapez dla slope-back, prostokąt dla slope-left/right)
     if(kind==='slope-back'){
-      // plecy ze skosem: tył jest niższy
-      const backH=c.cutH||H*0.6;
-      const bShape=new THREE.Shape();
-      bShape.moveTo(-W/2+pt, legH+pt);
-      bShape.lineTo(W/2-pt, legH+pt);
-      bShape.lineTo(W/2-pt, legH+backH-pt);
-      bShape.lineTo(-W/2+pt, legH+backH-pt);
-      const bGeo=new THREE.ExtrudeGeometry(bShape,{depth:pt,bevelEnabled:false});
-      bGeo.translate(0,0,-D/2);
-      const bMesh=new THREE.Mesh(bGeo, interiorMat);
-      bMesh.castShadow=true; g.add(bMesh);
+      // trapez: przód=fullH, tył=cutH
+      const shape=new THREE.Shape();
+      shape.moveTo(0,0); shape.lineTo(D,0); shape.lineTo(D,cutH); shape.lineTo(0,fullH); shape.lineTo(0,0);
+      const geo=new THREE.ExtrudeGeometry(shape,{depth:pt,bevelEnabled:false});
+      geo.translate(0,0,0);
+      const m=new THREE.Mesh(geo,bodyMat); m.castShadow=true; m.receiveShadow=true;
+      m.rotation.y=Math.PI/2; m.position.set(-(W/2-pt/2),legH,-D/2); g.add(m);
+      // BOK PRAWY (lustro)
+      const m2=new THREE.Mesh(geo.clone(),bodyMat); m2.castShadow=true; m2.receiveShadow=true;
+      m2.rotation.y=Math.PI/2; m2.position.set((W/2+pt/2),legH,-D/2); g.add(m2);
+    } else {
+      addBox(pt,hL,D,-(W/2-pt/2),legH+hL/2,0,bodyMat,true);
+      addBox(pt,hR,D,(W/2-pt/2),legH+hR/2,0,bodyMat,true);
     }
-    // półki wewnętrzne
-    const shCount=c.shelves!=null?c.shelves:Math.round(Math.min(fullH,cutH)/0.36);
-    const minH=Math.min(fullH,cutH||fullH);
+
+    // WIENIEC DOLNY
+    addBox(W-2*pt,pt,D,0,legH+pt/2,0,bodyMat,true);
+    // PLECY (wysokość = mniejszy bok)
+    const backH=(kind==='slope-back')?cutH:minSide;
+    addBox(W-2*pt,backH-pt,pt,0,legH+pt+(backH-pt)/2,-(D/2-pt/2),interiorMat,true);
+
+    // WIENIEC GÓRNY (skośny) — obrócona płyta łącząca szczyty boków
+    if(kind==='slope-back'){
+      // skos tył-przód: płyta od przodu (fullH) do tyłu (cutH)
+      const dH=fullH-cutH, topLen=Math.sqrt(D*D+dH*dH);
+      const angle=Math.atan2(dH,D);
+      const topPlate=meshOf(W-2*pt,pt,topLen,bodyMat,true);
+      topPlate.position.set(0,legH+(fullH+cutH)/2,0);
+      topPlate.rotation.x=angle;
+      g.add(topPlate);
+    } else {
+      // skos lewo-prawo: płyta od wyższego boku do niższego
+      const dH=fullH-cutH, topLen=Math.sqrt((W-2*pt)*(W-2*pt)+dH*dH);
+      const angle=Math.atan2(dH,W-2*pt);
+      const topPlate=meshOf(topLen,pt,D,bodyMat,true);
+      const midX=(kind==='slope-left')? 0 : 0;
+      const midY=legH+(fullH+cutH)/2;
+      topPlate.position.set(midX,midY,0);
+      topPlate.rotation.z=(kind==='slope-left')?angle:-angle;
+      g.add(topPlate);
+    }
+
+    // PÓŁKI (dopasowane do niższej krawędzi)
+    const shelfH=Math.min(hL,hR,hBack||fullH);
+    const shCount=c.shelves!=null?c.shelves:Math.round(shelfH/0.36);
     for(let s=1;s<=shCount;s++){
-      const sy=legH+pt+((minH-2*pt)*s/(shCount+1));
+      const sy=legH+pt+(shelfH-2*pt)*s/(shCount+1);
       addBox(W-2*pt,0.018,D-pt-0.01,0,sy,pt/2-0.005,bodyMat,true);
     }
-    // nóżki
+
+    // NÓŻKI
     const lo=.045;if(!wall)[[W/2-lo,D/2-lo],[-(W/2-lo),D/2-lo],[W/2-lo,-(D/2-lo)],[-(W/2-lo),-(D/2-lo)]].forEach(p=>addBox(.04,legH,.04,p[0],legH/2,p[1],dark,true));
     _G=prevG; _C=prevC; return;
   }
@@ -1835,7 +1866,10 @@ function cutlist(){
 }
 
 /* ---------- UI ---------- */
-['w','h','d'].forEach(k=>{const inp=document.getElementById(k);inp.addEventListener('input',()=>{cfg[k]=parseInt(inp.value,10);document.getElementById(k+'V').textContent=inp.value;build();});});
+['w','h','d'].forEach(k=>{const inp=document.getElementById(k);inp.addEventListener('input',()=>{cfg[k]=parseInt(inp.value,10);document.getElementById(k+'V').textContent=inp.value;if(k==='h'&&cfg.cutH){cfg.cutH=Math.min(cfg.cutH,cfg.h/100*0.95);document.getElementById('cutH').value=Math.round(cfg.cutH*100);document.getElementById('cutHV').textContent=Math.round(cfg.cutH*100);}build();});});
+// suwak wys. min (skos)
+document.getElementById('cutH').addEventListener('input',function(){cfg.cutH=parseInt(this.value,10)/100;document.getElementById('cutHV').textContent=this.value;build();});
+function updateSlopeUI(){const isSlope=cfg.kind&&cfg.kind.startsWith('slope');document.getElementById('slCutH').style.display=isSlope?'block':'none';if(isSlope){const v=Math.round((cfg.cutH||cfg.h/200)*100);document.getElementById('cutH').value=v;document.getElementById('cutH').max=cfg.h;document.getElementById('cutHV').textContent=v;}}
 document.querySelectorAll('.stp button[data-k]').forEach(b=>{b.onclick=()=>{const k=b.dataset.k,d=parseInt(b.dataset.d,10);if(k==='dr'){cfg.dr=Math.max(0,Math.min(6,cfg.dr+d));document.getElementById('qdr').textContent=cfg.dr;}else{cfg.doo=Math.max(0,Math.min(4,cfg.doo+d));document.getElementById('qdo').textContent=cfg.doo;}if(cfg.dr===0&&cfg.doo===0){cfg.dr=1;document.getElementById('qdr').textContent=1;}build();};});
 
 /* faktura list */
